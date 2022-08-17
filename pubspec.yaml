@@ -1,0 +1,61 @@
+name: read_novel
+description: Read Novel
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  adaptive_theme: ^3.1.1
+  velocity_x: ^3.5.1
+  rx_shared_preferences: ^3.0.0
+  singleton: ^0.0.3-nullsafety
+  stacked: ^2.3.15
+  double_back_to_close_app: ^2.1.0
+  flutter_svg: ^1.1.2
+  dio: ^4.0.6
+  intl: ^0.17.0
+  google_fonts: ^3.0.1
+  google_nav_bar: ^5.0.6
+  font_awesome_flutter: ^10.1.0
+  skeletons: ^0.0.3
+  carousel_slider: ^4.1.1
+  expandable: ^5.0.1
+  webview_flutter: ^3.0.4
+  dynamic_height_grid_view: ^0.0.3
+  nb_utils: ^4.6.19
+  pull_to_refresh: ^2.0.0
+  flutter_native_splash: ^2.2.7
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_launcher_icons: ^0.10.0
+
+  flutter_lints: ^2.0.0
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/logo.png"
+
+flutter_native_splash:
+  background_image: "assets/images/Read Novel splashscreen.png"
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icon/
+#    - assets/svgs/
