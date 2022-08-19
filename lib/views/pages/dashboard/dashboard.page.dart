@@ -73,8 +73,7 @@ class _DashboardPageState extends State<DashboardPage>
                     TabBarView(
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
-                        HomeTabWidget(vm: vm)
-                            .pOnly(left: Vx.dp12, right: Vx.dp12),
+                        HomeTabWidget(vm: vm),
                         GenresTabWidget()
                       ],
                     ).expand(),

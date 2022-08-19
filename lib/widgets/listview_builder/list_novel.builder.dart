@@ -11,7 +11,10 @@ class ListNovelBuilder extends StatelessWidget {
     Key? key,
     this.label,
     this.isGridType = false,
-    this.isVerticalList = false, this.itemBuilder, this.itemCount, this.labelTextSize,
+    this.isVerticalList = false,
+    this.itemBuilder,
+    this.itemCount,
+    this.labelTextSize, this.itemGrowable,
   }) : super(key: key);
   final String? label;
   final bool isGridType;
@@ -19,6 +22,7 @@ class ListNovelBuilder extends StatelessWidget {
   final IndexedWidgetBuilder? itemBuilder;
   final int? itemCount;
   final double? labelTextSize;
+  final List<Widget>? itemGrowable;
 
   @override
   Widget build(BuildContext context) {
@@ -27,32 +31,42 @@ class ListNovelBuilder extends StatelessWidget {
         UiSpacer.verticalSpace(space: Vx.dp16),
         HStack(
           [
-            (label ?? 'label').text.lg.size(labelTextSize).bold.make().expand(),
+            (label ?? 'label').text.lg.size(labelTextSize).color(AppColor.fontColor).bold.make().expand(),
             "Lihat Semua".text.size(12).make()
           ],
         ),
         UiSpacer.verticalSpace(space: Vx.dp8),
-        if(!isVerticalList)
+        if (!isVerticalList)
           if (!isGridType)
 
             //HORIZONTAL VIEW LIST
 
-            SizedBox(
-              height: 170,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: itemCount ?? imgList.length,
-                itemBuilder: itemBuilder ?? (context, index) {
-                  return NovelItem(
-                    image: imgList[index],
-                    index: index,
-                  );
-                },
-              ),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: HStack(itemGrowable ?? List.generate(imgList.length, (index) {
+                return NovelItem(
+                  image: imgList[index],
+                  index: index,
+                  author: "Author ${index + 1}",
+                );
+              })),
             )
-          else
 
+          // SizedBox(
+          //   height: null,
+          //   child: ListView.builder(
+          //     shrinkWrap: true,
+          //     scrollDirection: Axis.horizontal,
+          //     itemCount: itemCount ?? imgList.length,
+          //     itemBuilder: itemBuilder ?? (context, index) {
+          //       return NovelItem(
+          //         image: imgList[index],
+          //         index: index,
+          //       );
+          //     },
+          //   ),
+          // )
+          else
             //GRIDVIEW 2 ITEM LIST
 
             DynamicHeightGridView(
@@ -71,15 +85,14 @@ class ListNovelBuilder extends StatelessWidget {
                     heightCover: 135,
                     author: "Author ${index + 1}",
                     isCenteredContent: true,
-                  )
-                      .p8()
-                      .box
-                      .color(AppColor.primaryColorDark.withOpacity(0.4))
-                      .withRounded(value: 5)
-                      .make();
+                  );
+                      // .p8()
+                      // .box
+                      // .color(AppColor.primaryColorDark.withOpacity(0.4))
+                      // .withRounded(value: 5)
+                      // .make();
                 }).pOnly(right: Vx.dp8)
         else
-
           //VERTICAL VIEW LIST
 
           ListView.builder(

@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                   tabBackgroundGradient: LinearGradient(
                     begin: Alignment.topRight,
                     end: Alignment.bottomLeft,
-                    colors: [Colors.lightBlue[200]!, Colors.cyan],
+                    colors: [AppColor.royalOrange, AppColor.cerisePink],
                   ),
                   gap: 8,
                   tabBorderRadius: 15,
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
                   tabs: List.generate(model.listMenu.length, (index) => GButton(
                     icon: model.listIconMenu[index],
                     text: model.listMenu[index],
-                    iconSize: 15.5,
+                    iconSize: 15,
                   )),
                   selectedIndex: model.currentIndex,
                   onTabChange: model.onTabChange,

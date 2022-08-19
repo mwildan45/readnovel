@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "793399712102",
+    "project_id": "readnovel-4ba84",
+    "storage_bucket": "readnovel-4ba84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:793399712102:android:06a0baf61f8c40686dd0a7",
+        "android_client_info": {
+          "package_name": "com.readnovel.read_novel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "793399712102-3an5gaavm3huq39fcjqg3j9qnrhjogon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.readnovel.read_novel",
+            "certificate_hash": "3eaa4a73378f770496e1e143a7396bf250b67bbc"
+          }
+        },
+        {
+          "client_id": "793399712102-j29hka6lk6lm02qfrn5kus8thdpfgv93.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlOky2sF6rzDE1FSUCDCHvCtUCHyuk4zw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "793399712102-j29hka6lk6lm02qfrn5kus8thdpfgv93.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

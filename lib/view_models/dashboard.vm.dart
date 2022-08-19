@@ -1,8 +1,10 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/banner.model.dart';
 import 'package:read_novel/requests/dashboard.request.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class DashboardViewModel extends MyBaseViewModel {
   DashboardViewModel(BuildContext context) {
@@ -40,5 +42,9 @@ class DashboardViewModel extends MyBaseViewModel {
     }
 
     setBusy(false);
+  }
+
+  openNovel(){
+    viewContext?.navigator?.pushNamed(AppRoutes.detailNovelRoute);
   }
 }

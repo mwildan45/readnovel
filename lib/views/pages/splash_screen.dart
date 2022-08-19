@@ -12,12 +12,16 @@ class SplashScreen extends StatelessWidget {
         viewModelBuilder: () => SplashScreenViewModel(context),
         onModelReady: (model) => model.initialise(),
         builder: (context, model, child) {
-        return SafeArea(
-          child: Center(
-            child: Image.asset(AppImages.appSplashScreenImage1, fit: BoxFit.fill, height: double.maxFinite, width: double.maxFinite,),
-          ),
-        );
-      }
-    );
+          return SafeArea(
+            child: Center(
+              child: Image.asset(
+                AppImages.appSplashScreenImage1,
+                fit: BoxFit.fill,
+                height: double.maxFinite,
+                width: double.maxFinite,
+              ),
+            ),
+          );
+        });
   }
 }

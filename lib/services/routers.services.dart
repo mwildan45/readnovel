@@ -4,6 +4,7 @@ import 'package:read_novel/views/pages/auth/login.page.dart';
 import 'package:read_novel/views/pages/auth/register.page.dart';
 import 'package:read_novel/views/pages/home.page.dart';
 import 'package:read_novel/views/pages/menulis/register_penulis.page.dart';
+import 'package:read_novel/views/pages/read_novel/detail_novel.page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -19,6 +20,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case AppRoutes.registerWriterRoute:
       return MaterialPageRoute(builder: (context) => const RegisterPenulisPage());
+
+    case AppRoutes.detailNovelRoute:
+      return MaterialPageRoute(builder: (context) => const DetailNovelPage());
 
     //
     // case AppRoutes.laporanPenjualan:

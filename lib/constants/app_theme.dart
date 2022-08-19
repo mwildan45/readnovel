@@ -6,7 +6,7 @@ class AppTheme {
   //
   ThemeData lightTheme() {
     return ThemeData(
-      fontFamily: GoogleFonts.redHatDisplay().fontFamily,
+      fontFamily: GoogleFonts.alata(fontSize: 13, color: Colors.red).fontFamily,
       primaryColor: AppColor.primaryColor,
       primaryColorDark: AppColor.primaryColorDark,
       textSelectionTheme: TextSelectionThemeData(
@@ -15,13 +15,15 @@ class AppTheme {
       ),
       backgroundColor: Colors.white,
       cardColor: Colors.grey[50],
-      textTheme: const TextTheme(
-        headline3: TextStyle(
+      primaryTextTheme: TextTheme(
+        headline3: const TextStyle(
           color: Colors.black,
         ),
         bodyText1: TextStyle(
-          color: Colors.black,
+          color: AppColor.fontColor,
         ),
+      ).apply(
+        bodyColor: AppColor.romanSilver,
       ),
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: Colors.white,

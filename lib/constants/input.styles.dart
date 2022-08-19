@@ -7,7 +7,7 @@ class InputStyles {
   static InputBorder inputEnabledBorder({double? radius}) {
     return OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColor.primaryColorDark,
+        color: AppColor.grey,
       ),
       borderRadius: BorderRadius.circular(radius ?? 1000),
     );
@@ -17,7 +17,7 @@ class InputStyles {
   static InputBorder inputFocusBorder({double? radius}) {
     return OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColor.primaryColorDark,
+        color: AppColor.grey,
       ),
       borderRadius: BorderRadius.circular(radius ?? 1000),
     );

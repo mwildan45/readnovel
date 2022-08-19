@@ -10,5 +10,6 @@ class AppStrings {
   static String userAuthToken = "auth_token";
   static String userKey = "user";
   static String authenticated = "authenticated";
+  static String profileImg = "profile_image";
 
 }

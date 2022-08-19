@@ -15,17 +15,25 @@ class BasePage extends StatefulWidget {
     this.floatingActionWidget,
     this.floatingActionButtonLocation,
     this.bottomNavigationBar,
+    this.appBarTitleWidget,
+    this.centerTitle = true,
+    this.appBarActions,
+    this.appBarLeading,
   }) : super(key: key);
 
   final String? title;
+  final Widget? appBarTitleWidget;
   final Widget body;
   final Widget? drawerMenu;
   final Widget? floatingActionWidget;
   final Widget? bottomNavigationBar;
+  final Widget? appBarLeading;
+  final List<Widget>? appBarActions;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
   final bool noAppBar;
   final bool isLoading;
   final bool extendBodyBehindAppBar;
+  final bool? centerTitle;
 
   @override
   State<BasePage> createState() => _BasePageState();
@@ -38,12 +46,15 @@ class _BasePageState extends State<BasePage> {
       extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
       resizeToAvoidBottomInset: false,
       backgroundColor: AppColor.primaryColor,
-      appBar: widget.noAppBar ? null : AppBar(
-        title: widget.title == null ? Image.asset(
-          "assets/images/brand_text_white.png",
-          fit: BoxFit.contain,
-        ).w(120).h(50) : Text(widget.title ?? ""),
-      ),
+      appBar: widget.noAppBar
+          ? null
+          : AppBar(
+              title: widget.appBarTitleWidget ??
+                  Text(widget.title ?? "title appbar"),
+              centerTitle: widget.centerTitle,
+              actions: widget.appBarActions,
+              leading: widget.appBarLeading,
+            ),
       body: VStack(
         [
           widget.isLoading

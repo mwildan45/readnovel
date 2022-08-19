@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nb_utils/nb_utils.dart';
+import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/profile.vm.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
@@ -30,8 +32,9 @@ class _ProfilePageState extends State<ProfilePage>
                 [
                   HStack(
                     [
-                      const CircleAvatar(
+                      CircleAvatar(
                         radius: Vx.dp32,
+                        child: Image.network(getStringAsync(AppStrings.profileImg)),
                       ),
                       UiSpacer.horizontalSpace(space: Vx.dp8),
                       VStack([
