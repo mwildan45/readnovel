@@ -7,4 +7,5 @@ class AppRoutes {
   static const registerWriterRoute = "registerWriter";
 
   static const detailNovelRoute = "detailNovel";
+  static const readNovelRoute = "readNovelChapter";
 }

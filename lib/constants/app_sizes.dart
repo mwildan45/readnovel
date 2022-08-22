@@ -6,4 +6,6 @@ class AppSizes {
   static double appCoverHeightMedium = 155;
 
   static double appChaptersBottomSheetHeight = 300;
+
+  static double appSynopsisBottomHeight = 80;
 }

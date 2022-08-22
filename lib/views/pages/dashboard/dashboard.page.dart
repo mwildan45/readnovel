@@ -1,17 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_colors.dart';
-import 'package:read_novel/constants/app_images.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/dashboard.vm.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/genres_tab.widget.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/home_tab.widget.dart';
-import 'package:read_novel/widgets/list_items/novel.item.dart';
-import 'package:read_novel/widgets/listview_builder/list_novel.builder.dart';
 import 'package:read_novel/widgets/form_field/general.form_field.dart';
-import 'package:read_novel/widgets/list_items/carousel_image.item.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -54,13 +49,13 @@ class _DashboardPageState extends State<DashboardPage>
                 child: DefaultTabController(
                   length: 2,
                   child: VStack([
-                    const TabBar(
-                      indicatorColor: Colors.cyan,
+                    TabBar(
+                      indicatorColor: AppColor.royalOrange,
                       labelStyle:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: AppColor.black),
                       indicatorWeight: 1.5,
                       indicatorSize: TabBarIndicatorSize.label,
-                      tabs: [
+                      tabs: const [
                         Tab(
                           text: 'Home',
                         ),

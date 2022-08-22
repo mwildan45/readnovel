@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
-import 'package:read_novel/constants/app_images.dart';
+import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/widgets/base.page.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
 import 'package:read_novel/widgets/form_field/auth.form_field.dart';

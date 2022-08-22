@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_novel/constants/app_images.dart';
+import 'package:read_novel/constants/app_assets.dart';
 
 class NoImagePlaceholder extends StatelessWidget {
   const NoImagePlaceholder({Key? key}) : super(key: key);

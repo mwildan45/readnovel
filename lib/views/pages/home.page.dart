@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               child: PageView(
                 controller: model.pageViewController,
                 onPageChanged: model.onPageChanged,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: const [
                   DashboardPage(),
                   LibraryPage(),

@@ -19,8 +19,11 @@ class AuthViewModel extends MyBaseViewModel {
   }
 
   void onLoginGoogle() async {
+    setBusy(true);
+
     try {
       await authRequest.handleSignInGoogle().then((value) async {
+        print('val gmail ${value}');
         await setAuth();
       });
 
@@ -28,6 +31,8 @@ class AuthViewModel extends MyBaseViewModel {
       print("FAILED TO LOGIN: $error");
       ScaffoldMessenger.of(viewContext!).showSnackBar(const SnackBar(content: Text('Failed to Login')));
     }
+
+    setBusy(false);
   }
 
   void onLoginFacebook() async {

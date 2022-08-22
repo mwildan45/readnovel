@@ -26,7 +26,7 @@ class GenresTabWidget extends StatelessWidget {
                       .color(index == 0 ? Colors.black : Colors.grey)
                       .make(),
                 ],
-              ).pOnly(top: Vx.dp24);
+              ).pOnly(top: index == 0 ? 8 : Vx.dp24);
             },
           ),
         )
@@ -34,7 +34,7 @@ class GenresTabWidget extends StatelessWidget {
             .scrollVertical()
             .box
             .height(double.maxFinite)
-            .color(AppColor.primaryColorDark.withOpacity(0.4))
+            .color(AppColor.fadedGrey.withOpacity(0.4))
             .rightRounded(value: Vx.dp8)
             .make()
             .pOnly(top: Vx.dp8, bottom: Vx.dp8),

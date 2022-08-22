@@ -40,6 +40,11 @@ dependencies:
   firebase_core: ^1.21.0
   flutter_facebook_auth: ^4.4.1
   modal_bottom_sheet: ^2.1.0
+  firebase_crashlytics: ^2.8.8
+  flutter_widget_from_html: ^0.8.5
+  hidable: ^1.0.2
+  scroll_app_bar: ^2.0.0
+  sticky_headers: ^0.3.0+2
 
 
 dev_dependencies:
@@ -65,4 +70,5 @@ flutter:
   assets:
     - assets/images/
     - assets/icon/
+    - assets/gifs/
 #    - assets/svgs/

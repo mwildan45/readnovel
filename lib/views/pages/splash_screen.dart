@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:read_novel/constants/app_images.dart';
+import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/view_models/splash_screen.vm.dart';
 import 'package:stacked/stacked.dart';
 

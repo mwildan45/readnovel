@@ -1,7 +1,7 @@
 class ApiResponse {
   int get totalDataCount => body["meta"]["total"];
   int get totalPageCount => body["pagination"]["total_pages"];
-  List get data => hasDataObject ? body["data"] : body;
+  dynamic get data => hasDataObject ? body["data"] : body;
   // Just a way of saying there was no error with the request and response return
   bool get allGood => errors!.isEmpty;
   bool hasError() => errors!.isNotEmpty;
@@ -26,6 +26,8 @@ class ApiResponse {
     dynamic body = response.data ?? null; // Would mostly be a Map
     List errors = [];
     String message = "";
+
+    print('RESPONSE API: $body');
 
     switch (code) {
       case 200:

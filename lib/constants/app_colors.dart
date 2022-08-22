@@ -6,7 +6,8 @@ class AppColor {
   static Color get primaryColor => const Color(0xffffffff);
   static Color get primaryColorDark => grey;
   static Color get cursorColor => accentColor;
-  static Color fontColor = const Color(0xFF0F1433);
+  static Color fontColor = const Color(0xFF727272);
+  static Color black = const Color(0xFF0E0E0E);
 
   //Shimmer Colors
   static Color shimmerBaseColor = Colors.grey[300] ?? Colors.white;

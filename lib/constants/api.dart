@@ -9,6 +9,10 @@ class Api {
   static const login = "/login";
 
   static const getBanner = "/banners";
+  static const getListNovelsDashboard = "/novels_dashboard";
+  static const getNovelDetail = "/detail_novel";
+  static const getReadNovelChapter = "/read_chapter";
+  static const getGenres = "/genres";
 
   // Other pages
   // static String get privacyPolicy {

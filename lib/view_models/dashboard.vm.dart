@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/banner.model.dart';
+import 'package:read_novel/models/novel.model.dart';
+import 'package:read_novel/models/novels_dashboard.model.dart';
 import 'package:read_novel/requests/dashboard.request.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -15,10 +17,12 @@ class DashboardViewModel extends MyBaseViewModel {
   int currentSliderIndex = 0;
   final CarouselController carouselController = CarouselController();
   BannerHeader? bannerData;
+  ListNovelsDashboard? data;
 
   @override
   void initialise() {
-    getBanner();
+    fetchBanner();
+    fetchListNovelsDashboard();
   }
 
   onSliderChanged(index, reason) {
@@ -26,12 +30,34 @@ class DashboardViewModel extends MyBaseViewModel {
     notifyListeners();
   }
 
-  getBanner() async {
-    setBusy(true);
+  //
+  fetchBanner() async {
+    setBusyForObject(bannerData, true);
     try {
 
       bannerData = await dashboardRequest.getBanners();
 
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+      // viewContext?.showToast(
+      //   msg: "$error",
+      //   bgColor: Colors.red,
+      // );
+    }
+
+    setBusyForObject(bannerData, false);
+  }
+
+  //
+  fetchListNovelsDashboard() async {
+    setBusy(true);
+    try {
+
+      data = await dashboardRequest.getNovelsDashboard();
+
+      clearErrors();
     } catch (error) {
       print("Error ==> $error");
       setError(error);
@@ -44,7 +70,20 @@ class DashboardViewModel extends MyBaseViewModel {
     setBusy(false);
   }
 
-  openNovel(){
-    viewContext?.navigator?.pushNamed(AppRoutes.detailNovelRoute);
+  openNovel(int? id, Novel? novel) async {
+    final result = await viewContext?.navigator?.pushNamed(
+      AppRoutes.detailNovelRoute,
+      arguments: novel,
+    );
+
+    if (result != null && result is Novel) {
+      print('back 1');
+      final orderIndex = data?.novelPopuler?.indexWhere((e) => e.id == result.id);
+      data?.novelPopuler?[orderIndex!] = result;
+      notifyListeners();
+    } else if (result != null && result is bool) {
+      print('back 2');
+      fetchListNovelsDashboard();
+    }
   }
 }

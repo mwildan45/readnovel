@@ -28,6 +28,8 @@ class HttpService {
     //preparing the api uri/url
     String uri = "$host$url";
 
+    print('CALLING API: $uri');
+
     //preparing the post options if header is required
     final mOptions = !includeHeaders
         ? null
@@ -58,6 +60,8 @@ class HttpService {
       }) async {
     //preparing the api uri/url
     String uri = "$host$url";
+
+    print('CALLING API: $uri');
 
     //preparing the post options if header is required
     final mOptions = !includeHeaders

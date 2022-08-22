@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
+import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/widgets/img_cover.widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -15,89 +16,131 @@ class NovelItem extends StatelessWidget {
     this.widthCover = 90,
     this.heightCover = 125,
     this.isInfoOnRightPosition = false,
-    this.isCenteredContent = false,
+    this.smallNovelItem = false,
     this.genres,
     this.novelName,
     this.onItemTap,
+    this.idNovel,
+    this.novel,
   }) : super(key: key);
+
   final String? image;
   final int? index;
+  final int? idNovel;
   final double width, height, widthCover, heightCover;
   final String? author;
   final String? genres;
   final String? novelName;
   final bool isInfoOnRightPosition;
-  final bool isCenteredContent;
+  final bool smallNovelItem;
   final Function()? onItemTap;
+  final Novel? novel;
 
   @override
   Widget build(BuildContext context) {
     if (!isInfoOnRightPosition) {
-      //CONTENT ON BELOW
-      return GestureDetector(
-        onTap: onItemTap,
-        child: VStack(
-          [
-            ZStack(
-              [
-                ImgCoverWidget(
-                  image: image,
-                  widthCover: widthCover,
-                  heightCover: heightCover,
-                ),
-                chapterBox(null).positioned(bottom: 0, left: 0)
-              ],
-            ),
-            3.height,
-            Flexible(
-              child: /*(novelName ?? "").split(p.extension(novelName ?? ""))[0]*/
-                  "Novel Placeholder"
-                      .text
-                      .size(13)
-                      .align(isCenteredContent
-                          ? TextAlign.center
-                          : TextAlign.start)
-                      .ellipsis
-                      .maxLines(2)
-                      .bold
-                      .make()
-                      .pOnly(right: 8),
-              // .expand(),
-            ),
-            2.height,
-            author == null
-                ? const SizedBox.shrink()
-                : '$author'.text.sm.medium.color(AppColor.redScarlet).make(),
-            genres == null
-                ? const SizedBox.shrink()
-                : 'Romance'.text.sm.gray500.make()
-          ],
-          crossAlignment: isCenteredContent
-              ? CrossAxisAlignment.center
-              : CrossAxisAlignment.start,
-        ).w(width),
-      ).pOnly(left: index == 0 ? 0 : 4, bottom: 4);
-      // .p(6)
-      // .box
-      // .withRounded(value: 8)
-      // .white
-      // .outerShadowMd
-      // .shadowOutline(outlineColor: AppColor.grey)
-      // .make();
+      if (smallNovelItem) {
+
+        //SMALL ITEM CONTENT
+
+        return GestureDetector(
+          onTap: onItemTap,
+          child: HStack(
+            [
+              ZStack(
+                [
+                  buildCoverHero(
+                    width: Vx.dp48,
+                    height: Vx.dp48,
+                  ),
+                  // chapterBox(null).positioned(bottom: 0, left: 0)
+                ],
+              ),
+              5.width,
+              VStack(
+                [
+                  Flexible(
+                    child:
+                        (novelName != null ? novelName! : "Novel Placeholder")
+                            .text
+                            .size(13)
+                            .ellipsis
+                            .maxLines(1)
+                            .bold
+                            .make(),
+                    // .expand(),
+                  ),
+                  3.height,
+                  author == null
+                      ? const SizedBox.shrink()
+                      : '$author'
+                          .text
+                          .sm
+                          .medium
+                          .color(AppColor.redScarlet)
+                          .make(),
+                  genres == null
+                      ? const SizedBox.shrink()
+                      : 'Romance'.text.sm.gray500.make(),
+                ],
+                crossAlignment: CrossAxisAlignment.start,
+              ).expand()
+            ],
+            crossAlignment: CrossAxisAlignment.center,
+          ).w(width),
+        );
+      } else {
+
+        //CONTENT ON BELOW
+
+        return GestureDetector(
+          onTap: onItemTap,
+          child: VStack(
+            [
+              ZStack(
+                [
+                  buildCoverHero(),
+                  // chapterBox(null).positioned(bottom: 0, left: 0)
+                ],
+              ),
+              3.height,
+              Flexible(
+                child: (novelName != null ? novelName! : "Novel Placeholder")
+                    .text
+                    .size(13)
+                    .align(TextAlign.start)
+                    .ellipsis
+                    .maxLines(2)
+                    .bold
+                    .make()
+                    .pOnly(right: 8),
+                // .expand(),
+              ),
+              // 2.height,
+              author == null
+                  ? const SizedBox.shrink()
+                  : '$author'.text.sm.medium.color(AppColor.redScarlet).make(),
+              genres == null
+                  ? const SizedBox.shrink()
+                  : 'Romance'.text.sm.gray500.make()
+            ],
+            crossAlignment: CrossAxisAlignment.start,
+          ).w(width),
+        ).pOnly(left: index == 0 ? 0 : 4, bottom: 4);
+      }
     } else {
+
       //CONTENT ON RIGHT
+
       return ZStack(
         [
           HStack(
             [
-              Image.network(
-                image ?? '',
-                fit: BoxFit.cover,
-              ).w(widthCover).h(heightCover).cornerRadius(8),
+              buildCoverHero(),
               VStack([
                 '$author'.text.color(AppColor.redScarlet).sm.make(),
                 Flexible(
-                  child: 'Novel Placeholder ${index! + 1}'
+                  child: (novelName != null ? novelName! : "Novel Placeholder")
                       .text
                       .size(13)
                       .ellipsis
@@ -107,54 +150,18 @@ class NovelItem extends StatelessWidget {
                   // .expand(),
                 ),
                 4.height,
-                // HStack(
-                //   [
-                //     HStack([
-                //       Icon(
-                //         FontAwesomeIcons.circleCheck,
-                //         size: 11,
-                //         color: Colors.white,
-                //       ),
-                //       3.width,
-                //       'Complete'.text.scale(0.8).white.make()
-                //     ])
-                //         .p(3)
-                //         .box
-                //         .rounded
-                //         .color(AppColor.lightMalachiteGreen)
-                //         .make(),
-                //     8.width,
-                //     Icon(
-                //       FontAwesomeIcons.solidEye,
-                //       size: 12,
-                //     ).center(),
-                //     4.width,
-                //     '32K'.text.black.scale(0.85).make().pOnly(top: 3)
-                //   ],
-                // ),
-                4.height,
-                'Romance'
-                    .text
-                    .sm
-                    .gray500
-                    .make()
-                    .px4()
-                    .py1()
-                    .box
-                    .rounded
-                    .border(color: AppColor.fadedGrey)
-                    .make(),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  physics: const NeverScrollableScrollPhysics(),
+                  child: Row(
+                    children: [
+                      ...buildGenresBox(novel),
+                    ],
+                  ),
+                ),
                 2.height,
                 Flexible(
-                  child: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-                          ' Quisque tincidunt nunc risus, vitae facilisis purus cursus vitae. Nullam ac augue vitae est ultrices rhoncus quis id lacus. '
-                          'Curabitur nec volutpat mi. Integer in magna odio. Integer porttitor erat in vehicula tempor. Sed sed ex erat. Mauris quis lacus '
-                          'quis arcu sagittis sodales. Vivamus mollis eget sem eu imperdiet. Phasellus vel sagittis quam, vel egestas nibh. In volutpat,'
-                          ' libero eget fringilla feugiat, odio quam ultricies augue, eu condimentum urna ex quis arcu. Aliquam sit amet purus'
-                          ' condimentum, auctor ipsum in, congue risus. Etiam ante arcu, imperdiet non enim et, ullamcorper cursus justo. Sed et lorem '
-                          'venenatis, dapibus purus sit amet, malesuada '
-                          'sapien. Quisque ornare finibus leo ullamcorper lacinia. Pellentesque fermentum mattis dolor, non dictum turpis dapibus quis.'
-                      .text
+                  child: (novel?.sinopsis ?? 'no synopsis').text
                       .ellipsis
                       .size(12)
                       .maxLines(3)
@@ -172,10 +179,27 @@ class NovelItem extends StatelessWidget {
               .shadowOutline(outlineColor: AppColor.grey)
               .make()
               .pOnly(bottom: 8),
-          chapterBox(null).positioned(top: 0, right: 0),
+          chapterBox("${novel?.chapter}").positioned(top: 0, right: 0),
         ],
-      );
+      ).onTap(onItemTap);
     }
+  }
+
+  Widget buildCoverHero({double? width, double? height}) {
+    return idNovel == null
+        ? ImgCoverWidget(
+            image: image,
+            widthCover: width ?? widthCover,
+            heightCover: height ?? heightCover,
+          )
+        : Hero(
+            tag: idNovel!,
+            child: ImgCoverWidget(
+              image: image,
+              widthCover: width ?? widthCover,
+              heightCover: height ?? heightCover,
+            ),
+          );
   }
 
   Widget chapterBox(String? capter) {
@@ -189,5 +213,18 @@ class NovelItem extends StatelessWidget {
       ),
       child: (capter ?? '20 Chapter').text.white.scale(0.75).make().px(6).py2(),
     );
+  }
+
+  buildGenresBox(Novel? model) {
+    return model?.genre?.map((e) {
+      return e.text.sm.gray500
+          .make()
+          .px4()
+          .py1()
+          .box
+          .rounded
+          .border(color: AppColor.fadedGrey)
+          .make().pOnly(right: 4);
+    }).toList();
   }
 }

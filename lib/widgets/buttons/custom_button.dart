@@ -2,7 +2,7 @@ import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/text.styles.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:flutter/material.dart';
-import 'package:read_novel/widgets/busy_indicator_button.dart';
+import 'package:read_novel/widgets/busy_indicator/button.busy_indicator.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CustomButton extends StatelessWidget {
@@ -13,6 +13,7 @@ class CustomButton extends StatelessWidget {
   final TextStyle? titleStyle;
   final Function()? onPressed;
   final OutlinedBorder? shape;
+  final BoxShape shapeContainer;
   final bool isFixedHeight;
   final double? height;
   final bool loading;
@@ -38,6 +39,7 @@ class CustomButton extends StatelessWidget {
     this.titleStyle,
     this.elevation,
     this.isGradientColor = false,
+    this.shapeContainer = BoxShape.rectangle,
     Key? key,
   }) : super(key: key);
 
@@ -56,7 +58,8 @@ class CustomButton extends StatelessWidget {
             end: Alignment.bottomLeft,
             colors: [AppColor.royalOrange, AppColor.cerisePink],
           ),
-          borderRadius: BorderRadius.circular(shapeRadius ?? 0),
+          borderRadius: shapeContainer == BoxShape.circle ? null : BorderRadius.circular(shapeRadius ?? 0),
+          shape: shapeContainer
         ),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(

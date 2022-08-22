@@ -1,11 +1,13 @@
 import 'package:easy_rich_text/easy_rich_text.dart';
 import 'package:flutter/material.dart';
 import 'package:read_novel/constants/app_colors.dart';
+import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class InfoViewChapterUpdateWIdget extends StatelessWidget {
-  const InfoViewChapterUpdateWIdget({Key? key}) : super(key: key);
+  const InfoViewChapterUpdateWIdget({Key? key, this.data}) : super(key: key);
+  final DetailNovel? data;
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +19,12 @@ class InfoViewChapterUpdateWIdget extends StatelessWidget {
         ),
         UiSpacer.greyedVerticalDivider().px8(),
         richText(
-          text: '23 Bab',
+          text: '${data?.chapter ?? "0"} Bab',
           selected: '23',
         ),
         UiSpacer.greyedVerticalDivider().px8(),
         richText(
-          text: 'Harian update',
+          text: 'status: ${data?.status ?? ""}',
           selected: 'Harian',
         ),
       ],

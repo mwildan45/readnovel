@@ -10,7 +10,13 @@ class AppImages {
   static const imgNoImagePlaceholder = "https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg";
 }
 
-class AppSvgs{
-  // static const upward = "assets/svgs/up.svg";
+class AppIcons{
+  static const textSize = "assets/icon/text_size.png";
+  static const share = "assets/icon/send.png";
+  static const noImage = "assets/icon/no-image.png";
+}
+
+class AppGifs{
+  static const bookLoading = "assets/gifs/book loading.gif";
   // static const downward = "assets/svgs/down.svg";
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:read_novel/constants/app_images.dart';
+import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/view_models/auth.vm.dart';
 import 'package:read_novel/widgets/base.page.dart';
