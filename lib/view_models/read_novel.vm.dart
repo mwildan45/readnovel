@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/models/novel_read_chapter.model.dart';
 import 'package:read_novel/requests/novel_detail.request.dart';
+import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:read_novel/widgets/bottom_sheets/chapters_bottom_sheet.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -31,7 +33,8 @@ class ReadNovelViewModel extends MyBaseViewModel {
     try {
       detailNovel = await novelDetailRequest.getNovelDetail(
         {
-          'id': idNovel,
+          'novel_id': idNovel,
+          'valToken': await AuthServices.getAuthBearerToken(),
         }
       );
 
@@ -46,6 +49,8 @@ class ReadNovelViewModel extends MyBaseViewModel {
   getReadNovelChapter() async {
     //
     setBusyForObject(read, true);
+
+    disableScreenshot();
 
     try {
       read = await novelDetailRequest.getReadNovelChapter(
@@ -64,7 +69,12 @@ class ReadNovelViewModel extends MyBaseViewModel {
 
 
   startToReadTheChapter(Chapters chapters) async {
-    viewContext?.navigator?.pushNamed(AppRoutes.readNovelRoute, arguments: chapters);
+    if (chapters.isLocked!) {
+
+    }else{
+      viewContext?.navigator?.pushNamed(
+          AppRoutes.readNovelRoute, arguments: chapters);
+    }
   }
 
 
@@ -76,5 +86,15 @@ class ReadNovelViewModel extends MyBaseViewModel {
 
   backPressed() {
     viewContext?.navigator?.pop();
+  }
+
+  disableScreenshot({bool onClose = false}) async {
+    if(!onClose){
+      await FlutterWindowManager.addFlags(
+          FlutterWindowManager.FLAG_SECURE);
+    }else{
+      await FlutterWindowManager.clearFlags(
+          FlutterWindowManager.FLAG_SECURE);
+    }
   }
 }

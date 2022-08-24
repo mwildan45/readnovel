@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:read_novel/widgets/list_items/carousel_image.item.dart';
 import 'package:read_novel/widgets/list_items/history_novel.item.dart';
+import 'package:read_novel/widgets/list_items/novel.item.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ListReadHistories extends StatelessWidget {
@@ -15,11 +16,10 @@ class ListReadHistories extends StatelessWidget {
           // scrollDirection: Axis.horizontal,
           itemCount: imgList.length,
           itemBuilder: (context, index) {
-            return HistoryNovelItem(
-              image: imgList[index],
+            return NovelItem(
               index: index,
-              author: "Author ${index + 1}",
-            );
+              isInfoOnRightPosition: true,
+            ).p2();
           },
         ).expand()
       ]

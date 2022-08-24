@@ -89,7 +89,7 @@ class _DetailNovelPageState extends State<DetailNovelPage> {
                         [
                           InfoCoverAuthorGenresWidget(
                             detailNovel: vm.detailNovel,
-                            id: widget.novel!.id!,
+                            id: widget.novel!.sectionId!,
                             novel: widget.novel,
                           ),
                           InfoViewChapterUpdateWIdget(

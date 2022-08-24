@@ -11,7 +11,7 @@ class ListAuthorBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return VStack(
       [
-        UiSpacer.verticalSpace(space: Vx.dp16),
+        UiSpacer.verticalSpace(space: Vx.dp20),
         HStack(
           [
             (label ?? 'label').text.lg.bold.make().expand(),

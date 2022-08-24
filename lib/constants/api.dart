@@ -7,12 +7,17 @@ class Api {
   }
 
   static const login = "/login";
+  static const register = "/register";
 
   static const getBanner = "/banners";
   static const getListNovelsDashboard = "/novels_dashboard";
   static const getNovelDetail = "/detail_novel";
   static const getReadNovelChapter = "/read_chapter";
   static const getGenres = "/genres";
+  static const getAges = "/ages";
+
+  static const getFAQ = "/faq";
+  static const getCoinsTopUp = "/coins";
 
   // Other pages
   // static String get privacyPolicy {

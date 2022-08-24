@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hidable/hidable.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
@@ -12,27 +10,39 @@ import 'package:read_novel/widgets/base.page.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class ReadNovelChapterPage extends StatelessWidget {
+class ReadNovelChapterPage extends StatefulWidget {
   const ReadNovelChapterPage({Key? key, required this.chapters})
       : super(key: key);
   final Chapters chapters;
 
   @override
+  State<ReadNovelChapterPage> createState() => _ReadNovelChapterPageState();
+}
+
+class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
+
+  @override
+  void dispose() {
+    ReadNovelViewModel(context).disableScreenshot(onClose: true);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ReadNovelViewModel>.reactive(
       viewModelBuilder: () =>
-          ReadNovelViewModel(context, idNovelChapter: chapters.id),
+          ReadNovelViewModel(context, idNovelChapter: widget.chapters.id),
       onModelReady: (model) => model.getReadNovelChapter(),
       builder: (context, vm, child) {
         return BasePage(
           bottomNavigationBar: Hidable(
             controller: vm.scrollController,
             wOpacity: true, // As default it's true.
-            size: 48,
+            size: 50,
             child: Column(
               children: [
                 Container(
-                  height: 42,
+                  height: 48,
                   width: double.maxFinite,
                   padding: const EdgeInsets.all(8),
                   child: HStack(
@@ -51,22 +61,25 @@ class ReadNovelChapterPage extends StatelessWidget {
                 ? Image.asset(AppGifs.bookLoading).centered()
                 : VStack(
                     [
-                      HStack(
-                        [
-                          const Icon(
-                            Icons.arrow_back_ios_new_outlined,
-                            size: 18,
-                          ).onTap(vm.backPressed),
-                          ("${vm.read?.bab ?? "0"} | ${vm.read?.title ?? 'chapter title placeholder'}")
-                              .text
-                              .wide
-                              .ellipsis
-                              .fontWeight(FontWeight.w900)
-                              .center
-                              .make()
-                              .expand(),
-                        ],
-                      ).px12().py12(),
+                      Hidable(
+                        controller: vm.scrollController,
+                        child: HStack(
+                          [
+                            const Icon(
+                              Icons.arrow_back_ios_new_outlined,
+                              size: 18,
+                            ).onTap(vm.backPressed),
+                            ("${vm.read?.bab ?? "0"} | ${vm.read?.title ?? 'chapter title placeholder'}")
+                                .text
+                                .wide
+                                .ellipsis
+                                .fontWeight(FontWeight.w900)
+                                .center
+                                .make()
+                                .expand(),
+                          ],
+                        ).px12().py12(),
+                      ),
                       Expanded(
                         child: SingleChildScrollView(
                           controller: vm.scrollController,

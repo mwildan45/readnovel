@@ -47,19 +47,13 @@ class DataDiriPenulisPage extends StatelessWidget {
             4.height,
             CustomTextFormField(
               height: 40,
-              hintText: 'Email',
-              maxLines: 1,
-            ),
-            4.height,
-            CustomTextFormField(
-              height: 40,
               hintText: 'No. Telp',
               maxLines: 1,
             ),
             4.height,
             CustomTextFormField(
               height: 40,
-              hintText: 'Facebook',
+              hintText: 'Link Facebook',
               maxLines: 1,
             ),
             6.height,

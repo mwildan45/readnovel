@@ -34,7 +34,7 @@ class GenresTabWidget extends StatelessWidget {
             .scrollVertical()
             .box
             .height(double.maxFinite)
-            .color(AppColor.fadedGrey.withOpacity(0.4))
+            .color(AppColor.fadedGrey.withOpacity(0.3))
             .rightRounded(value: Vx.dp8)
             .make()
             .pOnly(top: Vx.dp8, bottom: Vx.dp8),
@@ -49,7 +49,7 @@ class GenresTabWidget extends StatelessWidget {
                 mainAxisSpacing: Vx.dp12,
                 builder: (ctx, index) {
                   return NovelItem(
-                    image: imgList[index],
+                    // image: imgList[index],
                     index: index,
                   );
                 }).px8().expand(),

@@ -1,13 +1,13 @@
-class Genre {
+class Genres {
   int? id;
   String? name;
   String? slug;
   String? createdAt;
   String? updatedAt;
 
-  Genre({this.id, this.name, this.slug, this.createdAt, this.updatedAt});
+  Genres({this.id, this.name, this.slug, this.createdAt, this.updatedAt});
 
-  Genre.fromJson(Map<String, dynamic> json) {
+  Genres.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     slug = json['slug'];

@@ -41,7 +41,7 @@ Future<dynamic> chaptersBottomSheet(BuildContext context, DetailNovel data, Read
                 return HStack(
                   [
                     '${data.chapters?[index].title}'.text.color(AppColor.fontColor).make().expand(),
-                    if(data.chapters?[index].coin != 0)
+                    if(data.chapters![index].isLocked!)
                       Icon(
                         Icons.lock, size: 18, color: AppColor.royalOrange,
                       )

@@ -5,7 +5,7 @@ import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/view_models/home.vm.dart';
 import 'package:read_novel/views/pages/dashboard/dashboard.page.dart';
 import 'package:read_novel/views/pages/library/library.page.dart';
-import 'package:read_novel/views/pages/menulis/menulis.page.dart';
+import 'package:read_novel/views/pages/menulis/menulis_menu.page.dart';
 import 'package:read_novel/views/pages/profile/profile.page.dart';
 import 'package:read_novel/widgets/base.page.dart';
 import 'package:stacked/stacked.dart';
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
                 children: const [
                   DashboardPage(),
                   LibraryPage(),
-                  MenulisPage(),
+                  MenulisMenuPage(),
                   ProfilePage(),
                 ],
               ),

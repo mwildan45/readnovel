@@ -18,7 +18,7 @@ class InfoCoverAuthorGenresWidget extends StatelessWidget {
   }) : super(key: key);
   final DetailNovel? detailNovel;
   final Novel? novel;
-  final int id;
+  final String id;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class InfoCoverAuthorGenresWidget extends StatelessWidget {
             ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
           },
           blendMode: BlendMode.dstOut,
-          child: 250.height.w(double.maxFinite).box.white.make(),
+          child: 251.height.w(double.maxFinite).box.white.make(),
         ),
         VStack(
           [

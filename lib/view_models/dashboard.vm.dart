@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/banner.model.dart';
 import 'package:read_novel/models/novel.model.dart';
@@ -18,11 +19,19 @@ class DashboardViewModel extends MyBaseViewModel {
   final CarouselController carouselController = CarouselController();
   BannerHeader? bannerData;
   ListNovelsDashboard? data;
+  final RefreshController refreshController = RefreshController(initialRefresh: false);
 
   @override
   void initialise() {
     fetchBanner();
     fetchListNovelsDashboard();
+  }
+
+  void onRefresh() async{
+    fetchBanner();
+    fetchListNovelsDashboard();
+    await Future.delayed(const Duration(milliseconds: 1000));
+    refreshController.refreshCompleted();
   }
 
   onSliderChanged(index, reason) {

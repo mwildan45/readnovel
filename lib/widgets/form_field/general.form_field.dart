@@ -93,7 +93,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           prefixIcon: widget.prefixIcon,
           suffixIcon: widget.suffixIcon ?? _getSuffixWidget(),
           labelStyle: Theme.of(context).textTheme.bodyText1,
-          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 0.5),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0.5),
         ),
         cursorColor: AppColor.cursorColor,
         obscureText: (widget.obscureText) ? !makePasswordVisible : false,

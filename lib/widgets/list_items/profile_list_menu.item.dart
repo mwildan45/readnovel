@@ -14,10 +14,10 @@ class ProfileListItemMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return HStack(
       [
-        Icon(icon ?? Icons.currency_bitcoin, size: 16,),
+        Icon(icon ?? Icons.currency_bitcoin, size: 16,).box.color(AppColor.fadedGrey.withOpacity(0.7)).withRounded(value: 8).p8.make(),
         UiSpacer.horizontalSpace(space: Vx.dp12),
         (label ?? "label").text.bold.letterSpacing(1.1).make().expand(),
-        Icon(Icons.arrow_forward_ios, size: 15, color: AppColor.grey,),
+        Icon(Icons.arrow_forward_ios, size: 15, color: AppColor.fontColor,),
       ]
     ).onTap(onTap);
   }

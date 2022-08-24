@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:read_novel/constants/app_routes.dart';
+import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:read_novel/models/ages.model.dart';
+import 'package:read_novel/models/genres.model.dart';
+import 'package:read_novel/requests/ages.request.dart';
+import 'package:read_novel/requests/genres.request.dart';
 import 'package:read_novel/services/app.services.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
-import 'package:read_novel/widgets/buttons/custom_button.dart';
-import 'package:read_novel/widgets/dialogs/custom_alert.dialog.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MenulisViewModel extends MyBaseViewModel {
@@ -15,27 +17,37 @@ class MenulisViewModel extends MyBaseViewModel {
 
   int currentIndex = 0;
   PageController pageViewController = PageController(initialPage: 0);
-  StreamSubscription? registerPenulisPageChangeStream;
+  StreamSubscription? menulisPageChangeStream;
+
+  GenresRequest genresRequest = GenresRequest();
+  AgesRequest agesRequest = AgesRequest();
+  List<Genres>? genres;
+  List<Ages>? ages;
+  var agesMap = <int, bool>{};
+  var genresMap = <int, bool>{};
+
+  TextEditingController novelName = TextEditingController();
+  TextEditingController chapterName = TextEditingController();
+  HtmlEditorController chapterContent = HtmlEditorController();
+
 
   @override
   void initialise() {
-    // Future.delayed(const Duration(milliseconds: 500), () {
-    //   openBecomeWriter();
-    // });
-
-    registerPenulisPageChangeStream = AppService.instance?.homePageIndex.stream.listen(
-          (index) {
-        //
+    menulisPageChangeStream = AppService.instance?.homePageIndex.stream.listen(
+      (index) {
         onTabChange(index);
       },
     );
+
+    fetchAges();
+    fetchGenres();
   }
 
   //
   @override
   dispose() {
     super.dispose();
-    registerPenulisPageChangeStream?.cancel();
+    menulisPageChangeStream?.cancel();
   }
 
   //
@@ -47,7 +59,7 @@ class MenulisViewModel extends MyBaseViewModel {
   //
   onTabChange(int index) {
     print("index $index");
-    if(index >= 0) {
+    if (index >= 0) {
       currentIndex = index;
       pageViewController.animateToPage(
         currentIndex,
@@ -55,30 +67,54 @@ class MenulisViewModel extends MyBaseViewModel {
         curve: Curves.fastLinearToSlowEaseIn,
       );
       notifyListeners();
-    }else{
+    } else {
       viewContext?.navigator?.pop();
     }
   }
 
-  openBecomeWriter() {
-    viewContext?.navigator?.pushNamed(AppRoutes.registerWriterRoute);
-    // showDialog(
-    //   context: viewContext!,
-    //   builder: (viewContext) {
-    //     return CustomAlertDialog(
-    //       child: VStack(
-    //         [
-    //           'Sebelum jadi penulis, silahkan melengkapi data diri kamu terlebih dahulu disini'.text.bold.make(),
-    //           CustomButton(
-    //             onPressed: (){
-    //               viewContext.navigator?.pushNamed(AppRoutes.registerWriterRoute);
-    //             },
-    //             title: 'Lanjut',
-    //           )
-    //         ],
-    //       ),
-    //     );
-    //   },
-    // );
+  //
+  fetchGenres() async {
+    setBusyForObject(genres, true);
+    try {
+
+      genres = await genresRequest.getGenres();
+
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+    }
+
+    setBusyForObject(genres, false);
   }
+
+  //
+  fetchAges() async {
+    setBusyForObject(ages, true);
+    try {
+
+      ages = await agesRequest.getAges();
+
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+    }
+
+    setBusyForObject(ages, false);
+  }
+
+  void handleSelectGenre(id, action) {
+    genresMap.putIfAbsent(id, () => action);
+    genresMap.update(id, (value) => action);
+    notifyListeners();
+  }
+
+
+  void handleSelectAge(id, action) {
+    agesMap.putIfAbsent(id, () => action);
+    agesMap.update(id, (value) => action);
+    notifyListeners();
+  }
+
 }

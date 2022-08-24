@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_routes.dart';
+import 'package:read_novel/services/validator.service.dart';
 import 'package:read_novel/view_models/auth.vm.dart';
 import 'package:read_novel/widgets/base.page.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
@@ -71,23 +72,23 @@ class _LoginPageState extends State<LoginPage> {
                           Padding(
                             padding: const EdgeInsets.only(left: 20, right: 20),
                             child: Form(
-                              // key: _formKey,
+                              key: vm.formKey,
                               child: Column(
                                 children: [
                                   EditText(
-                                    hintText: 'masukkan username',
+                                    hintText: 'masukkan email',
                                     isPassword: false,
-                                    // mController: usernameCont,
+                                    mController: vm.email,
                                     mKeyboardType: TextInputType.emailAddress,
-                                    validator: (String? s) {},
+                                    validator: FormValidator.validateEmail,
                                   ),
                                   14.height,
                                   EditText(
                                     hintText: 'masukkan password',
                                     isPassword: true,
-                                    // mController: passwordCont,
+                                    mController: vm.password,
                                     isSecure: true,
-                                    validator: (String? s) {},
+                                    validator: FormValidator.validatePassword,
                                   ),
                                   8.height,
                                 ],
@@ -96,7 +97,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           20.height,
                           CustomButton(
-                            color: Colors.cyan,
                             isGradientColor: true,
                             loading: vm.isBusy,
                             shapeRadius: 10,
@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16),
-                            onPressed: () {},
+                            onPressed: vm.onLocalLogin,
                           ).px20(),
                           20.height,
                           socialButtons,
@@ -120,17 +120,14 @@ class _LoginPageState extends State<LoginPage> {
                               Container(
                                 margin: const EdgeInsets.only(left: 4),
                                 child: GestureDetector(
+                                    onTap: vm.navRegisterPage,
                                     child: const Text('Daftar!',
                                         style: TextStyle(
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.cyan,
                                         )),
-                                    onTap: () {
-                                      // context.navigator
-                                      //     ?.pushNamed(AppRoutes.registerRoute);
-                                      // SignUpScreen().launch(context);
-                                    }),
+                                )
                               )
                             ],
                           ),

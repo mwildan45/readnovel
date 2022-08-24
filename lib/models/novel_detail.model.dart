@@ -87,14 +87,16 @@ class Chapters {
   String? title;
   int? bab;
   int? coin;
+  bool? isLocked;
 
-  Chapters({this.id, this.title, this.bab, this.coin});
+  Chapters({this.id, this.title, this.bab, this.coin, this.isLocked});
 
   Chapters.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     bab = json['bab'];
     coin = json['coin'];
+    isLocked = json['isLocked'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +105,7 @@ class Chapters {
     data['title'] = title;
     data['bab'] = bab;
     data['coin'] = coin;
+    data['isLocked'] = isLocked;
     return data;
   }
 }

@@ -6,6 +6,7 @@ class Novel {
   String? approval;
   String? author;
   String? sinopsis;
+  String? sectionId;
   int? chapter;
   String? age;
   List<String>? genre;
@@ -19,6 +20,7 @@ class Novel {
         this.author,
         this.chapter,
         this.sinopsis,
+        this.sectionId,
         this.age,
         this.genre});
 
@@ -31,6 +33,7 @@ class Novel {
     author = json['author'];
     chapter = json['chapter'];
     sinopsis = json['sinopsis'];
+    sectionId = json['section_id'];
     age = json['age'];
     if (json['genre'] != null) {
       genre = json['genre'].cast<String>();
@@ -47,6 +50,7 @@ class Novel {
     data['author'] = author;
     data['chapter'] = chapter;
     data['sinopsis'] = sinopsis;
+    data['section_id'] = sectionId;
     data['age'] = age;
     if (genre != null) {
       data['genre'] = genre;

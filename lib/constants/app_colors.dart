@@ -5,7 +5,7 @@ class AppColor {
   static Color get accentColor => const Color(0xFFFFFFFF);
   static Color get primaryColor => const Color(0xffffffff);
   static Color get primaryColorDark => grey;
-  static Color get cursorColor => accentColor;
+  static Color get cursorColor => royalOrange;
   static Color fontColor = const Color(0xFF727272);
   static Color black = const Color(0xFF0E0E0E);
 
@@ -22,7 +22,9 @@ class AppColor {
   static Color cerisePink = const Color(0xFFeb3389);
   static Color azureishWhite = const Color(0xFFEFEBE1);
   static Color ghostWhite = const Color(0xFFF7F9FD);
+  static Color ghostWhite2 = const Color(0xFFF3F6FF);
   static Color romanSilver = const Color(0xFF8C8E99);
+  static Color lotion = const Color(0xFFFAFAFA);
   static Color cyan = Colors.cyan;
 
   static Color fadedGrey = Colors.grey.shade300;

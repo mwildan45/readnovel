@@ -31,7 +31,7 @@ dependencies:
   webview_flutter: ^3.0.4
   dynamic_height_grid_view: ^0.0.3
   nb_utils: ^4.6.19
-  pull_to_refresh: ^2.0.0
+  pull_to_refresh_flutter3: ^2.0.1
   flutter_native_splash: ^2.2.7
   easy_rich_text: '^1.1.0'
   path: ^1.8.1
@@ -43,8 +43,9 @@ dependencies:
   firebase_crashlytics: ^2.8.8
   flutter_widget_from_html: ^0.8.5
   hidable: ^1.0.2
-  scroll_app_bar: ^2.0.0
-  sticky_headers: ^0.3.0+2
+  flutter_windowmanager: ^0.2.0
+  basic_utils: ^5.1.1
+  html_editor_enhanced: ^2.2.0+1-dev.1
 
 
 dev_dependencies:

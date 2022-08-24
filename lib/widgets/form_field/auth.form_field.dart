@@ -17,6 +17,7 @@ class EditText extends StatefulWidget {
   VoidCallback? onPressed;
   Function? onFieldSubmitted;
   TextInputType? mKeyboardType;
+  String? labelText;
 
   EditText({
     var this.fontSize = textSizeNormal,
@@ -31,6 +32,7 @@ class EditText extends StatefulWidget {
     this.mKeyboardType,
     var this.maxLine = 1,
     var this.visible = false,
+    this.labelText
   });
 
   @override
@@ -54,6 +56,7 @@ class EditTextState extends State<EditText> {
         keyboardType: widget.mKeyboardType,
         style: TextStyle(fontSize: widget.fontSize.toDouble(), color: Colors.black, fontFamily: widget.fontFamily),
         decoration: InputDecoration(
+          labelText: widget.labelText,
           contentPadding: const EdgeInsets.fromLTRB(26, 16, 4, 16),
           hintText: widget.hintText,
           hintStyle: TextStyle(color: AppColor.grey),
@@ -63,7 +66,15 @@ class EditTextState extends State<EditText> {
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppColor.primaryColorDark, width: 0.0),
           ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: AppColor.sizzlingRed, width: 0.0),
+          ),
           focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: AppColor.primaryColorDark, width: 0.0),
+          ),
+          border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppColor.primaryColorDark, width: 0.0),
           ),
@@ -102,10 +113,18 @@ class EditTextState extends State<EditText> {
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppColor.primaryColorDark, width: 0.0),
           ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: AppColor.sizzlingRed, width: 0.0),
+          ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: AppColor.primaryColorDark, width: 0.0),
           ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: AppColor.primaryColorDark, width: 0.0),
+          )
         ),
       );
     }

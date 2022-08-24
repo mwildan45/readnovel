@@ -36,7 +36,7 @@ class ListNovelBuilder extends StatelessWidget {
     return itemCount != 0
         ? VStack(
             [
-              UiSpacer.verticalSpace(space: Vx.dp16),
+              UiSpacer.verticalSpace(space: Vx.dp24),
               HStack(
                 [
                   (label ?? 'label')
@@ -73,9 +73,7 @@ class ListNovelBuilder extends StatelessWidget {
                         return const BusyIndicatorNovelItem();
                       } else {
                         return NovelItem(
-                          image: imgList[index],
                           index: index,
-                          author: "Author ${index + 1}",
                         );
                       }
                     },
@@ -101,13 +99,10 @@ class ListNovelBuilder extends StatelessWidget {
               : itemBuilder ??
                   (ctx, index) {
                     return NovelItem(
-                      image: imgList[index],
                       index: index,
                       height: 202,
                       widthCover: 100,
                       heightCover: 135,
-                      author: 'author',
-                      novelName: 'novel placeholder',
                       smallNovelItem: true,
                     );
                     // .p8()
@@ -131,9 +126,7 @@ class ListNovelBuilder extends StatelessWidget {
             : itemBuilder ??
                 (context, index) {
                   return NovelItem(
-                    image: imgList[index],
                     index: index,
-                    author: "Author ${index + 1}",
                     isInfoOnRightPosition: true,
                   );
                 },
