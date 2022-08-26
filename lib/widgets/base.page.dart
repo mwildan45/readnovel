@@ -22,7 +22,7 @@ class BasePage extends StatefulWidget {
       this.appBarActions,
       this.appBarLeading,
       this.customAppBar = false,
-      this.activeContext, this.backgroundColorAppBar})
+      this.activeContext, this.backgroundColorAppBar, this.bodyBgColor})
       : super(key: key);
 
   final String? title;
@@ -41,6 +41,7 @@ class BasePage extends StatefulWidget {
   final bool? centerTitle;
   final BuildContext? activeContext;
   final Color? backgroundColorAppBar;
+  final Color? bodyBgColor;
 
   @override
   State<BasePage> createState() => _BasePageState();
@@ -52,7 +53,8 @@ class _BasePageState extends State<BasePage> {
     return Scaffold(
       extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
       resizeToAvoidBottomInset: false,
-      backgroundColor: AppColor.primaryColor,
+      drawerEnableOpenDragGesture: false,
+      backgroundColor: widget.bodyBgColor ?? AppColor.primaryColor,
       appBar: widget.withAppBar
           ? widget.customAppBar
               ? AppBar(

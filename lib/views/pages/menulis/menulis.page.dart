@@ -33,7 +33,7 @@ class _MenulisPageState extends State<MenulisPage> {
               const Spacer(),
               CustomButton(
                 onPressed: () => vm.onTabChange(vm.currentIndex + 1),
-                color: AppColor.lightMalachiteGreen,
+                color: AppColor.guppieGreen,
                 title: 'Selanjutnya',
               ).w(120).h(40),
             ],

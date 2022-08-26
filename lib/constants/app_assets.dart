@@ -14,6 +14,7 @@ class AppIcons{
   static const textSize = "assets/icon/text_size.png";
   static const share = "assets/icon/send.png";
   static const noImage = "assets/icon/no-image.png";
+  static const settings = "assets/icon/settings.png";
 }
 
 class AppGifs{

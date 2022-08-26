@@ -16,6 +16,10 @@ class Api {
   static const getGenres = "/genres";
   static const getAges = "/ages";
 
+  static const getBookmarks = "/bookmark";
+  static const handleBookmark = "/isbookmark";
+  static const getHistories = "/history";
+
   static const getFAQ = "/faq";
   static const getCoinsTopUp = "/coins";
 

@@ -17,11 +17,11 @@ class BusyIndicatorNovelItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SkeletonAvatar(
       style: SkeletonAvatarStyle(
-        width: 100,
-        height: 170,
+        width: width,
+        height: height,
         padding: const EdgeInsets.only(right: Vx.dp8),
-        minHeight: minHeight,
-        maxHeight: maxHeight,
+        // minHeight: minHeight,
+        // maxHeight: maxHeight,
       ),
     );
   }

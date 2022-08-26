@@ -46,7 +46,7 @@ Future<dynamic> chaptersBottomSheet(BuildContext context, DetailNovel data, Read
                         Icons.lock, size: 18, color: AppColor.royalOrange,
                       )
                   ],
-                ).px12().py8().onTap(() => viewModel.startToReadTheChapter(data.chapters![index]));
+                ).px12().py8().onTap(() => viewModel.startToReadTheChapter(data.chapters![index], data));
               },
             ).py4(),
           ),

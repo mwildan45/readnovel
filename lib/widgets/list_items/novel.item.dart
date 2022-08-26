@@ -124,7 +124,7 @@ class NovelItem extends StatelessWidget {
                     .flexible(),
                 buildNovelTitle(),
                 4.height,
-                novel == null
+                novel == null || novel?.genre == null
                     ? UiSpacer.emptySpace()
                     : SingleChildScrollView(
                         scrollDirection: Axis.horizontal,

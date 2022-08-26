@@ -29,6 +29,7 @@ class DetailNovel {
   int? chapter;
   String? age;
   String? synopsis;
+  bool? isBookmarked;
   List<String>? genre;
   List<Chapters>? chapters;
 
@@ -42,6 +43,7 @@ class DetailNovel {
         this.chapter,
         this.age,
         this.genre,
+        this.isBookmarked,
         this.chapters});
 
   DetailNovel.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class DetailNovel {
     chapter = json['chapter'];
     age = json['age'];
     synopsis = json['synopsis'];
+    isBookmarked = json['isBookmarked'];
     genre = json['genre'].cast<String>();
     if (json['chapters'] != null) {
       chapters = <Chapters>[];
@@ -75,6 +78,7 @@ class DetailNovel {
     data['age'] = age;
     data['synopsis'] = synopsis;
     data['genre'] = genre;
+    data['isBookmarked'] = isBookmarked;
     if (chapters != null) {
       data['chapters'] = chapters!.map((v) => v.toJson()).toList();
     }

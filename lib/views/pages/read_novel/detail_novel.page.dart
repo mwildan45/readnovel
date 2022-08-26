@@ -44,11 +44,12 @@ class _DetailNovelPageState extends State<DetailNovelPage> {
                 onPressed: () => vm.openAvailableChapters(vm),
               ).expand(),
               CustomButton(
-                onPressed: (){},
-                shape: CircleBorder(),
+                onPressed: vm.handleBookmark,
+                loading: vm.busy(vm.isBookmarked),
+                shape: const CircleBorder(),
                 shapeContainer: BoxShape.circle,
                 color: AppColor.redScarlet,
-                icon: FontAwesomeIcons.solidBookmark,
+                icon: vm.isBookmarked ? FontAwesomeIcons.solidCircleCheck : FontAwesomeIcons.solidBookmark,
               )
             ],
           ).px12(),

@@ -45,7 +45,8 @@ dependencies:
   hidable: ^1.0.2
   flutter_windowmanager: ^0.2.0
   basic_utils: ^5.1.1
-  html_editor_enhanced: ^2.2.0+1-dev.1
+  html_editor_enhanced: ^2.5.0
+  side_navigation: ^1.0.2
 
 
 dev_dependencies:

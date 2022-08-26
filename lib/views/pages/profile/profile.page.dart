@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage>
       builder: (context, vm, child) {
         return SafeArea(
           child: Container(
-            color: AppColor.ghostWhite2,
+            color: AppColor.ghostWhite,
             child: VStack(
               [
                 8.height,

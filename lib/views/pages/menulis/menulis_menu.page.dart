@@ -4,12 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_assets.dart';
-import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/register_as_writer.vm.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
-import 'package:read_novel/widgets/custom_tabbar.widget.dart';
-import 'package:read_novel/widgets/listview_builder/list_read_histories.builder.dart';
+import 'package:read_novel/widgets/listview_builder/list_histories.builder.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -53,7 +51,7 @@ class _MenulisMenuPageState extends State<MenulisMenuPage>
                 ],
               ).pOnly(bottom: Vx.dp24).box.color(AppColor.ghostWhite2).bottomRounded(value: 30).make(),
               UiSpacer.verticalSpace(),
-              ListReadHistories().px8().expand()
+              ListHistories().px8().expand()
               // buildRegisterAsWriterDialog(vm),
             ],
           ),

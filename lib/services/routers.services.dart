@@ -45,13 +45,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         ),
       );
 
-    case AppRoutes.readNovelRoute:
-      return MaterialPageRoute(
-        settings: const RouteSettings(name: AppRoutes.readNovelRoute),
-        builder: (context) => ReadNovelChapterPage(
-          chapters: settings.arguments as Chapters,
-        ),
-      );
+    // case AppRoutes.readNovelRoute:
+    //   return MaterialPageRoute(
+    //     settings: const RouteSettings(name: AppRoutes.readNovelRoute),
+    //     builder: (context) => ReadNovelChapterPage(
+    //       chapters: settings.arguments as Chapters,
+    //       detailNovel: ,
+    //     ),
+    //   );
 
     case AppRoutes.faqRoute:
       return MaterialPageRoute(builder: (context) => const PusatBantuanPage());

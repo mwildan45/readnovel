@@ -13,15 +13,25 @@ class WriteChapterPage extends StatelessWidget {
       [
         HtmlEditor(
           controller: vm.chapterContent, //required
-          htmlEditorOptions: HtmlEditorOptions(
+          htmlEditorOptions: const HtmlEditorOptions(
             hint: "Your text here...",
             //initalText: "text content initial, if any",
           ),
-          otherOptions: OtherOptions(
+          htmlToolbarOptions: const HtmlToolbarOptions(
+            defaultToolbarButtons: [
+              StyleButtons(),
+              FontSettingButtons(),
+              FontButtons(),
+              ColorButtons(),
+              ListButtons(),
+              ParagraphButtons(),
+            ],
+          ),
+          otherOptions: const OtherOptions(
             height: 400,
           ),
         ).expand()
-      ]
+      ],
     );
   }
 }

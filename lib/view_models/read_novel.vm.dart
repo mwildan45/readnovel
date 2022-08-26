@@ -6,7 +6,9 @@ import 'package:read_novel/models/novel_read_chapter.model.dart';
 import 'package:read_novel/requests/novel_detail.request.dart';
 import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
-import 'package:read_novel/widgets/bottom_sheets/chapters_bottom_sheet.dart';
+import 'package:read_novel/views/pages/read_novel/read_novel_chapter.page.dart';
+import 'package:read_novel/widgets/bottom_sheets/chapters.bottom_sheet.dart';
+import 'package:read_novel/widgets/bottom_sheets/read_settings.bottom_sheet.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ReadNovelViewModel extends MyBaseViewModel {
@@ -20,13 +22,19 @@ class ReadNovelViewModel extends MyBaseViewModel {
   DetailNovel? detailNovel;
   Read? read;
   ScrollController scrollController = ScrollController();
+  bool isBookmarked = false;
+  Color? selectedColor;
+  int selectedFontSize = 15;
 
   @override
   void initialise(){
-    print('id $idNovel');
+
   }
 
   getNovelDetail() async {
+
+    // final token = await AuthServices.getAuthBearerToken();
+    // print('id $token');
     //
     setBusyForObject(detailNovel, true);
 
@@ -37,6 +45,9 @@ class ReadNovelViewModel extends MyBaseViewModel {
           'valToken': await AuthServices.getAuthBearerToken(),
         }
       );
+
+      isBookmarked = detailNovel!.isBookmarked!;
+      notifyListeners();
 
       clearErrors();
     } catch (error) {
@@ -56,7 +67,7 @@ class ReadNovelViewModel extends MyBaseViewModel {
       read = await novelDetailRequest.getReadNovelChapter(
         {
           'chapter_id': idNovelChapter,
-          'user_id': 1,
+          'valToken': await AuthServices.getAuthBearerToken(),
         }
       );
 
@@ -68,12 +79,42 @@ class ReadNovelViewModel extends MyBaseViewModel {
   }
 
 
-  startToReadTheChapter(Chapters chapters) async {
+  handleBookmark() async {
+    //
+    if(detailNovel != null) {
+
+      setBusyForObject(isBookmarked, true);
+
+      try {
+        var resp = await novelDetailRequest.handleBookmark(
+            {
+              'novel_id': idNovel,
+              'valToken': await AuthServices.getAuthBearerToken(),
+            }
+        );
+
+        if (resp == 'Novel dibookmark' || resp == "Novel ditambah dibookmark") {
+          isBookmarked = true;
+        } else if (resp == 'Novel dihapus dari bookmark') {
+          isBookmarked = false;
+        }
+        notifyListeners();
+
+        clearErrors();
+      } catch (error) {
+        setError(error);
+      }
+      setBusyForObject(isBookmarked, false);
+    }
+  }
+
+
+  startToReadTheChapter(Chapters chapters, DetailNovel detailNovel) async {
     if (chapters.isLocked!) {
 
     }else{
-      viewContext?.navigator?.pushNamed(
-          AppRoutes.readNovelRoute, arguments: chapters);
+      viewContext?.navigator?.push(
+          MaterialPageRoute(builder: (context) => ReadNovelChapterPage(chapters: chapters, detailNovel: detailNovel,)));
     }
   }
 
@@ -84,9 +125,11 @@ class ReadNovelViewModel extends MyBaseViewModel {
     }
   }
 
+
   backPressed() {
     viewContext?.navigator?.pop();
   }
+
 
   disableScreenshot({bool onClose = false}) async {
     if(!onClose){
@@ -96,5 +139,24 @@ class ReadNovelViewModel extends MyBaseViewModel {
       await FlutterWindowManager.clearFlags(
           FlutterWindowManager.FLAG_SECURE);
     }
+  }
+
+
+  openReadSetting(ReadNovelViewModel vm) {
+    readSettingsBottomSheet(viewContext!, vm);
+  }
+
+
+  handleBgColor(Color color) {
+    selectedColor = color;
+    notifyListeners();
+  }
+
+  handleFontSize(int size) {
+    final _size = selectedFontSize + size;
+    if(_size >= 14 && _size <= 18) {
+      selectedFontSize = _size;
+    }
+    notifyListeners();
   }
 }

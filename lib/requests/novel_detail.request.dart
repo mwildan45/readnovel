@@ -27,4 +27,14 @@ class NovelDetailRequest extends HttpService {
     }
   }
 
+  Future<String> handleBookmark(Map params) async {
+    final apiResult = await post(Api.handleBookmark, params);
+    final apiResponse = ApiResponse.fromResponse(apiResult);
+    if (apiResponse.allGood) {
+      return apiResponse.body['message'];
+    } else {
+      throw apiResponse.message;
+    }
+  }
+
 }

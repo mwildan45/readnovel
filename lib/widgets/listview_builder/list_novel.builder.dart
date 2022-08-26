@@ -1,5 +1,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
@@ -64,23 +65,34 @@ class ListNovelBuilder extends StatelessWidget {
       if (!isGridType) {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: HStack(
-            itemCount == null || itemGrowable == null
-                ? List.generate(
-                    imgList.length,
-                    (index) {
-                      if (onLoading) {
-                        return const BusyIndicatorNovelItem();
-                      } else {
-                        return NovelItem(
-                          index: index,
-                        );
-                      }
-                    },
-                  )
-                : itemGrowable!,
-            crossAlignment: CrossAxisAlignment.start,
-          ),
+          child: Builder(builder: (context) {
+            if (onLoading) {
+              return HStack(
+                List.generate(
+                  8,
+                      (index) {
+                    return const BusyIndicatorNovelItem();
+                  },
+                ),
+                crossAlignment: CrossAxisAlignment.start,
+              );
+            } else if (itemCount == null || itemGrowable == null) {
+              return HStack(
+                List.generate(
+                  imgList.length,
+                      (index) {
+                    return NovelItem(
+                      index: index,
+                    );
+                  },
+                ),
+                crossAlignment: CrossAxisAlignment.start,
+              );
+            } else {
+              return HStack(itemGrowable!,
+                  crossAlignment: CrossAxisAlignment.start);
+            }
+          }),
         );
       } else {
         //GRIDVIEW BUILDER
@@ -94,7 +106,9 @@ class ListNovelBuilder extends StatelessWidget {
           mainAxisSpacing: Vx.dp12,
           builder: onLoading
               ? (context, index) => const BusyIndicatorNovelItem(
-                    height: 50,
+                    height: 78,
+                    width: 68,
+                    minHeight: 78,
                   )
               : itemBuilder ??
                   (ctx, index) {
@@ -105,24 +119,21 @@ class ListNovelBuilder extends StatelessWidget {
                       heightCover: 135,
                       smallNovelItem: true,
                     );
-                    // .p8()
-                    // .box
-                    // .color(AppColor.primaryColorDark.withOpacity(0.4))
-                    // .withRounded(value: 5)
-                    // .make();
                   },
         ).pOnly(right: Vx.dp8);
       }
     } else {
       //VERTICAL BUILDER
 
-      return ListView.builder(
+      return ListView.separated(
         shrinkWrap: true,
         primary: false,
         // scrollDirection: Axis.horizontal,
         itemCount: itemCount ?? imgList.length,
         itemBuilder: onLoading
-            ? (context, index) => const BusyIndicatorNovelItem(height: 110,)
+            ? (context, index) => const BusyIndicatorNovelItem(
+                  height: 135,
+                )
             : itemBuilder ??
                 (context, index) {
                   return NovelItem(
@@ -130,6 +141,7 @@ class ListNovelBuilder extends StatelessWidget {
                     isInfoOnRightPosition: true,
                   );
                 },
+        separatorBuilder: (context, index) => onLoading ? 5.height : Container(),
       );
     }
   }

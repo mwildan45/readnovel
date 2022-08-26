@@ -15,6 +15,7 @@ class AppColor {
 
   //texts
   static Color lightMalachiteGreen = const Color(0xFF42F38C);
+  static Color guppieGreen = const Color(0xff26d968);
   static Color sizzlingRed = const Color(0xFFF93154);
   static Color aliceBlue = const Color(0xFFF0FFFD);
   static Color redScarlet = const Color(0xFFFE4C81);
@@ -25,10 +26,15 @@ class AppColor {
   static Color ghostWhite2 = const Color(0xFFF3F6FF);
   static Color romanSilver = const Color(0xFF8C8E99);
   static Color lotion = const Color(0xFFFAFAFA);
+  static Color yellowPastel = const Color(0xFFFDFD96);
   static Color cyan = Colors.cyan;
 
   static Color fadedGrey = Colors.grey.shade300;
   static Color grey = Colors.grey.shade400;
+
+
+  static List<Color> listChooseBgReadColor = [primaryColor, black, yellowPastel];
+
 
   // static Color get openColor => Vx.hexToColor(colorEnv('openColor'));
 

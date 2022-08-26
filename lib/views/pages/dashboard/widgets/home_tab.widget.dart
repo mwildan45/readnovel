@@ -1,16 +1,12 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/dashboard.vm.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/fragments/carousel_image.fragment.dart';
-import 'package:read_novel/widgets/list_items/carousel_image.item.dart';
 import 'package:read_novel/widgets/list_items/novel.item.dart';
 import 'package:read_novel/widgets/listview_builder/list_author.builder.dart';
 import 'package:read_novel/widgets/listview_builder/list_novel.builder.dart';
-import 'package:read_novel/widgets/no_image.dart';
-import 'package:skeletons/skeletons.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeTabWidget extends StatefulWidget {
