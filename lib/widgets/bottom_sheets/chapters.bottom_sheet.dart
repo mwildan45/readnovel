@@ -5,7 +5,7 @@ import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/read_novel.vm.dart';
-import 'package:read_novel/widgets/img_cover.widget.dart';
+import 'package:read_novel/widgets/card_image/img_cover.widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 Future<dynamic> chaptersBottomSheet(BuildContext context, DetailNovel data, ReadNovelViewModel viewModel) {

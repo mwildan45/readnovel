@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -17,11 +18,10 @@ class ImageProfileWidget extends StatelessWidget {
       child: CircleAvatar(
         radius: radius - 1.5,
         backgroundColor: AppColor.ghostWhite,
-        child: Image.network(
-          getStringAsync(AppStrings.profileImg),
+        child: CachedNetworkImage(
+          imageUrl: getStringAsync(AppStrings.profileImg),
           fit: BoxFit.cover,
-          errorBuilder:
-              (BuildContext context, Object exception, StackTrace? stackTrace) {
+          errorWidget: (BuildContext context, String exception, stackTrace) {
             return CircleAvatar(
               radius: radius - 2,
               backgroundColor: AppColor.fadedGrey,

@@ -7,7 +7,7 @@ class InputStyles {
   static InputBorder inputEnabledBorder({double? radius}) {
     return OutlineInputBorder(
       borderSide: BorderSide(
-        color: AppColor.fadedGrey,
+        color: AppColor.grey,
       ),
       borderRadius: BorderRadius.circular(radius ?? 1000),
     );

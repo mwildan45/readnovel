@@ -20,6 +20,12 @@ class Api {
   static const handleBookmark = "/isbookmark";
   static const getHistories = "/history";
 
+  static const beAuthor = "/be_author";
+
+  static const createNovel = "/add_novel";
+  static const myNovels = "/mynovels";
+
+  static const getProfile = "/profile";
   static const getFAQ = "/faq";
   static const getCoinsTopUp = "/coins";
 

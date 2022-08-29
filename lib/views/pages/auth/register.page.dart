@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                           VStack(
                             [
-                              'Dengan mengklik tombol daftar di bawah ini, Anda menyetujui'
+                              'Dengan mengklik tombol daftar di bawah ini, Kamu menyetujui'
                                   .text
                                   .sm
                                   .gray400

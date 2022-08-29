@@ -3,7 +3,7 @@ import 'package:read_novel/constants/input.styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatefulWidget {
-  CustomTextFormField({
+  const CustomTextFormField({
     Key? key,
     this.filled,
     this.fillColor,
@@ -25,7 +25,7 @@ class CustomTextFormField extends StatefulWidget {
     this.maxLines,
     this.suffixIcon,
     this.prefixIcon,
-    this.underline = false, this.height, this.radius,
+    this.underline = false, this.height, this.radius, this.maxLength, this.verticalPadding,
   }) : super(key: key);
 
   //
@@ -51,6 +51,8 @@ class CustomTextFormField extends StatefulWidget {
   final Function()? onTap;
   final int? minLines;
   final int? maxLines;
+  final int? maxLength;
+  final double? verticalPadding;
 
   final Widget? prefixIcon;
   final Widget? suffixIcon;
@@ -67,54 +69,55 @@ class CustomTextFormField extends StatefulWidget {
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: widget.height,
-      child: TextFormField(
-        decoration: InputDecoration(
-          filled: true,
-          // isDense: true,
-          fillColor: Colors.white,
-          labelText: widget.labelText,
-          hintText: widget.hintText,
-          hintStyle: TextStyle(color: AppColor.grey, fontSize: 12),
-          errorText: widget.errorText,
-          enabledBorder: widget.underline
-              ? InputStyles.inputUnderlineEnabledBorder()
-              : InputStyles.inputEnabledBorder(radius: widget.radius),
-          errorBorder: widget.underline
-              ? InputStyles.inputUnderlineEnabledBorder()
-              : InputStyles.inputEnabledBorder(radius: widget.radius),
-          focusedErrorBorder: widget.underline
-              ? InputStyles.inputUnderlineFocusBorder()
-              : InputStyles.inputFocusBorder(radius: widget.radius),
-          focusedBorder: widget.underline
-              ? InputStyles.inputUnderlineFocusBorder()
-              : InputStyles.inputFocusBorder(radius: widget.radius),
-          prefixIcon: widget.prefixIcon,
-          suffixIcon: widget.suffixIcon ?? _getSuffixWidget(),
-          labelStyle: Theme.of(context).textTheme.bodyText1,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0.5),
-        ),
-        cursorColor: AppColor.cursorColor,
-        obscureText: (widget.obscureText) ? !makePasswordVisible : false,
-        onTap: widget.onTap,
-        readOnly: widget.isReadOnly,
-        controller: widget.textEditingController,
-        validator: widget.validator,
-        focusNode: widget.focusNode,
-        onFieldSubmitted: (data) {
-          if (widget.onFieldSubmitted != null) {
-            widget.onFieldSubmitted!(data);
-          } else {
-            FocusScope.of(context).requestFocus(widget.nextFocusNode);
-          }
-        },
-        onChanged: widget.onChanged,
-        textInputAction: widget.textInputAction,
-        keyboardType: widget.keyboardType,
-        minLines: widget.minLines,
-        maxLines: widget.obscureText ? 1 : widget.maxLines,
+    return TextFormField(
+      decoration: InputDecoration(
+        filled: true,
+        // isDense: true,
+        fillColor: Colors.white,
+        labelText: widget.labelText,
+        hintText: widget.hintText,
+        counterText: "",
+        hintStyle: TextStyle(color: AppColor.romanSilver, fontSize: 12),
+        errorText: widget.errorText,
+        enabledBorder: widget.underline
+            ? InputStyles.inputUnderlineEnabledBorder()
+            : InputStyles.inputEnabledBorder(radius: widget.radius),
+        errorBorder: widget.underline
+            ? InputStyles.inputUnderlineEnabledBorder()
+            : InputStyles.inputEnabledBorder(radius: widget.radius),
+        focusedErrorBorder: widget.underline
+            ? InputStyles.inputUnderlineFocusBorder()
+            : InputStyles.inputFocusBorder(radius: widget.radius),
+        focusedBorder: widget.underline
+            ? InputStyles.inputUnderlineFocusBorder()
+            : InputStyles.inputFocusBorder(radius: widget.radius),
+        prefixIcon: widget.prefixIcon,
+        suffixIcon: widget.suffixIcon ?? _getSuffixWidget(),
+        labelStyle: Theme.of(context).textTheme.bodyText1,
+        contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: widget.verticalPadding ?? 0.5),
       ),
+      cursorColor: AppColor.cursorColor,
+      obscureText: (widget.obscureText) ? !makePasswordVisible : false,
+      onTap: widget.onTap,
+      readOnly: widget.isReadOnly,
+      controller: widget.textEditingController,
+      validator: widget.validator,
+      focusNode: widget.focusNode,
+      onFieldSubmitted: (data) {
+        if (widget.onFieldSubmitted != null) {
+          widget.onFieldSubmitted!(data);
+        } else {
+          FocusScope.of(context).requestFocus(widget.nextFocusNode);
+        }
+      },
+      onChanged: widget.onChanged,
+      textInputAction: widget.textInputAction,
+      keyboardType: widget.keyboardType,
+      minLines: widget.minLines,
+      maxLines: widget.obscureText ? 1 : widget.maxLines,
+      maxLength: widget.maxLength ?? 100,
+      enableSuggestions: false,
+      autocorrect: false,
     );
   }
 

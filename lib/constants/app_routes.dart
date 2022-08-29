@@ -9,6 +9,8 @@ class AppRoutes {
   static const readNovelRoute = "readNovelChapter";
 
   static const registerWriterRoute = "registerWriter";
+  static const confirmRegisterWriterRoute = "confirmRegisterWriter";
+
   static const menulisRoute = "menulis";
 
 

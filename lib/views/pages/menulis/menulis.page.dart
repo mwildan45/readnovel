@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
-import 'package:read_novel/view_models/menulis.vm.dart';
+import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel_step/create_novel.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel_step/write_chapter.page.dart';
 import 'package:read_novel/widgets/base.page.dart';
@@ -19,8 +19,8 @@ class MenulisPage extends StatefulWidget {
 class _MenulisPageState extends State<MenulisPage> {
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<MenulisViewModel>.reactive(
-      viewModelBuilder: () => MenulisViewModel(context),
+    return ViewModelBuilder<WriteNovelViewModel>.reactive(
+      viewModelBuilder: () => WriteNovelViewModel(context),
       onModelReady: (model) => model.initialise(),
       builder: (context, vm, child) {
         return BasePage(
@@ -32,7 +32,8 @@ class _MenulisPageState extends State<MenulisPage> {
               ).w(120).h(40),
               const Spacer(),
               CustomButton(
-                onPressed: () => vm.onTabChange(vm.currentIndex + 1),
+                loading: vm.isBusy,
+                onPressed: () => vm.currentIndex == 0 ? vm.addNovel() : vm.onTabChange(vm.currentIndex + 1),
                 color: AppColor.guppieGreen,
                 title: 'Selanjutnya',
               ).w(120).h(40),

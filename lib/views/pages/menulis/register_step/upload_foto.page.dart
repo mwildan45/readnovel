@@ -4,10 +4,13 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
+import 'package:read_novel/view_models/register_as_writer.vm.dart';
+import 'package:read_novel/widgets/picker/image_ktp.picker.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UploadFotoPage extends StatelessWidget {
-  const UploadFotoPage({Key? key}) : super(key: key);
+  const UploadFotoPage({Key? key, required this.vm}) : super(key: key);
+  final RegisterAsWriterViewModel vm;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,7 @@ class UploadFotoPage extends StatelessWidget {
             [
               'Upload Foto Identitas Kamu'.text.bold.make().centered(),
               UiSpacer.verticalSpace(),
-              const Icon(FontAwesomeIcons.image).box.border(color: AppColor.fadedGrey).rounded.width(210).height(130).make().centered(),
+              ImageKTPSelectorView(vm: vm),
               8.height,
               'harap mengupload foto identitas (ktp/paspor/sim)\nyang benar dan berlaku'.text.sm.center.italic.gray500.make().centered(),
               UiSpacer.verticalSpace(space: Vx.dp48),

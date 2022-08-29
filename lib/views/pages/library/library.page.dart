@@ -48,10 +48,11 @@ class _LibraryPageState extends State<LibraryPage> /*with AutomaticKeepAliveClie
                     TabBarView(
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
-                        ListHistories(),
+                        ListHistories(vm: vm,),
                         ListHistories(
                           onLoading: vm.busy(vm.bookmark),
                           novel: vm.bookmark,
+                          vm: vm,
                         ),
                       ],
                     ).expand(),

@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/banner.model.dart';
+import 'package:read_novel/models/genres.model.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/models/novels_dashboard.model.dart';
 import 'package:read_novel/requests/dashboard.request.dart';
+import 'package:read_novel/requests/genres.request.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -14,17 +16,20 @@ class DashboardViewModel extends MyBaseViewModel {
     viewContext = context;
   }
 
-  DashboardRequest dashboardRequest = DashboardRequest();
   int currentSliderIndex = 0;
   final CarouselController carouselController = CarouselController();
+  final RefreshController refreshController = RefreshController(initialRefresh: false);
+  DashboardRequest dashboardRequest = DashboardRequest();
+  GenresRequest genresRequest = GenresRequest();
   BannerHeader? bannerData;
   ListNovelsDashboard? data;
-  final RefreshController refreshController = RefreshController(initialRefresh: false);
+  List<Genres>? genres;
 
   @override
   void initialise() {
     fetchBanner();
     fetchListNovelsDashboard();
+    fetchGenres();
   }
 
   void onRefresh() async{
@@ -57,6 +62,22 @@ class DashboardViewModel extends MyBaseViewModel {
     }
 
     setBusyForObject(bannerData, false);
+  }
+
+  //
+  fetchGenres() async {
+    setBusyForObject(genres, true);
+    try {
+
+      genres = await genresRequest.getGenres();
+
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+    }
+
+    setBusyForObject(genres, false);
   }
 
   //

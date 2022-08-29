@@ -19,5 +19,6 @@ class AppIcons{
 
 class AppGifs{
   static const bookLoading = "assets/gifs/book loading.gif";
+  static const success = "assets/gifs/success.gif";
   // static const downward = "assets/svgs/down.svg";
 }

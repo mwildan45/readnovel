@@ -3,7 +3,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
-import 'package:read_novel/widgets/img_cover.widget.dart';
+import 'package:read_novel/widgets/card_image/img_cover.widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class NovelItem extends StatelessWidget {

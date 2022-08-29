@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_sizes.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
-import 'package:read_novel/widgets/img_cover.widget.dart';
+import 'package:read_novel/widgets/card_image/img_cover.widget.dart';
 import 'package:read_novel/widgets/list_items/carousel_image.item.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -29,6 +30,9 @@ class InfoCoverAuthorGenresWidget extends StatelessWidget {
           height: 250,
           width: double.maxFinite,
           fit: BoxFit.cover,
+          errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+            return Image.asset(AppIcons.noImage).wFull(context).h(250);
+          },
         ),
         ShaderMask(
           shaderCallback: (rect) {

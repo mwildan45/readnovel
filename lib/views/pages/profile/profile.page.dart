@@ -5,7 +5,7 @@ import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/profile.vm.dart';
-import 'package:read_novel/widgets/img_profile.widget.dart';
+import 'package:read_novel/widgets/card_image/img_profile.widget.dart';
 import 'package:read_novel/widgets/list_items/profile_list_menu.item.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage>
       builder: (context, vm, child) {
         return SafeArea(
           child: Container(
-            color: AppColor.ghostWhite,
+            color: AppColor.ghostWhite2,
             child: VStack(
               [
                 8.height,
@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage>
                       UiSpacer.verticalSpace(space: Vx.dp12),
                       const ProfileListItemMenu(
                         icon: FontAwesomeIcons.book,
-                        label: 'Buku Saya',
+                        label: 'Buku Favorit Saya',
                       ),
                       UiSpacer.divider(width: double.maxFinite).py16(),
                       const ProfileListItemMenu(

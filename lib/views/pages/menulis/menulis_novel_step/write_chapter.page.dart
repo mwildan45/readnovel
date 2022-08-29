@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:read_novel/view_models/menulis.vm.dart';
+import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class WriteChapterPage extends StatelessWidget {
   const WriteChapterPage({Key? key, required this.vm}) : super(key: key);
-  final MenulisViewModel vm;
+  final WriteNovelViewModel vm;
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,9 @@ class WriteChapterPage extends StatelessWidget {
           htmlToolbarOptions: const HtmlToolbarOptions(
             defaultToolbarButtons: [
               StyleButtons(),
-              FontSettingButtons(),
               FontButtons(),
-              ColorButtons(),
               ListButtons(),
-              ParagraphButtons(),
-            ],
+            ]
           ),
           otherOptions: const OtherOptions(
             height: 400,

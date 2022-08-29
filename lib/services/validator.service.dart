@@ -25,4 +25,12 @@ class FormValidator {
     }
     return null;
   }
+
+  //for general
+  static String? validateEmpty(String? value, {required String errorTitle}) {
+    if (value!.isEmpty || value.trim().isEmpty) {
+      return '$errorTitle ' + 'kosong';
+    }
+    return null;
+  }
 }

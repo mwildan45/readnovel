@@ -10,7 +10,7 @@ import 'package:read_novel/views/pages/dashboard/widgets/genres_tab.widget.dart'
 import 'package:read_novel/views/pages/dashboard/widgets/home_tab.widget.dart';
 import 'package:read_novel/widgets/custom_tabbar.widget.dart';
 import 'package:read_novel/widgets/form_field/general.form_field.dart';
-import 'package:read_novel/widgets/img_profile.widget.dart';
+import 'package:read_novel/widgets/card_image/img_profile.widget.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -68,7 +68,7 @@ class _DashboardPageState extends State<DashboardPage>
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
                         HomeTabWidget(vm: vm),
-                        GenresTabWidget()
+                        GenresTabWidget(vm: vm)
                       ],
                     ).expand(),
                   ]),

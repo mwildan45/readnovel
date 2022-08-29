@@ -51,7 +51,7 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                     child: SideNavigationBar(
                       expandable: false,
                       theme: SideNavigationBarTheme(
-                          itemTheme: SideNavigationBarItemTheme(selectedItemColor: AppColor.royalOrange, iconSize: 12),
+                          itemTheme: SideNavigationBarItemTheme(selectedItemColor: AppColor.royalOrange, iconSize: 8),
                           togglerTheme: SideNavigationBarTogglerTheme.standard(),
                           dividerTheme: SideNavigationBarDividerTheme.standard(),
                           backgroundColor: Colors.white
@@ -86,7 +86,7 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                 [
                   Builder(
                     builder: (context) {
-                      return const Icon(FontAwesomeIcons.bookOpenReader).onTap(() => Scaffold.of(context).openDrawer());
+                      return const Icon(FontAwesomeIcons.listUl).onTap(() => Scaffold.of(context).openDrawer());
                     }
                   ),
                   Image.asset(AppIcons.settings, width: 25, height: 25,).w(50).onTap(() => vm.openReadSetting(vm)),

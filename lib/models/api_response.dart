@@ -23,15 +23,16 @@ class ApiResponse {
   factory ApiResponse.fromResponse(dynamic response, {bool hasDataObject = true}) {
 
     int code = response.statusCode;
-    String status = response.data['status'];
+    print('code $code');
     dynamic body = response.data ?? null; // Would mostly be a Map
     List errors = [];
     String message = "";
 
     print('RESPONSE API: $body');
 
-    switch (status) {
-      case "success":
+    switch (code) {
+      case 200:
+        String status = response.data['status'];
         if(hasDataObject) {
           try {
             message = body["message"];
@@ -39,8 +40,8 @@ class ApiResponse {
             print("Message reading error ==> $error");
           }
         }
-
         break;
+
       default:
         message = body["message"] ??
             "Whoops! Something went wrong, please contact support.";

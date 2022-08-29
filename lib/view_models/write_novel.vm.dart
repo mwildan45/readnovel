@@ -1,17 +1,20 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:read_novel/models/ages.model.dart';
 import 'package:read_novel/models/genres.model.dart';
 import 'package:read_novel/requests/ages.request.dart';
 import 'package:read_novel/requests/genres.request.dart';
+import 'package:read_novel/requests/write.request.dart';
 import 'package:read_novel/services/app.services.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class MenulisViewModel extends MyBaseViewModel {
-  MenulisViewModel(BuildContext context) {
+class WriteNovelViewModel extends MyBaseViewModel {
+  WriteNovelViewModel(BuildContext context) {
     viewContext = context;
   }
 
@@ -21,15 +24,18 @@ class MenulisViewModel extends MyBaseViewModel {
 
   GenresRequest genresRequest = GenresRequest();
   AgesRequest agesRequest = AgesRequest();
+  WriteRequest writeRequest = WriteRequest();
   List<Genres>? genres;
   List<Ages>? ages;
   var agesMap = <int, bool>{};
   var genresMap = <int, bool>{};
 
   TextEditingController novelName = TextEditingController();
+  TextEditingController synopsis = TextEditingController();
   TextEditingController chapterName = TextEditingController();
   HtmlEditorController chapterContent = HtmlEditorController();
 
+  XFile? selectedNovelCover;
 
   @override
   void initialise() {
@@ -48,6 +54,12 @@ class MenulisViewModel extends MyBaseViewModel {
   dispose() {
     super.dispose();
     menulisPageChangeStream?.cancel();
+  }
+
+  //
+  onImageSelected(XFile file) {
+    selectedNovelCover = file;
+    notifyListeners();
   }
 
   //
@@ -73,10 +85,49 @@ class MenulisViewModel extends MyBaseViewModel {
   }
 
   //
+  Future addNovel() async {
+    setBusy(true);
+
+    List<int> agesId = [];
+    List<int> genresId = [];
+
+    agesMap.forEach((key, value) {
+      if (value) {
+        agesId.add(key);
+      }
+    });
+
+    genresMap.forEach((key, value) {
+      if (value) {
+        genresId.add(key);
+      }
+    });
+
+    try {
+      final apiResponse = await writeRequest.createNovel(novelName.text, agesId,
+          genresId, synopsis.text, File(selectedNovelCover!.path));
+
+      print('resp create novel: ${apiResponse['message']}');
+
+      onTabChange(1);
+
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+      showToast(msg: "Ops, got error: $error");
+    }
+
+    setBusy(false);
+
+    return 'done';
+
+  }
+
+  //
   fetchGenres() async {
     setBusyForObject(genres, true);
     try {
-
       genres = await genresRequest.getGenres();
 
       clearErrors();
@@ -92,7 +143,6 @@ class MenulisViewModel extends MyBaseViewModel {
   fetchAges() async {
     setBusyForObject(ages, true);
     try {
-
       ages = await agesRequest.getAges();
 
       clearErrors();
@@ -110,11 +160,9 @@ class MenulisViewModel extends MyBaseViewModel {
     notifyListeners();
   }
 
-
   void handleSelectAge(id, action) {
     agesMap.putIfAbsent(id, () => action);
     agesMap.update(id, (value) => action);
     notifyListeners();
   }
-
 }

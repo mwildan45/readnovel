@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:read_novel/constants/api.dart';
@@ -78,14 +79,52 @@ class HttpService {
         data: body,
         options: mOptions,
       );
-    } on DioError catch(error) {
-      response = formatDioException(error);
+    } catch(error) {
+      response = formatDioException(error as DioError);
     }
 
     return response;
 
     // return
   }
+
+
+  //for post api calls with file upload
+  Future<Response> postWithFiles(
+      String url,
+      body, {
+        bool includeHeaders = true,
+      }) async {
+    //preparing the api uri/url
+    String uri = "$host$url";
+
+    print('CALLING API: $uri');
+    log('with PARAMS: $body');
+
+    //preparing the post options if header is required
+    final mOptions = !includeHeaders
+        ? null
+        : Options(
+      headers: await getHeaders(),
+      validateStatus: (status) => true,
+    );
+
+    Response response;
+    response = await dio.post(
+      uri,
+      data: FormData.fromMap(body),
+      options: mOptions,
+    );
+
+    try {
+
+    } catch (error) {
+      response = formatDioException(error as DioError);
+    }
+
+    return response;
+  }
+
 
   Response formatDioException(DioError ex) {
     Response response = Response(requestOptions: ex.requestOptions);
