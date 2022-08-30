@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
-import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/models/novel_read_chapter.model.dart';
 import 'package:read_novel/requests/novel_detail.request.dart';

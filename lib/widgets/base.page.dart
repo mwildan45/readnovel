@@ -22,7 +22,9 @@ class BasePage extends StatefulWidget {
       this.appBarActions,
       this.appBarLeading,
       this.customAppBar = false,
-      this.activeContext, this.backgroundColorAppBar, this.bodyBgColor})
+      this.activeContext,
+      this.backgroundColorAppBar,
+      this.bodyBgColor})
       : super(key: key);
 
   final String? title;
@@ -52,22 +54,35 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       drawerEnableOpenDragGesture: false,
       backgroundColor: widget.bodyBgColor ?? AppColor.primaryColor,
       appBar: widget.withAppBar
           ? widget.customAppBar
-              ? AppBar(
-                  title: widget.appBarTitleWidget ??
-                      Text(widget.title ?? "title appbar"),
-                  centerTitle: widget.centerTitle,
-                  actions: widget.appBarActions,
-                  leading: widget.appBarLeading,
+              ? PreferredSize(
+                  preferredSize: const Size.fromHeight(50.0),
+                  child: AppBar(
+                    backgroundColor:
+                        widget.backgroundColorAppBar ?? Colors.white,
+                    elevation: 0,
+                    title: widget.appBarTitleWidget ??
+                        (widget.title ?? 'appbar title').text.black.xl2.bold.make(),
+                    centerTitle: widget.centerTitle,
+                    actions: widget.appBarActions,
+                    leading: widget.appBarLeading ??
+                        Icon(
+                          Icons.arrow_back_ios_new_outlined,
+                          size: 18,
+                          color: AppColor.romanSilver,
+                        ).w(30).onTap(
+                            () => widget.activeContext?.navigator?.pop()),
+                  ),
                 )
               : PreferredSize(
                   preferredSize: const Size.fromHeight(50.0),
                   child: AppBar(
-                    backgroundColor: widget.backgroundColorAppBar ?? Colors.white,
+                    backgroundColor:
+                        widget.backgroundColorAppBar ?? Colors.white,
                     centerTitle: true,
                     elevation: 0,
                     title: Image.asset(

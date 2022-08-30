@@ -136,7 +136,7 @@ class RegisterAsWriterViewModel extends MyBaseViewModel {
         },
       ).then((value) {
         viewContext?.navigator?.pop();
-        // viewContext?.navigator?.pop();
+        viewContext?.navigator?.pop();
       });
 
       clearErrors();

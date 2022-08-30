@@ -30,7 +30,7 @@ class CustomAlertDialog extends StatelessWidget {
             ],
           ).wFull(context),
           UiSpacer.verticalSpace(),
-          TextButton(onPressed: () => context.pop(), child: 'Kembali'.text.sm.black.bold.make()).center(),
+          TextButton(onPressed: () => context.pop(), child: 'Selesai'.text.sm.black.bold.make()).center(),
         ],
       ).p8(),
     );

@@ -3,12 +3,15 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/view_models/library.vm.dart';
 import 'package:read_novel/widgets/busy_indicator/novel_item.busy_indicator.dart';
+import 'package:read_novel/widgets/empty_list.widget.dart';
 import 'package:read_novel/widgets/list_items/carousel_image.item.dart';
 import 'package:read_novel/widgets/list_items/novel.item.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ListHistories extends StatelessWidget {
-  const ListHistories({Key? key, this.novel, this.onLoading = false, required this.vm}) : super(key: key);
+  const ListHistories(
+      {Key? key, this.novel, this.onLoading = false, required this.vm})
+      : super(key: key);
   final List<Novel>? novel;
   final bool onLoading;
   final LibraryViewModel vm;
@@ -17,25 +20,32 @@ class ListHistories extends StatelessWidget {
   Widget build(BuildContext context) {
     return VStack(
       [
-        ListView.separated(
-          shrinkWrap: true,
-          // scrollDirection: Axis.horizontal,
-          itemCount: novel?.length ?? imgList.length,
-          itemBuilder: (context, index) {
-            if (onLoading) {
-              return const BusyIndicatorNovelItem(height: 135);
-            } else {
-              return NovelItem(
-                index: index,
-                novel: novel?[index],
-                isInfoOnRightPosition: true,
-                onItemTap: () => vm.openNovel(vm.bookmark?[index].id, vm.bookmark?[index]),
-              ).p2();
-            }
-          },
-          separatorBuilder: (context, index) => onLoading ? 5.height : Container(),
-        ).expand()
-      ]
+        if (novel == null || novel!.isEmpty)
+          const EmptyListWidget(
+            textEmpty: 'Riwayat anda kosong',
+          ).centered()
+        else
+          ListView.separated(
+            shrinkWrap: true,
+            // scrollDirection: Axis.horizontal,
+            itemCount: novel?.length ?? imgList.length,
+            itemBuilder: (context, index) {
+              if (onLoading) {
+                return const BusyIndicatorNovelItem(height: 135);
+              } else {
+                return NovelItem(
+                  index: index,
+                  novel: novel?[index],
+                  isInfoOnRightPosition: true,
+                  onItemTap: () => vm.openNovel(
+                      vm.histories?[index].id, vm.histories?[index]),
+                ).p2();
+              }
+            },
+            separatorBuilder: (context, index) =>
+                onLoading ? 5.height : Container(),
+          ).expand()
+      ],
     );
   }
 }

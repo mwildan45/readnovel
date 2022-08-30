@@ -1,6 +1,7 @@
 class Novel {
   int? id;
   String? title;
+  String? chapterTitle;
   String? cover;
   String? status;
   String? approval;
@@ -14,6 +15,7 @@ class Novel {
   Novel(
       {this.id,
         this.title,
+        this.chapterTitle,
         this.cover,
         this.status,
         this.approval,
@@ -27,6 +29,7 @@ class Novel {
   Novel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
+    chapterTitle = json['chapter_title'];
     cover = json['cover'];
     status = json['status'];
     approval = json['approval'];
@@ -44,6 +47,7 @@ class Novel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['title'] = title;
+    data['chapter_title'] = chapterTitle;
     data['cover'] = cover;
     data['status'] = status;
     data['approval'] = approval;

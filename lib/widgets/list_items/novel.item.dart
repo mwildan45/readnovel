@@ -19,17 +19,21 @@ class NovelItem extends StatelessWidget {
     this.onItemTap,
     this.novel,
     this.image,
+    this.idNovel,
+    this.author,
+    this.genres,
+    this.novelName,
   }) : super(key: key);
 
   final String? image;
   final int? index;
 
-  // final int? idNovel;
+  final int? idNovel;
   final double width, height, widthCover, heightCover;
 
-  // final String? author;
-  // final String? genres;
-  // final String? novelName;
+  final String? author;
+  final String? genres;
+  final String? novelName;
   final bool isInfoOnRightPosition;
   final bool smallNovelItem;
   final Function()? onItemTap;
@@ -115,7 +119,7 @@ class NovelItem extends StatelessWidget {
             [
               buildCoverHero(),
               VStack([
-                (novel?.author ?? "author")
+                (author ?? novel?.author ?? "author")
                     .text
                     .color(AppColor.redScarlet)
                     .sm

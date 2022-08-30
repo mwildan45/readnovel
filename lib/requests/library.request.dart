@@ -19,4 +19,18 @@ class LibraryRequest extends HttpService {
     }
   }
 
+  Future<List<Novel>> getHistories(params) async {
+    final apiResult = await post(Api.getHistories, params);
+    final apiResponse = ApiResponse.fromResponse(apiResult);
+    if (apiResponse.allGood) {
+      var data = <Novel>[];
+      apiResponse.data.forEach((v) {
+        data.add(Novel.fromJson(v));
+      });
+      return data;
+    } else {
+      throw apiResponse.message;
+    }
+  }
+
 }

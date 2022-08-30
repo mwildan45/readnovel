@@ -5,17 +5,16 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
-import 'package:read_novel/utils/ui_spacer.dart';
-import 'package:read_novel/view_models/register_as_writer.vm.dart';
 import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ImageNovelCoverSelectorView extends StatefulWidget {
-  const ImageNovelCoverSelectorView({Key? key, required this.vm})
+  const ImageNovelCoverSelectorView({Key? key, required this.vm, this.urlImage})
       : super(key: key);
 
   final WriteNovelViewModel vm;
+  final String? urlImage;
 
   @override
   _ImageNovelCoverSelectorViewState createState() => _ImageNovelCoverSelectorViewState();
@@ -29,12 +28,12 @@ class _ImageNovelCoverSelectorViewState extends State<ImageNovelCoverSelectorVie
     return VStack(
       [
         //
-        (showSelectedImage()
+        (showSelectedImage() || widget.urlImage != null
             ? Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
               image: DecorationImage(
-                image: FileImage(File(widget.vm.selectedNovelCover!.path)),
+                image: showSelectedImage() ? FileImage(File(widget.vm.selectedNovelCover!.path)) : NetworkImage(widget.urlImage!) as ImageProvider,
                 fit: BoxFit.cover,
               )),
         )
@@ -50,8 +49,8 @@ class _ImageNovelCoverSelectorViewState extends State<ImageNovelCoverSelectorVie
         CustomButton(
           onPressed: pickNewPhoto,
           height: 30,
-          title: 'upload cover',
-          color: AppColor.royalOrange,
+          title: widget.urlImage != null ? 'edit cover' : 'upload cover',
+          color: AppColor.redScarlet,
           shapeRadius: 15,
         ).w(120).center(),
       ],

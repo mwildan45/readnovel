@@ -5,6 +5,7 @@ import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/library.vm.dart';
 import 'package:read_novel/widgets/custom_tabbar.widget.dart';
+import 'package:read_novel/widgets/listview_builder/list_bookmark.builder.dart';
 import 'package:read_novel/widgets/listview_builder/list_histories.builder.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -48,10 +49,14 @@ class _LibraryPageState extends State<LibraryPage> /*with AutomaticKeepAliveClie
                     TabBarView(
                       physics: const NeverScrollableScrollPhysics(),
                       children: [
-                        ListHistories(vm: vm,),
                         ListHistories(
-                          onLoading: vm.busy(vm.bookmark),
-                          novel: vm.bookmark,
+                          onLoading: vm.busy(vm.histories),
+                          novel: vm.histories,
+                          vm: vm,
+                        ),
+                        ListBookmarks(
+                          onLoading: vm.busy(vm.bookmarks),
+                          novel: vm.bookmarks,
                           vm: vm,
                         ),
                       ],

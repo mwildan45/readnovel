@@ -2,10 +2,14 @@ import 'package:read_novel/constants/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/view_models/register_as_writer.vm.dart';
+import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:read_novel/views/pages/auth/login.page.dart';
 import 'package:read_novel/views/pages/auth/register.page.dart';
 import 'package:read_novel/views/pages/home.page.dart';
-import 'package:read_novel/views/pages/menulis/menulis.page.dart';
+import 'package:read_novel/views/pages/menulis/menulis_novel/create_update_novel.page.dart';
+import 'package:read_novel/views/pages/menulis/menulis_novel/list_my_novel_chapter.page.dart';
+import 'package:read_novel/views/pages/menulis/menulis_novel/update_novel.page.dart';
+import 'package:read_novel/views/pages/menulis/menulis_novel/write_chapter.page.dart';
 import 'package:read_novel/views/pages/menulis/register_as_writer.page.dart';
 import 'package:read_novel/views/pages/menulis/register_step/confirm_data.page.dart';
 import 'package:read_novel/views/pages/profile/koinku.page.dart';
@@ -40,9 +44,33 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         ),
       );
 
-    case AppRoutes.menulisRoute:
+    case AppRoutes.createNovelRoute:
       return MaterialPageRoute(
-          builder: (context) => const MenulisPage());
+          builder: (context) => const CreateNovelPage());
+
+    case AppRoutes.updateNovelRoute:
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: AppRoutes.updateNovelRoute),
+        builder: (context) => UpdateNovelPage(
+          idNovel: settings.arguments as int,
+        ),
+      );
+
+    case AppRoutes.writeChapterRoute:
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: AppRoutes.writeChapterRoute),
+        builder: (context) => WriteChapterPage(
+          viewModel: settings.arguments as WriteNovelViewModel,
+        ),
+      );
+
+    case AppRoutes.listChapterRoute:
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: AppRoutes.listChapterRoute),
+        builder: (context) => ListMyNovelChapter(
+          vm: settings.arguments as WriteNovelViewModel,
+        ),
+      );
 
     case AppRoutes.detailNovelRoute:
       return MaterialPageRoute(

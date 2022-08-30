@@ -10,6 +10,7 @@ import 'package:read_novel/view_models/register_as_writer.vm.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
 import 'package:read_novel/widgets/card_image/img_profile.widget.dart';
 import 'package:read_novel/widgets/listview_builder/list_histories.builder.dart';
+import 'package:read_novel/widgets/listview_builder/list_own_novels.builder.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -20,8 +21,8 @@ class MenulisMenuPage extends StatefulWidget {
   State<MenulisMenuPage> createState() => _MenulisMenuPageState();
 }
 
-class _MenulisMenuPageState extends State<MenulisMenuPage>
-    /*with AutomaticKeepAliveClientMixin<MenulisMenuPage>*/ {
+class _MenulisMenuPageState extends State<
+    MenulisMenuPage> /*with AutomaticKeepAliveClientMixin<MenulisMenuPage>*/ {
   @override
   Widget build(BuildContext context) {
     // super.build(context);
@@ -34,7 +35,10 @@ class _MenulisMenuPageState extends State<MenulisMenuPage>
             children: [
               if (vm.isBusy)
                 Center(
-                  child: Image.asset(AppImages.appLogoOnly, width: 80,).centered(),
+                  child: Image.asset(
+                    AppImages.appLogoOnly,
+                    width: 80,
+                  ).centered(),
                 ).expand()
               else if (vm.levelUser == 1)
                 VStack(
@@ -66,10 +70,15 @@ class _MenulisMenuPageState extends State<MenulisMenuPage>
                         .make(),
                     8.height,
                     "Novel Saya".text.bold.xl2.make().center(),
-                    UiSpacer.verticalSpace(),
+                    // UiSpacer.verticalSpace(),
+                    ListMyOwnNovels(
+                      vm: vm,
+                      novel: vm.novel,
+                      onLoading: vm.busy(vm.novel),
+                    ).px12().expand()
                     // ListHistories(vm: ,).px8().expand()
                   ],
-                )
+                ).expand()
               else
                 buildRegisterAsWriterDialog(vm).expand(),
             ],
@@ -141,6 +150,6 @@ class _MenulisMenuPageState extends State<MenulisMenuPage>
     );
   }
 
-  // @override
-  // bool get wantKeepAlive => true;
+// @override
+// bool get wantKeepAlive => true;
 }

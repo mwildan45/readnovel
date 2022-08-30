@@ -55,7 +55,8 @@ class MenuMenulisViewModel extends MyBaseViewModel {
 
   //
   fetchMyOwnNovels() async {
-    setBusy(true);
+    setBusyForObject(novel, true);
+
     try {
 
       novel = await writeRequest.getMyNovels();
@@ -71,7 +72,7 @@ class MenuMenulisViewModel extends MyBaseViewModel {
       // );
     }
 
-    setBusy(false);
+    setBusyForObject(novel, false);
   }
 
 
@@ -85,6 +86,11 @@ class MenuMenulisViewModel extends MyBaseViewModel {
   }
 
   navCreateNovel() {
-    viewContext?.navigator?.pushNamed(AppRoutes.menulisRoute);
+    viewContext?.navigator?.pushNamed(AppRoutes.createNovelRoute);
+  }
+
+  navUpdateNovel(idNovel) {
+    print('id $idNovel');
+    viewContext?.navigator?.pushNamed(AppRoutes.updateNovelRoute, arguments: idNovel);
   }
 }

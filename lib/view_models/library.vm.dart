@@ -12,20 +12,22 @@ class LibraryViewModel extends MyBaseViewModel {
   }
 
   LibraryRequest libraryRequest = LibraryRequest();
-  List<Novel>? bookmark;
+  List<Novel>? bookmarks;
+  List<Novel>? histories;
 
   @override
   void initialise(){
+    getHistories();
     getBookmark();
   }
 
   //
-  getBookmark() async {
+  getHistories() async {
 
-    setBusyForObject(bookmark, true);
+    setBusyForObject(histories, true);
 
     try {
-      bookmark = await libraryRequest.getBookmark(
+      histories = await libraryRequest.getHistories(
         {
           'valToken': await AuthServices.getAuthBearerToken()
         }
@@ -36,7 +38,27 @@ class LibraryViewModel extends MyBaseViewModel {
       setError(error);
     }
 
-    setBusyForObject(bookmark, false);
+    setBusyForObject(histories, false);
+  }
+
+  //
+  getBookmark() async {
+
+    setBusyForObject(bookmarks, true);
+
+    try {
+      bookmarks = await libraryRequest.getBookmark(
+        {
+          'valToken': await AuthServices.getAuthBearerToken()
+        }
+      );
+
+      clearErrors();
+    } catch (error) {
+      setError(error);
+    }
+
+    setBusyForObject(bookmarks, false);
   }
 
   openNovel(int? id, Novel? novel) async {
@@ -47,8 +69,8 @@ class LibraryViewModel extends MyBaseViewModel {
 
     if (result != null && result is Novel) {
       print('back 1');
-      final orderIndex = bookmark?.indexWhere((e) => e.id == result.id);
-      bookmark?[orderIndex!] = result;
+      final orderIndex = bookmarks?.indexWhere((e) => e.id == result.id);
+      bookmarks?[orderIndex!] = result;
       notifyListeners();
     } else if (result != null && result is bool) {
       print('back 2');

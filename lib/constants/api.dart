@@ -23,7 +23,11 @@ class Api {
   static const beAuthor = "/be_author";
 
   static const createNovel = "/add_novel";
+  static const updateNovel = "/edit_novel";
   static const myNovels = "/mynovels";
+  static const myNovelDetail = "/mynoveldetail";
+  static const addChapter = "/add_chapter";
+  static const editChapter = "/edit_chapter";
 
   static const getProfile = "/profile";
   static const getFAQ = "/faq";
