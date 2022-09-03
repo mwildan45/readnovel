@@ -30,6 +30,7 @@ class ProfileViewModel extends MyBaseViewModel {
 
       clearErrors();
     } catch (error) {
+      print("Error ==> $error");
       setError(error);
     }
 

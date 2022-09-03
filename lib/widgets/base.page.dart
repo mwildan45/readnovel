@@ -1,3 +1,4 @@
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_colors.dart';
@@ -24,7 +25,7 @@ class BasePage extends StatefulWidget {
       this.customAppBar = false,
       this.activeContext,
       this.backgroundColorAppBar,
-      this.bodyBgColor})
+      this.bodyBgColor, this.onBackPressed})
       : super(key: key);
 
   final String? title;
@@ -44,6 +45,7 @@ class BasePage extends StatefulWidget {
   final BuildContext? activeContext;
   final Color? backgroundColorAppBar;
   final Color? bodyBgColor;
+  final Function()? onBackPressed;
 
   @override
   State<BasePage> createState() => _BasePageState();
@@ -52,62 +54,56 @@ class BasePage extends StatefulWidget {
 class _BasePageState extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
-      resizeToAvoidBottomInset: true,
-      drawerEnableOpenDragGesture: false,
-      backgroundColor: widget.bodyBgColor ?? AppColor.primaryColor,
-      appBar: widget.withAppBar
-          ? widget.customAppBar
-              ? PreferredSize(
-                  preferredSize: const Size.fromHeight(50.0),
-                  child: AppBar(
-                    backgroundColor:
-                        widget.backgroundColorAppBar ?? Colors.white,
-                    elevation: 0,
-                    title: widget.appBarTitleWidget ??
-                        (widget.title ?? 'appbar title').text.black.xl2.bold.make(),
-                    centerTitle: widget.centerTitle,
-                    actions: widget.appBarActions,
-                    leading: widget.appBarLeading ??
-                        Icon(
-                          Icons.arrow_back_ios_new_outlined,
-                          size: 18,
-                          color: AppColor.romanSilver,
-                        ).w(30).onTap(
-                            () => widget.activeContext?.navigator?.pop()),
-                  ),
-                )
-              : PreferredSize(
-                  preferredSize: const Size.fromHeight(50.0),
-                  child: AppBar(
-                    backgroundColor:
-                        widget.backgroundColorAppBar ?? Colors.white,
-                    centerTitle: true,
-                    elevation: 0,
-                    title: Image.asset(
-                      AppImages.appLogoHorizontal,
-                      width: 128,
-                    ),
-                    leading: Icon(
-                      Icons.arrow_back_ios_new_outlined,
-                      size: 18,
-                      color: AppColor.romanSilver,
-                    ).w(30).onTap(() => widget.activeContext?.navigator?.pop()),
-                  ),
-                )
-          : null,
-      body: VStack(
-        [
-          widget.isLoading
-              ? const CircularProgressIndicator().center().expand()
-              : widget.body.expand(),
-        ],
+    return LoaderOverlay(
+      useDefaultLoading: false,
+      overlayWholeScreen: true,
+      overlayWidget: Center(
+        child: Image.asset(AppImages.appLogoOnly).w(75).h(75),
       ),
-      floatingActionButton: widget.floatingActionWidget,
-      floatingActionButtonLocation: widget.floatingActionButtonLocation,
-      drawer: widget.drawerMenu,
-      bottomNavigationBar: widget.bottomNavigationBar,
+      child: Scaffold(
+        extendBodyBehindAppBar: widget.extendBodyBehindAppBar,
+        resizeToAvoidBottomInset: true,
+        drawerEnableOpenDragGesture: false,
+        backgroundColor: widget.bodyBgColor ?? AppColor.primaryColor,
+        appBar: widget.withAppBar
+            ? PreferredSize(
+                preferredSize: const Size.fromHeight(50.0),
+                child: AppBar(
+                  backgroundColor: widget.backgroundColorAppBar ?? Colors.white,
+                  centerTitle: true,
+                  elevation: 0,
+                  title: widget.customAppBar
+                      ? widget.appBarTitleWidget ??
+                          (widget.title ?? 'appbar titlee')
+                              .text
+                              .color(widget.backgroundColorAppBar == null ? Colors.black : Colors.white)
+                              .xl
+                              .bold
+                              .make()
+                      : Image.asset(
+                          AppImages.appLogoHorizontal,
+                          width: 128,
+                        ),
+                  leading: Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    size: 18,
+                    color: widget.backgroundColorAppBar == null ? AppColor.romanSilver : Colors.white,
+                  ).w(30).onTap(widget.onBackPressed ?? () => widget.activeContext?.navigator?.pop()),
+                ),
+              )
+            : null,
+        body: VStack(
+          [
+            widget.isLoading
+                ? const CircularProgressIndicator().center().expand()
+                : widget.body.expand(),
+          ],
+        ),
+        floatingActionButton: widget.floatingActionWidget,
+        floatingActionButtonLocation: widget.floatingActionButtonLocation,
+        drawer: widget.drawerMenu,
+        bottomNavigationBar: widget.bottomNavigationBar,
+      ),
     );
   }
 }

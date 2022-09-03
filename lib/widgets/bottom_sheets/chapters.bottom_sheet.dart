@@ -9,6 +9,7 @@ import 'package:read_novel/widgets/card_image/img_cover.widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 Future<dynamic> chaptersBottomSheet(BuildContext context, DetailNovel data, ReadNovelViewModel viewModel) {
+  print('data ${data.title}');
   return showBarModalBottomSheet(
     expand: false,
     context: context,

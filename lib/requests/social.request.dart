@@ -48,7 +48,7 @@ class SocialRequest{
       };
       return req;
     } else {
-      throw errorSomethingWentWrong;
+      throw errorMessage;
     }
   }
 
@@ -92,7 +92,7 @@ class SocialRequest{
 
       return req;
     }else{
-      throw errorSomethingWentWrong;
+      throw errorMessage;
     }
   }
 

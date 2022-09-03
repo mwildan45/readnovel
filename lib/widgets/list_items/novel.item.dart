@@ -23,6 +23,7 @@ class NovelItem extends StatelessWidget {
     this.author,
     this.genres,
     this.novelName,
+    this.withoutHeroAnimation = false
   }) : super(key: key);
 
   final String? image;
@@ -38,6 +39,7 @@ class NovelItem extends StatelessWidget {
   final bool smallNovelItem;
   final Function()? onItemTap;
   final Novel? novel;
+  final bool withoutHeroAnimation;
 
   @override
   Widget build(BuildContext context) {
@@ -158,8 +160,7 @@ class NovelItem extends StatelessWidget {
               .withRounded(value: 8)
               .outerShadow
               .shadowOutline(outlineColor: AppColor.grey)
-              .make()
-              .pOnly(bottom: 8),
+              .make(),
           buildChapterBox("${novel?.chapter ?? 0} Chapters")
               .positioned(top: 0, right: 0),
         ],
@@ -184,7 +185,7 @@ class NovelItem extends StatelessWidget {
 
   //
   Widget buildCoverHero({double? width, double? height}) {
-    return novel == null
+    return novel == null || withoutHeroAnimation
         ? ImgCoverWidget(
             image: novel?.cover,
             widthCover: width ?? widthCover,

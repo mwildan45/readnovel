@@ -27,6 +27,8 @@ class AppColor {
   static Color romanSilver = const Color(0xFF8C8E99);
   static Color lotion = const Color(0xFFFAFAFA);
   static Color yellowPastel = const Color(0xFFFDFD96);
+  static Color unitedNationsBlue = const Color(0xFF4A9BF0);
+  static Color burlywood = const Color(0xFFDBBB8A);
   static Color cyan = Colors.cyan;
 
   static Color fadedGrey = Colors.grey.shade300;

@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
         onModelReady: (model) => model.initialise(),
         builder: (context, model, child) {
           return BasePage(
-            title: "D'lovera",
             body: DoubleBackToCloseApp(
               snackBar: const SnackBar(
                 content: Text("Tekan sekali lagi untuk keluar"),

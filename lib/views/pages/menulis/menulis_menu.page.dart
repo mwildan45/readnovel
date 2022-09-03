@@ -40,7 +40,7 @@ class _MenulisMenuPageState extends State<
                     width: 80,
                   ).centered(),
                 ).expand()
-              else if (vm.levelUser == 1)
+              else if (vm.levelUser != 0)
                 VStack(
                   [
                     Column(
@@ -69,7 +69,7 @@ class _MenulisMenuPageState extends State<
                         .bottomRounded(value: 30)
                         .make(),
                     8.height,
-                    "Novel Saya".text.bold.xl2.make().center(),
+                    "Novel Saya".text.bold.xl.make().center(),
                     // UiSpacer.verticalSpace(),
                     ListMyOwnNovels(
                       vm: vm,

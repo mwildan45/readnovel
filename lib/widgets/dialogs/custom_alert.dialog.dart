@@ -6,9 +6,10 @@ import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CustomAlertDialog extends StatelessWidget {
-  const CustomAlertDialog({Key? key, this.title, this.contentText}) : super(key: key);
+  const CustomAlertDialog({Key? key, this.title, this.contentText, this.failedResult = false}) : super(key: key);
   final String? title;
   final String? contentText;
+  final bool failedResult;
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +21,13 @@ class CustomAlertDialog extends StatelessWidget {
       insetPadding: const EdgeInsets.symmetric(horizontal: 40),
       child: VStack(
         [
-          Image.asset(AppGifs.success, fit: BoxFit.cover,).wFull(context).h16(context),
+          failedResult ? UiSpacer.emptySpace() : Image.asset(AppGifs.success, fit: BoxFit.cover,).wFull(context).h16(context),
           UiSpacer.verticalSpace(),
           Column(
             children: [
-              (title ?? 'Yeay!').text.bold.lg.make(),
+              (title ?? 'Yeay!').text.color(failedResult ? AppColor.redScarlet : Colors.black).bold.lg.make(),
               8.height,
-              (contentText ?? 'info goes here').text.color(AppColor.romanSilver).make(),
+              (contentText ?? 'info goes here').text.center.color(AppColor.romanSilver).make().px12(),
             ],
           ).wFull(context),
           UiSpacer.verticalSpace(),

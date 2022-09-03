@@ -19,14 +19,22 @@ class ListBookmarks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VStack([
-      if (novel == null || novel!.isEmpty)
+      if(onLoading)
+        ListView.separated(
+          shrinkWrap: true,
+          itemCount: 8,
+          itemBuilder: (context, index) {
+            return const BusyIndicatorNovelItem(height: 135);
+          },
+          separatorBuilder: (context, index) => 5.height,
+        ).expand()
+      else if (novel == null || novel!.isEmpty)
         const EmptyListWidget(
           textEmpty: 'Bookmark anda kosong',
-        )
+        ).center().expand()
       else
         ListView.separated(
           shrinkWrap: true,
-          // scrollDirection: Axis.horizontal,
           itemCount: novel?.length ?? imgList.length,
           itemBuilder: (context, index) {
             if (onLoading) {
@@ -41,8 +49,7 @@ class ListBookmarks extends StatelessWidget {
               ).p2();
             }
           },
-          separatorBuilder: (context, index) =>
-              onLoading ? 5.height : Container(),
+          separatorBuilder: (context, index) => 8.height,
         ).expand()
     ]);
   }

@@ -31,6 +31,22 @@ class AuthServices {
   }
 
 
+  static Future<void> setProfileValue(data) async {
+    setValue(AppStrings.userId, data.id ?? "");
+    setValue(AppStrings.firstName, data.firstname ?? "");
+    setValue(AppStrings.lastName, data.lastname ?? "");
+    setValue(AppStrings.username, data.username ?? "");
+    setValue(AppStrings.userEmail, data.email ?? "");
+    setValue(AppStrings.levelUser, data.level ?? "");
+    setValue(AppStrings.coinUser, data.coin.toString());
+    setValue(AppStrings.incomeUser, data.income ?? "");
+    setValue(AppStrings.numberID, data.nomorID ?? "");
+    setValue(AppStrings.phoneUser, data.telepon ?? "");
+    setValue(AppStrings.facebook, data.facebook ?? "");
+    // setValue(AppStrings.ageUser, data.umur ?? "");
+  }
+
+
   static void logout(BuildContext context) async {
     await LocalStorageService.prefs?.clear();
     var pref = await getSharedPref();

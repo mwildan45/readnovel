@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
+import 'package:read_novel/services/validator.service.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:read_novel/widgets/base.page.dart';
@@ -23,6 +24,7 @@ class CreateNovelPage extends StatelessWidget {
             activeContext: context,
             withAppBar: true,
             customAppBar: true,
+            onBackPressed: vm.onBackPressed,
             title: "Buat Novel Baru",
             body: SafeArea(
               child: SingleChildScrollView(
@@ -42,6 +44,7 @@ class CreateNovelPage extends StatelessWidget {
                             hintText: 'Tulis nama novel',
                             maxLines: 1,
                             radius: 10,
+                            validator: (val) => FormValidator.validateEmpty(val, errorTitle: 'Nama Novel'),
                           ),
                           12.height,
                           '* Peringkat Konten'.text.make().px8(),
@@ -74,7 +77,7 @@ class CreateNovelPage extends StatelessWidget {
                             radius: 15,
                             maxLength: 4000,
                             verticalPadding: 8,
-                            // validator: (val) => FormValidator.validateEmpty(val, errorTitle: 'Sinopsis'),
+                            validator: (val) => FormValidator.validateEmpty(val, errorTitle: 'Sinopsis'),
                           ).h(120),
                         ],
                       ),

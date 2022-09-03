@@ -12,6 +12,7 @@ import 'package:read_novel/views/pages/menulis/menulis_novel/update_novel.page.d
 import 'package:read_novel/views/pages/menulis/menulis_novel/write_chapter.page.dart';
 import 'package:read_novel/views/pages/menulis/register_as_writer.page.dart';
 import 'package:read_novel/views/pages/menulis/register_step/confirm_data.page.dart';
+import 'package:read_novel/views/pages/payment.page.dart';
 import 'package:read_novel/views/pages/profile/koinku.page.dart';
 import 'package:read_novel/views/pages/profile/pusat_bantuan.page.dart';
 import 'package:read_novel/views/pages/read_novel/detail_novel.page.dart';
@@ -60,7 +61,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: const RouteSettings(name: AppRoutes.writeChapterRoute),
         builder: (context) => WriteChapterPage(
-          viewModel: settings.arguments as WriteNovelViewModel,
+          data: settings.arguments as Map,
         ),
       );
 
@@ -68,7 +69,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         settings: const RouteSettings(name: AppRoutes.listChapterRoute),
         builder: (context) => ListMyNovelChapter(
-          vm: settings.arguments as WriteNovelViewModel,
+          idNovel: settings.arguments as int,
         ),
       );
 
@@ -94,6 +95,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case AppRoutes.koinkuRoute:
       return MaterialPageRoute(builder: (context) => const KoinkuPage());
+
+    case AppRoutes.paymentWebView:
+      return MaterialPageRoute(settings: const RouteSettings(name: AppRoutes.paymentWebView),
+        builder: (context) => PaymentScreen(
+          url: settings.arguments as String,
+        ),
+      );
 
 
     //

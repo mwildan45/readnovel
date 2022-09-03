@@ -141,7 +141,7 @@ class ListNovelBuilder extends StatelessWidget {
                     isInfoOnRightPosition: true,
                   );
                 },
-        separatorBuilder: (context, index) => onLoading ? 5.height : Container(),
+        separatorBuilder: (context, index) => 8.height,
       );
     }
   }

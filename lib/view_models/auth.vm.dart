@@ -167,18 +167,7 @@ class AuthViewModel extends MyBaseViewModel {
       await AuthServices.isAuthenticated();
       await AuthServices.setAuthBearerToken(data.accesstoken);
 
-      setValue(AppStrings.userId, data.id ?? "");
-      setValue(AppStrings.firstName, data.firstname ?? "");
-      setValue(AppStrings.lastName, data.lastname ?? "");
-      setValue(AppStrings.username, data.username ?? "");
-      setValue(AppStrings.userEmail, data.email ?? "");
-      setValue(AppStrings.levelUser, data.level ?? "");
-      setValue(AppStrings.coinUser, data.coin ?? "");
-      setValue(AppStrings.incomeUser, data.income ?? "");
-      setValue(AppStrings.numberID, data.nomorID ?? "");
-      setValue(AppStrings.phoneUser, data.telepon ?? "");
-      setValue(AppStrings.facebook, data.facebook ?? "");
-      setValue(AppStrings.ageUser, data.umur ?? "");
+      await AuthServices.setProfileValue(data);
 
       viewContext?.navigator?.pushNamedAndRemoveUntil(
         AppRoutes.homeRoute,

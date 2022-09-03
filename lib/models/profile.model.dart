@@ -9,14 +9,14 @@ class Profile {
   int? level;
   String? alamat;
   String? tanggalLahir;
-  String? coin;
-  String? income;
+  dynamic coin;
+  dynamic income;
   String? facebook;
   String? telepon;
   String? namabank;
   String? atasnama;
   String? rekening;
-  String? nomorId;
+  String? nomorID;
   String? imageId;
 
   Profile(
@@ -37,7 +37,7 @@ class Profile {
         this.namabank,
         this.atasnama,
         this.rekening,
-        this.nomorId,
+        this.nomorID,
         this.imageId});
 
   Profile.fromJson(Map<String, dynamic> json) {
@@ -58,7 +58,7 @@ class Profile {
     namabank = json['namabank'];
     atasnama = json['atasnama'];
     rekening = json['rekening'];
-    nomorId = json['nomor_id'];
+    nomorID = json['nomor_id'];
     imageId = json['image_id'];
   }
 
@@ -81,7 +81,7 @@ class Profile {
     data['namabank'] = namabank;
     data['atasnama'] = atasnama;
     data['rekening'] = rekening;
-    data['nomor_id'] = nomorId;
+    data['nomor_id'] = nomorID;
     data['image_id'] = imageId;
     return data;
   }

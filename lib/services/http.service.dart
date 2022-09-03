@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
@@ -62,13 +63,15 @@ class HttpService {
     //preparing the api uri/url
     String uri = "$host$url";
 
-    print('CALLING API: $uri');
+    print('---- CALLING API: $uri');
+    print('---- with PARAMS: ${jsonEncode(body)}');
 
     //preparing the post options if header is required
     final mOptions = !includeHeaders
         ? null
         : Options(
       headers: await getHeaders(),
+      validateStatus: (status) => true,
     );
 
     Response response;

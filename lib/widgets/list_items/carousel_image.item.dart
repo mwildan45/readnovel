@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:read_novel/models/banner.model.dart';
 
@@ -18,8 +19,12 @@ List<Container>? imageSliders(BannerHeader? bannerList) => bannerList?.data
           borderRadius: const BorderRadius.all(Radius.circular(5.0)),
           child: Stack(
             children: <Widget>[
-              Image.network(item.img ?? "",
-                  fit: BoxFit.cover, height: 1000, width: 1000.0),
+              CachedNetworkImage(
+                fit: BoxFit.cover,
+                height: 1000,
+                width: 1000.0,
+                imageUrl: item.img ?? "",
+              ),
               // Positioned(
               //   bottom: 0.0,
               //   left: 0.0,

@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/ages.model.dart';
+import 'package:read_novel/models/api_response.dart';
 import 'package:read_novel/models/genres.model.dart';
+import 'package:read_novel/models/my_novel_detail.model.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/requests/ages.request.dart';
 import 'package:read_novel/requests/genres.request.dart';
@@ -24,14 +27,10 @@ class WriteNovelViewModel extends MyBaseViewModel {
     viewContext = context;
   }
 
-  int currentIndex = 0;
-  PageController pageViewController = PageController(initialPage: 0);
-  StreamSubscription? menulisPageChangeStream;
-
   GenresRequest genresRequest = GenresRequest();
   AgesRequest agesRequest = AgesRequest();
   WriteRequest writeRequest = WriteRequest();
-  DetailNovel? detailNovel;
+  MyNovelDetail? myNovelDetail;
   List<Genres>? genres;
   List<Ages>? ages;
   var agesMap = <int, bool>{};
@@ -41,30 +40,12 @@ class WriteNovelViewModel extends MyBaseViewModel {
   TextEditingController novelName = TextEditingController();
   TextEditingController synopsis = TextEditingController();
 
-  TextEditingController chapterName = TextEditingController();
-  TextEditingController chapterNumber = TextEditingController();
-  HtmlEditorController chapterContent = HtmlEditorController();
-  bool locked = false;
-
   XFile? selectedNovelCover;
 
   @override
   void initialise() {
-    // menulisPageChangeStream = AppService.instance?.homePageIndex.stream.listen(
-    //   (index) {
-    //     onTabChange(index);
-    //   },
-    // );
-
     fetchAges();
     fetchGenres();
-  }
-
-  //
-  @override
-  dispose() {
-    super.dispose();
-    menulisPageChangeStream?.cancel();
   }
 
   //
@@ -73,153 +54,107 @@ class WriteNovelViewModel extends MyBaseViewModel {
     notifyListeners();
   }
 
-  //
-  onPageChanged(int index) {
-    currentIndex = index;
-    notifyListeners();
-  }
-
-  //
-  onTabChange(int index) {
-    print("index $index");
-    if (index >= 0) {
-      currentIndex = index;
-      pageViewController.animateToPage(
-        currentIndex,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.fastLinearToSlowEaseIn,
-      );
-      notifyListeners();
-    } else {
-      viewContext?.navigator?.pop();
-    }
-  }
-
   getNovelDetail(idNovel) async {
-    setBusyForObject(detailNovel, true);
+    setBusyForObject(myNovelDetail, true);
 
     fetchAges();
     fetchGenres();
 
     try {
-      detailNovel = await writeRequest.getMyNovelDetail({
+      myNovelDetail = await writeRequest.getMyNovelDetail({
         'novel_id': idNovel,
         'valToken': await AuthServices.getAuthBearerToken(),
       });
 
-      novelName = TextEditingController(text: detailNovel?.title);
-      synopsis = TextEditingController(text: detailNovel?.synopsis);
-      agesMap.putIfAbsent(detailNovel!.age!.toInt(), () => true);
-      detailNovel?.genre?.forEach((element) {
+      novelName = TextEditingController(text: myNovelDetail?.title);
+      synopsis = TextEditingController(text: myNovelDetail?.synopsis);
+      myNovelDetail?.age?.forEach((element) {
+        agesMap.putIfAbsent(element.toInt(), () => true);
+      });
+      myNovelDetail?.genre?.forEach((element) {
         genresMap.putIfAbsent(element.toInt(), () => true);
       });
       notifyListeners();
 
       clearErrors();
     } catch (error) {
+      print("Error ==> $error");
       setError(error);
     }
-    setBusyForObject(detailNovel, false);
+    setBusyForObject(myNovelDetail, false);
   }
 
   //
   addOrUpdateNovel(vm, {bool onUpdate = false, int? idNovel}) async {
-    setBusy(true);
+    if(selectedNovelCover == null){
+      showToast(msg: 'Pilih cover terlebih dahulu!');
+    } else if(agesMap.isEmpty) {
+      showToast(msg: 'Pilih peringkat konten!');
+    } else if(genresMap.isEmpty) {
+      showToast(msg: 'Pilih minimal satu genre!');
+    } else{
+      if (formKey.currentState!.validate()) {
+        setBusy(true);
 
-    List<int> agesId = [];
-    List<int> genresId = [];
+        List<int> agesId = [];
+        List<int> genresId = [];
 
-    agesMap.forEach((key, value) {
-      if (value) {
-        agesId.add(key);
-      }
-    });
+        agesMap.forEach((key, value) {
+          if (value) {
+            agesId.add(key);
+          }
+        });
 
-    genresMap.forEach((key, value) {
-      if (value) {
-        genresId.add(key);
-      }
-    });
+        genresMap.forEach((key, value) {
+          if (value) {
+            genresId.add(key);
+          }
+        });
 
-    try {
-      var apiResponse;
+        try {
+          ApiResponse apiResponse;
 
-      if (onUpdate) {
-        apiResponse = await writeRequest.updateNovel(
-            idNovel!,
-            novelName.text,
-            'ongoing',
-            agesId,
-            genresId,
-            synopsis.text,
-            selectedNovelCover == null ? null : File(selectedNovelCover!.path));
-      } else {
-        apiResponse = await writeRequest.createNovel(novelName.text, agesId,
-            genresId, synopsis.text, File(selectedNovelCover!.path));
+          if (onUpdate) {
+            apiResponse = await writeRequest.updateNovel(
+                idNovel!,
+                novelName.text,
+                'ongoing',
+                agesId,
+                genresId,
+                synopsis.text,
+                selectedNovelCover == null ? null : File(
+                    selectedNovelCover!.path));
+          } else {
+            apiResponse = await writeRequest.createNovel(novelName.text, agesId,
+                genresId, synopsis.text, File(selectedNovelCover!.path));
 
-        novelId = apiResponse['data']['novel']['id'];
-        notifyListeners();
-      }
+            novelId = apiResponse.data['novel']['id'];
+            notifyListeners();
+          }
 
-      print('resp create novel: ${apiResponse['message']}');
+          print('resp create novel: ${apiResponse.message}');
 
-      showDialogResponse(apiResponse['message'].toString(), (value) {
-        if (!onUpdate) {
-          navToWriteChapter('create', vm);
+          showDialogResponse(apiResponse.message.toString(), (value) {
+            if (!onUpdate) {
+              navToWriteChapter(novelId!);
+            }
+            // viewContext?.navigator?.pop();
+          });
+
+          clearErrors();
+        } catch (error) {
+          print("Error ==> $error");
+          setError(error);
+          showToast(msg: "Ops, got error: $error");
         }
-        // viewContext?.navigator?.pop();
-      });
 
-      clearErrors();
-    } catch (error) {
-      print("Error ==> $error");
-      setError(error);
-      showToast(msg: "Ops, got error: $error");
+        setBusy(false);
+      }
     }
-
-    setBusy(false);
 
     return 'done';
   }
 
-
-  void handleCheckbox(bool? val){
-    locked = !locked;
-    notifyListeners();
-  }
-
-
-  addNewChapter(status, {int? idNovel}) async {
-    setBusyForObject(status == 'draft' ? chapterNumber : chapterName, true);
-    // print('chapter ${txt}, id $idNovel');
-
-    try {
-
-      var txtContent = await chapterContent.getText();
-
-      final apiResponse = await writeRequest.addChapterNovel(
-        novelId: idNovel!,
-        chapterTitle: chapterName.text,
-        bab: chapterNumber.text,
-        coin: locked ? 1 : 0,
-        status: status,
-        content: txtContent,
-      );
-
-      showDialogResponse(apiResponse['message'].toString(), (value) {
-        viewContext?.navigator?.pop();
-        // viewContext?.navigator?.pop();
-      });
-
-      clearErrors();
-    } catch (error) {
-      print("Error ==> $error");
-      setError(error);
-      showToast(msg: "Ops, got error: $error");
-    }
-
-    setBusyForObject(status == 'draft' ? chapterNumber : chapterName, false);
-  }
 
   //
   showDialogResponse(message, Function(dynamic value) action) {
@@ -281,22 +216,27 @@ class WriteNovelViewModel extends MyBaseViewModel {
     notifyListeners();
   }
 
+
   //nav functions
 
   //fromNav = create
-  navToWriteChapter(fromNav, vm) {
-    if (fromNav == 'create') {
-      viewContext?.navigator
-          ?.pushReplacementNamed(AppRoutes.writeChapterRoute, arguments: vm);
-    } else {
-      viewContext?.navigator
-          ?.pushNamed(AppRoutes.writeChapterRoute, arguments: vm);
-    }
+  navToWriteChapter(int idNovel) {
+    viewContext?.navigator
+        ?.pushReplacementNamed(AppRoutes.writeChapterRoute, arguments: {
+      'idNovel': idNovel,
+      'idChapter': null,
+      'onUpdate': false,
+    });
   }
 
   //
-  navShowAllChapter(vm) {
+  navShowAllChapter(int idNovel) {
     viewContext?.navigator
-        ?.pushNamed(AppRoutes.listChapterRoute, arguments: vm);
+        ?.pushNamed(AppRoutes.listChapterRoute, arguments: idNovel);
+  }
+
+  onBackPressed() {
+    //
+    viewContext?.navigator?.pop(true);
   }
 }

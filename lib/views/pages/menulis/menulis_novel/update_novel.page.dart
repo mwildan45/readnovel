@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
+import 'package:read_novel/services/validator.service.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:read_novel/widgets/base.page.dart';
@@ -30,14 +31,15 @@ class _UpdateNovelPageState extends State<UpdateNovelPage> {
             withAppBar: true,
             customAppBar: true,
             title: "Perbarui Novel",
-            isLoading: vm.busy(vm.detailNovel),
+            isLoading: vm.busy(vm.myNovelDetail),
+            // onBackPressed: vm.onBackPressed,
             body: SafeArea(
               child: SingleChildScrollView(
                 child: VStack(
                   [
                     8.height,
                     ImageNovelCoverSelectorView(
-                        vm: vm, urlImage: vm.detailNovel?.cover),
+                        vm: vm, urlImage: vm.myNovelDetail?.cover),
                     UiSpacer.verticalSpace(),
                     Form(
                       key: vm.formKey,
@@ -50,10 +52,11 @@ class _UpdateNovelPageState extends State<UpdateNovelPage> {
                             hintText: 'Tulis nama novel',
                             maxLines: 1,
                             radius: 10,
+                            validator: (val) => FormValidator.validateEmpty(val, errorTitle: 'Nama Novel'),
                           ),
                           12.height,
                           '* Peringkat Konten'.text.make().px8(),
-                          vm.busy(vm.ages)
+                          vm.busy(vm.ages) || vm.ages == null
                               ? "-".text.make()
                               : Wrap(
                                   spacing: 10,
@@ -64,7 +67,7 @@ class _UpdateNovelPageState extends State<UpdateNovelPage> {
                                 ).p8(),
                           12.height,
                           '* Genre'.text.make().px8(),
-                          vm.busy(vm.genres)
+                          vm.busy(vm.genres) || vm.genres == null
                               ? "-".text.make()
                               : Wrap(
                                   spacing: 10,
@@ -82,7 +85,7 @@ class _UpdateNovelPageState extends State<UpdateNovelPage> {
                             radius: 15,
                             maxLength: 4000,
                             verticalPadding: 8,
-                            // validator: (val) => FormValidator.validateEmpty(val, errorTitle: 'Sinopsis'),
+                            validator: (val) => FormValidator.validateEmpty(val, errorTitle: 'Sinopsis'),
                           ).h(120),
                         ],
                       ),
@@ -97,7 +100,7 @@ class _UpdateNovelPageState extends State<UpdateNovelPage> {
                         buildMenuAction(
                           icon: FontAwesomeIcons.listOl,
                           label: 'Daftar Bab',
-                          onTap: () => vm.navShowAllChapter(vm)
+                          onTap: () => vm.navShowAllChapter(widget.idNovel)
                         ),
                         buildMenuAction(
                             icon: Icons.refresh_rounded,

@@ -35,6 +35,7 @@ class LibraryViewModel extends MyBaseViewModel {
 
       clearErrors();
     } catch (error) {
+      print("Error ==> $error");
       setError(error);
     }
 
@@ -55,6 +56,7 @@ class LibraryViewModel extends MyBaseViewModel {
 
       clearErrors();
     } catch (error) {
+      print("Error ==> $error");
       setError(error);
     }
 
@@ -65,17 +67,19 @@ class LibraryViewModel extends MyBaseViewModel {
     final result = await viewContext?.navigator?.pushNamed(
       AppRoutes.detailNovelRoute,
       arguments: novel,
-    );
+    ).then((value) {
+      initialise();
+    });
 
-    if (result != null && result is Novel) {
-      print('back 1');
-      final orderIndex = bookmarks?.indexWhere((e) => e.id == result.id);
-      bookmarks?[orderIndex!] = result;
-      notifyListeners();
-    } else if (result != null && result is bool) {
-      print('back 2');
-      getBookmark();
-    }
+    // if (result != null && result is Novel) {
+    //   print('back 1');
+    //   final orderIndex = bookmarks?.indexWhere((e) => e.id == result.id);
+    //   bookmarks?[orderIndex!] = result;
+    //   notifyListeners();
+    // } else if (result != null && result is bool) {
+    //   print('back 2');
+    //   getBookmark();
+    // }
   }
 
 

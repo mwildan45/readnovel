@@ -17,6 +17,7 @@ class AppRoutes {
   static const writeChapterRoute = "write_chapter";
   static const updateChapterRoute = "update_chapter";
 
+  static const paymentWebView = "payment_webview";
 
   static const koinkuRoute = "koinku";
   static const faqRoute = "faq";

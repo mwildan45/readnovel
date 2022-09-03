@@ -7,8 +7,9 @@ import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/services/http.service.dart';
 
 class RegisterAsWriterRequest extends HttpService {
-  Future<dynamic> handleBecomeWriter({
+  Future<ApiResponse> handleBecomeWriter({
     required String nama_asli,
+    required String nama_pena,
     required String tanggal_lahir,
     required String nomor_id,
     required File image_id,
@@ -24,6 +25,7 @@ class RegisterAsWriterRequest extends HttpService {
     final apiResult = await postWithFiles(Api.beAuthor, {
       "valToken": userToken,
       "nama_asli": nama_asli,
+      "nama_pena": nama_pena,
       "tanggal_lahir": tanggal_lahir,
       "nomor_id": nomor_id,
       "image_id": await MultipartFile.fromFile(image_id.path),

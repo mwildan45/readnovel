@@ -32,6 +32,7 @@ class ListMyOwnNovels extends StatelessWidget {
                   isInfoOnRightPosition: true,
                   author: vm.profile?.username,
                   onItemTap: () => vm.navUpdateNovel(novel?[index].id),
+                  withoutHeroAnimation: true,
                 ).p2().pOnly(top: index == 0 ? 8 : 0);
               }
             },

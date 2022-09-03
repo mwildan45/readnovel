@@ -9,6 +9,7 @@ class MyBaseViewModel extends BaseViewModel {
   BuildContext? viewContext;
   final currencySymbol = AppStrings.appCurrency;
   GlobalKey pageKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   final widgetKey = GlobalKey();
 
@@ -27,7 +28,7 @@ class MyBaseViewModel extends BaseViewModel {
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,
-      backgroundColor: color ?? AppColor.sizzlingRed,
+      backgroundColor: color ?? AppColor.cerisePink,
       textColor: Colors.white,
       fontSize: 16.0,
     );

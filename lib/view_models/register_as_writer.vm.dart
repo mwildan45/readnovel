@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path/path.dart';
 import 'package:read_novel/constants/app_routes.dart';
+import 'package:read_novel/models/profile.model.dart';
 import 'package:read_novel/requests/register_as_writer.request.dart';
 import 'package:read_novel/services/app.services.dart';
+import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:read_novel/widgets/dialogs/custom_alert.dialog.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -25,6 +27,7 @@ class RegisterAsWriterViewModel extends MyBaseViewModel {
   RegisterAsWriterRequest registerAsWriterRequest = RegisterAsWriterRequest();
 
   TextEditingController realNameCon = TextEditingController();
+  TextEditingController namaPenaCon = TextEditingController();
   TextEditingController noIdCon = TextEditingController();
   TextEditingController addressCon = TextEditingController();
   TextEditingController phoneCon = TextEditingController();
@@ -112,6 +115,7 @@ class RegisterAsWriterViewModel extends MyBaseViewModel {
     try {
       final apiResponse = await registerAsWriterRequest.handleBecomeWriter(
           nama_asli: realNameCon.text,
+          nama_pena: namaPenaCon.text,
           tanggal_lahir: ("${selectedTglLahir!.year}-${selectedTglLahir!.month}-${selectedTglLahir!.day}"),
           nomor_id: noIdCon.text,
           image_id: File(selectedPhotoKTP!.path),
@@ -120,6 +124,8 @@ class RegisterAsWriterViewModel extends MyBaseViewModel {
           nama_bank: bankNameCon.text,
           atas_nama: bankOwnerAccountCon.text,
           rekening: bankAccountCon.text);
+
+      await AuthServices.setProfileValue(apiResponse.data);
 
       showDialog(
         context: viewContext!,
@@ -130,7 +136,7 @@ class RegisterAsWriterViewModel extends MyBaseViewModel {
               return false;
             },
             child: CustomAlertDialog(
-              contentText: apiResponse['message'].toString(),
+              contentText: apiResponse.message.toString(),
             ),
           );
         },

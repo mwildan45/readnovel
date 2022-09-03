@@ -11,7 +11,7 @@ import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MenuMenulisViewModel extends MyBaseViewModel {
-  MenuMenulisViewModel(BuildContext context){
+  MenuMenulisViewModel(BuildContext context) {
     viewContext = context;
   }
 
@@ -29,14 +29,13 @@ class MenuMenulisViewModel extends MyBaseViewModel {
   refreshProfileUser() async {
     setBusy(true);
     try {
-
       final token = await AuthServices.getAuthBearerToken();
       profile = await profileRequest.getProfileUser(token);
 
       setValue(AppStrings.levelUser, profile?.level);
       levelUser = profile?.level;
       notifyListeners();
-      if(profile?.level == 1){
+      if (profile?.level != 0) {
         fetchMyOwnNovels();
       }
 
@@ -58,7 +57,6 @@ class MenuMenulisViewModel extends MyBaseViewModel {
     setBusyForObject(novel, true);
 
     try {
-
       novel = await writeRequest.getMyNovels();
 
       clearErrors();
@@ -75,10 +73,13 @@ class MenuMenulisViewModel extends MyBaseViewModel {
     setBusyForObject(novel, false);
   }
 
-
   //nav function section
   navBecomeWriter() {
-    viewContext?.navigator?.pushNamed(AppRoutes.registerWriterRoute);
+    viewContext?.navigator?.pushNamed(AppRoutes.registerWriterRoute).then(
+      (value) {
+        refreshProfileUser();
+      },
+    );
   }
 
   navPusatBantuanPage() {
@@ -86,11 +87,29 @@ class MenuMenulisViewModel extends MyBaseViewModel {
   }
 
   navCreateNovel() {
-    viewContext?.navigator?.pushNamed(AppRoutes.createNovelRoute);
+    final result =
+        viewContext?.navigator?.pushNamed(AppRoutes.createNovelRoute).then(
+      (value) {
+        fetchMyOwnNovels();
+      },
+    );
+
+    if (result != null && result is bool) {
+      fetchMyOwnNovels();
+    }
   }
 
   navUpdateNovel(idNovel) {
-    print('id $idNovel');
-    viewContext?.navigator?.pushNamed(AppRoutes.updateNovelRoute, arguments: idNovel);
+    final result = viewContext?.navigator
+        ?.pushNamed(AppRoutes.updateNovelRoute, arguments: idNovel)
+        .then(
+      (value) {
+        fetchMyOwnNovels();
+      },
+    );
+
+    if (result != null && result is bool) {
+      fetchMyOwnNovels();
+    }
   }
 }

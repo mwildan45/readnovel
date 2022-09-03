@@ -26,12 +26,16 @@ class Api {
   static const updateNovel = "/edit_novel";
   static const myNovels = "/mynovels";
   static const myNovelDetail = "/mynoveldetail";
+  static const myNovelChapters = "/my_novel_chapters";
+  static const myNovelDetailChapter = "/my_detail_chapter";
   static const addChapter = "/add_chapter";
   static const editChapter = "/edit_chapter";
 
   static const getProfile = "/profile";
   static const getFAQ = "/faq";
-  static const getCoinsTopUp = "/coins";
+  static const getListAvailableCoinsTopUp = "/coins";
+  static const buyCoin = "/buycoins";
+  static const buyChapter = "/buy_chapter";
 
   // Other pages
   // static String get privacyPolicy {

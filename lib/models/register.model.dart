@@ -33,8 +33,8 @@ class Register {
   String? accesstoken;
   String? logintype;
   int? level;
-  String? coin;
-  String? income;
+  dynamic coin;
+  dynamic income;
   String? nomorID;
   String? telepon;
   String? facebook;

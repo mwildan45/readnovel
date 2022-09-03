@@ -2,6 +2,7 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/coin.vm.dart';
 import 'package:read_novel/view_models/profile.vm.dart';
@@ -16,59 +17,66 @@ class KoinkuPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<CoinViewModel>.reactive(
       viewModelBuilder: () => CoinViewModel(context),
-      onModelReady: (model) => model.getCoinsTopUp(),
+      onModelReady: (model) => model.initialise(),
       builder: (context, vm, child) {
         return BasePage(
           withAppBar: true,
           activeContext: context,
           isLoading: vm.busy(vm.coinsTopUp),
-          body: VStack(
-            [
-              8.height,
-              'Koinku'.text.lg.bold.make().center().px16(),
-              8.height,
-              HStack(
-                [
-                  _buildCoin(),
-                  8.width,
-                  '0'.text.bold.xl4.make()
-                ],
-              ).center(),
-              UiSpacer.verticalSpace(),
-              DynamicHeightGridView(
-                shrinkWrap: true,
-                itemCount: vm.coinsTopUp?.length ?? 0,
-                crossAxisCount: 2,
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                builder: (context, index) {
-                  return VStack(
-                    [
-                      HStack(
-                        [
-                          _buildCoin(),
-                          4.width,
-                          '${vm.coinsTopUp?[index].name} Koin'.text.lg.make(),
-                        ],
-                      ),
-                      'Rp. ${vm.coinsTopUp?[index].price}'.text.lg.make(),
-                    ],
-                    crossAlignment: CrossAxisAlignment.center,
-                    alignment: MainAxisAlignment.spaceAround,
-                  ).h(100).box.rounded.white.shadowMd.make();
-                },
-              ).px16().expand()
-            ],
+          body: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: VStack(
+              [
+                8.height,
+                'Koinku'.text.lg.bold.make().center().px16(),
+                8.height,
+                HStack(
+                  [
+                    _buildCoin(),
+                    8.width,
+                    "${vm.coinUser == "" || vm.coinUser == null ? 0 : vm.coinUser }".text.bold.xl4.make()
+                  ],
+                ).center(),
+                UiSpacer.verticalSpace(),
+                GridView.count(
+                  padding: const EdgeInsets.symmetric(horizontal: Vx.dp16, vertical: Vx.dp5),
+                  shrinkWrap: true,
+                  primary: false,
+                  // itemCount: vm.coinsTopUp?.length ?? 0,
+                  crossAxisCount: 2,
+                  childAspectRatio: 1.2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  children: List.generate(vm.coinsTopUp?.length ?? 0, (index) {
+                    return VStack(
+                      [
+                        VStack(
+                          [
+                            _buildCoin(size: Vx.dp32),
+                            UiSpacer.verticalSpace(space: Vx.dp12),
+                            '${vm.coinsTopUp?[index].name} Koin'.text.xl.bold.make(),
+                          ],
+                          crossAlignment: CrossAxisAlignment.center,
+                        ),
+                        'Rp. ${vm.coinsTopUp?[index].price}'.text.bold.lg.make(),
+                      ],
+                      crossAlignment: CrossAxisAlignment.center,
+                      alignment: MainAxisAlignment.spaceAround,
+                    ).box.rounded.white.shadowMd.make().onTap(() => vm.buyCoin(vm.coinsTopUp?[index].id));
+                  }),
+                )
+              ],
+            ),
           ),
         );
       },
     );
   }
 
-  Widget _buildCoin() {
-    return const Icon(
+  Widget _buildCoin({double? size}) {
+    return Icon(
       FontAwesomeIcons.c,
-      size: 12,
+      size: size ?? 12,
     )
         .box
         .p3

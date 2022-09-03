@@ -1,3 +1,5 @@
+import 'package:read_novel/utils/custom_exception.dart';
+
 class ApiResponse {
   int get totalDataCount => body["meta"]["total"];
   int get totalPageCount => body["pagination"]["total_pages"];
@@ -7,6 +9,7 @@ class ApiResponse {
   bool hasError() => errors!.isNotEmpty;
   bool hasData() => data != null;
   int code;
+  String? status;
   String message;
   dynamic body;
   List? errors;
@@ -15,6 +18,7 @@ class ApiResponse {
   ApiResponse({
     required this.code,
     required this.message,
+    this.status,
     this.body,
     this.errors,
     this.hasDataObject = true,
@@ -23,38 +27,71 @@ class ApiResponse {
   factory ApiResponse.fromResponse(dynamic response, {bool hasDataObject = true}) {
 
     int code = response.statusCode;
-    print('code $code');
-    dynamic body = response.data ?? null; // Would mostly be a Map
+    dynamic body = response.data; // Would mostly be a Map
     List errors = [];
     String message = "";
+    String status = "";
 
-    print('RESPONSE API: $body');
+    print('RESPONSE API: ${response.data}');
 
-    switch (code) {
+    switch (response.statusCode) {
       case 200:
-        String status = response.data['status'];
-        if(hasDataObject) {
-          try {
-            message = body["message"];
-          } catch (error) {
-            print("Message reading error ==> $error");
-          }
-        }
-        break;
+        print('CODE: $code');
 
+        status = body['status'];
+
+        try {
+          message = body["message"];
+        } catch (error) {
+          throw BadRequestException("Message response failed to get ==> $error");
+          // print("Message response failed to get ==> $error");
+        }
+
+        return ApiResponse(
+            code: code,
+            status: status,
+            message: message,
+            body: body,
+            errors: errors,
+            hasDataObject: hasDataObject
+        );
+      case 400:
+        throw BadRequestException(response.data.toString());
+      case 401:
+
+      case 403:
+        throw UnauthorisedException(response.data.toString());
+      case 500:
+        throw UnauthorisedException(response.data.toString());
       default:
-        message = body["message"] ??
-            "Whoops! Something went wrong, please contact support.";
-        errors.add(message);
-        break;
+        throw FetchDataException('Error terjadi saat melakukan koneksi dengan statusCode : ${response.statusCode}');
     }
 
-    return ApiResponse(
-        code: code,
-        message: message,
-        body: body,
-        errors: errors,
-        hasDataObject: hasDataObject
-    );
+    // switch (code) {
+    //   case 200:
+    //     String status = response.data['status'];
+    //     if(hasDataObject) {
+    //       try {
+    //         message = body["message"];
+    //       } catch (error) {
+    //         print("Message reading error ==> $error");
+    //       }
+    //     }
+    //     break;
+    //
+    //   default:
+    //     message = body["message"] ??
+    //         "Whoops! Something went wrong, please contact support.";
+    //     errors.add(message);
+    //     break;
+    // }
+
+    // return ApiResponse(
+    //     code: code,
+    //     message: message,
+    //     body: body,
+    //     errors: errors,
+    //     hasDataObject: hasDataObject
+    // );
   }
 }

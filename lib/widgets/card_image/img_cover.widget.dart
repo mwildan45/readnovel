@@ -18,22 +18,26 @@ class ImgCoverWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(
-      image ?? 'http://',
-      fit: BoxFit.cover,
-      errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-        return Image.asset(AppIcons.noImage).w(widthCover).h(heightCover);
-      },
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) return child;
+    try {
+      return Image.network(
+        image ?? 'http://',
+        fit: BoxFit.cover,
+        errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+          return Image.asset(AppIcons.noImage).w(widthCover).h(heightCover);
+        },
+        loadingBuilder: (context, child, loadingProgress) {
+          if (loadingProgress == null) return child;
 
-        return Container(
-                color: AppColor.ghostWhite,
-                child: Image.asset(AppImages.appLogoOnly, width: 38,))
-            .w(widthCover)
-            .h(heightCover)
-            .cornerRadius(shapeRadius!);
-      },
-    ).w(widthCover).h(heightCover).cornerRadius(shapeRadius!);
+          return Container(
+              color: AppColor.ghostWhite,
+              child: Image.asset(AppImages.appLogoOnly, width: 38,))
+              .w(widthCover)
+              .h(heightCover)
+              .cornerRadius(shapeRadius!);
+        },
+      ).w(widthCover).h(heightCover).cornerRadius(shapeRadius!);
+    } catch (e) {
+      return Image.asset(AppIcons.noImage).w(widthCover).h(heightCover);
+    }
   }
 }

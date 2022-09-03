@@ -13,9 +13,9 @@ import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ReadNovelChapterPage extends StatefulWidget {
-  const ReadNovelChapterPage({Key? key, required this.chapters, required this.detailNovel})
+  const ReadNovelChapterPage({Key? key, required this.idChapters, required this.detailNovel})
       : super(key: key);
-  final Chapters chapters;
+  final int idChapters;
   final DetailNovel detailNovel;
 
   @override
@@ -34,7 +34,7 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ReadNovelViewModel>.reactive(
       viewModelBuilder: () =>
-          ReadNovelViewModel(context, idNovelChapter: widget.chapters.id),
+          ReadNovelViewModel(context, idNovelChapter: widget.idChapters),
       onModelReady: (model) => model.getReadNovelChapter(),
       builder: (context, vm, child) {
         return BasePage(
