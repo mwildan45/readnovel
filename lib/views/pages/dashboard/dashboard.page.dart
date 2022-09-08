@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_assets.dart';
+import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/dashboard.vm.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/genres_tab.widget.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/home_tab.widget.dart';
+import 'package:read_novel/widgets/buttons/custom_button.dart';
 import 'package:read_novel/widgets/custom_tabbar.widget.dart';
 import 'package:read_novel/widgets/form_field/general.form_field.dart';
 import 'package:read_novel/widgets/card_image/img_profile.widget.dart';
@@ -37,7 +40,13 @@ class _DashboardPageState extends State<DashboardPage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(AppImages.appLogoHorizontal).w(130),
-                      const ImageProfileWidget(radius: 17),
+                      HStack(
+                        [
+                          UiSpacer.buildCoin(),
+                          4.width,
+                          getStringAsync(AppStrings.coinUser).text.white.bold.lg.make()
+                        ],
+                      ).py4().px12().box.rounded.color(AppColor.royalOrange).make().onTap(vm.navKoinkuPage),
                     ],
                   ),
                   UiSpacer.verticalSpace(space: Vx.dp12),

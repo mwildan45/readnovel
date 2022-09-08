@@ -6,6 +6,7 @@ import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_sizes.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
+import 'package:read_novel/view_models/chapter.vm.dart';
 import 'package:read_novel/view_models/read_novel.vm.dart';
 import 'package:read_novel/views/pages/read_novel/widgets/info_coverauthorgenres.widget.dart';
 import 'package:read_novel/views/pages/read_novel/widgets/info_viewchapterupdate.widget.dart';
@@ -41,7 +42,7 @@ class _DetailNovelPageState extends State<DetailNovelPage> {
                 height: 50,
                 isGradientColor: true,
                 shapeRadius: 30,
-                onPressed: () => vm.openAvailableChapters(vm),
+                onPressed: () => ChapterViewModel(context, detailNovel: vm.detailNovel).openAvailableChapters(),
               ).expand(),
               CustomButton(
                 onPressed: vm.handleBookmark,

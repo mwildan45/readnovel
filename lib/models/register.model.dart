@@ -34,6 +34,7 @@ class Register {
   String? logintype;
   int? level;
   dynamic coin;
+  String? namaPena;
   dynamic income;
   String? nomorID;
   String? telepon;
@@ -57,6 +58,7 @@ class Register {
         this.logintype,
         this.level,
         this.coin,
+        this.namaPena,
         this.income,
         this.nomorID,
         this.telepon,
@@ -80,6 +82,7 @@ class Register {
     logintype = json['logintype'];
     level = json['level'];
     coin = json['coin'];
+    namaPena = json['nama_pena'];
     income = json['income'];
     nomorID = json['nomorID'];
     telepon = json['telepon'];
@@ -105,6 +108,7 @@ class Register {
     data['logintype'] = logintype;
     data['level'] = level;
     data['coin'] = coin;
+    data['nama_pena'] = namaPena;
     data['income'] = income;
     data['nomorID'] = nomorID;
     data['telepon'] = telepon;

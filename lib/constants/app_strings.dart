@@ -20,15 +20,48 @@ class AppStrings {
   static String username = "username";
   static String levelUser = "level_user";
   static String coinUser = "coin_user";
+  static String namaPena = "nama_pena";
   static String incomeUser = "income_user";
   static String numberID = "number_id_user";
   static String phoneUser = "phone_user";
   static String facebook = "facebook_user";
   static String ageUser = "age_user";
 
-
   static List<String> listTabLabelDashboard = ['Home', 'Genres'];
   static List<String> listTabLabelLibrary = ['Terakhir Dibaca', 'Bookmark'];
   static List<String> listTabLabelMenulis = ['Rilis', 'Draft'];
 
+  static String popular = "populer";
+  static String wajib = "wajib";
+  static String disukai = "disukai";
+  static String baru = "baru";
+  static String rekomendasi = "rekomendasi";
+  static String pilihan = "pilihan";
+
+}
+
+enum SectionName {
+  popular, mustRead, mostlyLiked, newNovel, recommended, editorChoices
+}
+
+extension SectionNameExtension on SectionName {
+
+  String? get name {
+    switch (this) {
+      case SectionName.popular:
+        return 'populer';
+      case SectionName.mustRead:
+        return 'wajib';
+      case SectionName.mostlyLiked:
+        return 'disukai';
+      case SectionName.newNovel:
+        return 'baru';
+      case SectionName.recommended:
+        return 'rekomendasi';
+      case SectionName.editorChoices:
+        return 'pilihan';
+      default:
+        return null;
+    }
+  }
 }

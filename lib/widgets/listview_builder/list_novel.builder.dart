@@ -21,6 +21,8 @@ class ListNovelBuilder extends StatelessWidget {
     this.itemGrowable,
     this.onLoading = false,
     this.novel,
+    this.onTapSeeAll,
+    this.noLabel = false,
   }) : super(key: key);
   final String? label;
   final bool isGridType;
@@ -31,26 +33,32 @@ class ListNovelBuilder extends StatelessWidget {
   final List<Widget>? itemGrowable;
   final bool onLoading;
   final List<Novel>? novel;
+  final Function()? onTapSeeAll;
+  final bool noLabel;
 
   @override
   Widget build(BuildContext context) {
     return itemCount != 0
         ? VStack(
             [
-              UiSpacer.verticalSpace(space: Vx.dp24),
-              HStack(
-                [
-                  (label ?? 'label')
-                      .text
-                      .lg
-                      .size(labelTextSize)
-                      .color(AppColor.black)
-                      .bold
-                      .make()
-                      .expand(),
-                  "Lihat Semua".text.size(12).make()
-                ],
-              ),
+              noLabel
+                  ? UiSpacer.emptySpace()
+                  : VStack([
+                      UiSpacer.verticalSpace(space: Vx.dp24),
+                      HStack(
+                        [
+                          (label ?? 'label')
+                              .text
+                              .lg
+                              .size(labelTextSize)
+                              .color(AppColor.black)
+                              .bold
+                              .make()
+                              .expand(),
+                          "Lihat Semua".text.size(12).make().onTap(onTapSeeAll)
+                        ],
+                      ),
+                    ]),
               UiSpacer.verticalSpace(space: Vx.dp8),
               buildListView(),
             ],
@@ -70,7 +78,7 @@ class ListNovelBuilder extends StatelessWidget {
               return HStack(
                 List.generate(
                   8,
-                      (index) {
+                  (index) {
                     return const BusyIndicatorNovelItem();
                   },
                 ),
@@ -80,7 +88,7 @@ class ListNovelBuilder extends StatelessWidget {
               return HStack(
                 List.generate(
                   imgList.length,
-                      (index) {
+                  (index) {
                     return NovelItem(
                       index: index,
                     );

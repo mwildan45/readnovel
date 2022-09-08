@@ -10,6 +10,7 @@ class Profile {
   String? alamat;
   String? tanggalLahir;
   dynamic coin;
+  String? namaPena;
   dynamic income;
   String? facebook;
   String? telepon;
@@ -31,6 +32,7 @@ class Profile {
         this.alamat,
         this.tanggalLahir,
         this.coin,
+        this.namaPena,
         this.income,
         this.facebook,
         this.telepon,
@@ -52,6 +54,7 @@ class Profile {
     alamat = json['alamat'];
     tanggalLahir = json['tanggal_lahir'];
     coin = json['coin'];
+    namaPena = json['nama_pena'];
     income = json['income'];
     facebook = json['facebook'];
     telepon = json['telepon'];
@@ -75,6 +78,7 @@ class Profile {
     data['alamat'] = alamat;
     data['tanggal_lahir'] = tanggalLahir;
     data['coin'] = coin;
+    data['nama_pena'] = namaPena;
     data['income'] = income;
     data['facebook'] = facebook;
     data['telepon'] = telepon;

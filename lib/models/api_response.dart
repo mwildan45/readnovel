@@ -29,8 +29,8 @@ class ApiResponse {
     int code = response.statusCode;
     dynamic body = response.data; // Would mostly be a Map
     List errors = [];
-    String message = "";
-    String status = "";
+    dynamic message;
+    dynamic status;
 
     print('RESPONSE API: ${response.data}');
 
@@ -38,10 +38,9 @@ class ApiResponse {
       case 200:
         print('CODE: $code');
 
-        status = body['status'];
-
         try {
-          message = body["message"];
+          status = body['status'];
+          message = body["message"] ?? body["Message"];
         } catch (error) {
           throw BadRequestException("Message response failed to get ==> $error");
           // print("Message response failed to get ==> $error");
@@ -55,6 +54,7 @@ class ApiResponse {
             errors: errors,
             hasDataObject: hasDataObject
         );
+
       case 400:
         throw BadRequestException(response.data.toString());
       case 401:

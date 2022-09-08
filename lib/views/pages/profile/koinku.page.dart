@@ -1,11 +1,8 @@
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
-import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/coin.vm.dart';
-import 'package:read_novel/view_models/profile.vm.dart';
 import 'package:read_novel/widgets/base.page.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';

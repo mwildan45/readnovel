@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:read_novel/constants/app_colors.dart';
+import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/dashboard.vm.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/fragments/carousel_image.fragment.dart';
@@ -31,6 +32,7 @@ class _HomeTabWidgetState extends State<HomeTabWidget> with AutomaticKeepAliveCl
             CarouselImageDashboardFragment(vm: widget.vm),
             ListNovelBuilder(
               label: 'Buku Populer',
+              onTapSeeAll: () => widget.vm.openSeeAllNovels(AppStrings.popular),
               onLoading: widget.vm.isBusy,
               itemCount: widget.vm.data?.novelPopuler?.length,
               itemGrowable: List.generate(
@@ -46,6 +48,7 @@ class _HomeTabWidgetState extends State<HomeTabWidget> with AutomaticKeepAliveCl
             ),
             ListNovelBuilder(
               label: 'Wajib Dibaca',
+              onTapSeeAll: () => widget.vm.openSeeAllNovels(AppStrings.wajib),
               isGridType: true,
               onLoading: widget.vm.isBusy,
               itemCount: widget.vm.data?.wajibDibaca?.length,
@@ -63,6 +66,7 @@ class _HomeTabWidgetState extends State<HomeTabWidget> with AutomaticKeepAliveCl
             ),
             ListNovelBuilder(
               label: 'Disukai Pembaca',
+              onTapSeeAll: () => widget.vm.openSeeAllNovels(AppStrings.disukai),
               onLoading: widget.vm.isBusy,
               itemCount: widget.vm.data?.novelDisukai?.length,
               itemGrowable: List.generate(
@@ -78,6 +82,7 @@ class _HomeTabWidgetState extends State<HomeTabWidget> with AutomaticKeepAliveCl
             ),
             ListNovelBuilder(
               label: 'Buku Baru Pilihan',
+              onTapSeeAll: () => widget.vm.openSeeAllNovels(AppStrings.baru),
               isGridType: true,
               onLoading: widget.vm.isBusy,
               itemCount: widget.vm.data?.bukuBaru?.length,
@@ -92,6 +97,7 @@ class _HomeTabWidgetState extends State<HomeTabWidget> with AutomaticKeepAliveCl
             ),
             ListNovelBuilder(
               label: 'Rekomendasi Pilihan',
+              onTapSeeAll: () => widget.vm.openSeeAllNovels(AppStrings.rekomendasi),
               onLoading: widget.vm.isBusy,
               itemCount: widget.vm.data?.rekomendasi?.length,
               itemGrowable: List.generate(
@@ -107,6 +113,7 @@ class _HomeTabWidgetState extends State<HomeTabWidget> with AutomaticKeepAliveCl
             ),
             ListNovelBuilder(
               label: 'Kamu Mungkin Suka',
+              onTapSeeAll: () => widget.vm.openSeeAllNovels(AppStrings.pilihan),
               isVerticalList: true,
               onLoading: widget.vm.isBusy,
               itemCount: widget.vm.data?.mungkinSuka?.length,

@@ -48,7 +48,7 @@ class CustomButton extends StatelessWidget {
     return ButtonTheme(
       padding: const EdgeInsets.all(0),
       child: Container(
-        decoration: BoxDecoration(
+        decoration: isGradientColor ? BoxDecoration(
           boxShadow: const [
             BoxShadow(
                 color: Colors.black26, offset: Offset(0, 4), blurRadius: 5.0)
@@ -60,7 +60,7 @@ class CustomButton extends StatelessWidget {
           ),
           borderRadius: shapeContainer == BoxShape.circle ? null : BorderRadius.circular(shapeRadius ?? 0),
           shape: shapeContainer
-        ),
+        ) : null,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: elevation,

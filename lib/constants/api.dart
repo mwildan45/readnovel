@@ -12,9 +12,12 @@ class Api {
   static const getBanner = "/banners";
   static const getListNovelsDashboard = "/novels_dashboard";
   static const getNovelDetail = "/detail_novel";
+  static const getNovelChaptersList = "/chapter_list";
   static const getReadNovelChapter = "/read_chapter";
   static const getGenres = "/genres";
   static const getAges = "/ages";
+  static const getNovelsPerSection = "/novels";
+  static const getNovelsPerGenres = "/genrefilter";
 
   static const getBookmarks = "/bookmark";
   static const handleBookmark = "/isbookmark";

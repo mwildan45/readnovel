@@ -24,6 +24,8 @@ class DashboardViewModel extends MyBaseViewModel {
   BannerHeader? bannerData;
   ListNovelsDashboard? data;
   List<Genres>? genres;
+  List<Novel>? novelsPerGenre;
+  String? selectedGenre;
 
   @override
   void initialise() {
@@ -71,6 +73,8 @@ class DashboardViewModel extends MyBaseViewModel {
 
       genres = await genresRequest.getGenres();
 
+      fetchNovelsPerGenre(genres?.first.id, genres?.first.name);
+
       clearErrors();
     } catch (error) {
       print("Error ==> $error");
@@ -100,6 +104,29 @@ class DashboardViewModel extends MyBaseViewModel {
     setBusy(false);
   }
 
+  //
+  fetchNovelsPerGenre(idGenre, nameGenre) async {
+    setBusyForObject(novelsPerGenre, true);
+    novelsPerGenre = null;
+    selectedGenre = nameGenre;
+
+    try {
+
+      novelsPerGenre = await dashboardRequest.getNovelsPerGenres(idGenre);
+
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+      // viewContext?.showToast(
+      //   msg: "$error",
+      //   bgColor: Colors.red,
+      // );
+    }
+
+    setBusyForObject(novelsPerGenre, false);
+  }
+
   openNovel(int? id, Novel? novel) async {
     final result = await viewContext?.navigator?.pushNamed(
       AppRoutes.detailNovelRoute,
@@ -115,5 +142,17 @@ class DashboardViewModel extends MyBaseViewModel {
       print('back 2');
       fetchListNovelsDashboard();
     }
+  }
+
+  openSeeAllNovels(String sectionName) async {
+    print('section $sectionName');
+    await viewContext?.navigator?.pushNamed(
+      AppRoutes.seeAllRoute,
+      arguments: sectionName,
+    );
+  }
+
+  navKoinkuPage(){
+    viewContext?.navigator?.pushNamed(AppRoutes.koinkuRoute);
   }
 }

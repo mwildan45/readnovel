@@ -49,9 +49,9 @@ class CoinViewModel extends MyBaseViewModel {
 
   buyCoin(coinId) async {
     viewContext?.loaderOverlay.show();
+    final token = await AuthServices.getAuthBearerToken();
+    iPaymu = await coinRequest.buyCoin(coinId: coinId, token: token);
     try {
-      final token = await AuthServices.getAuthBearerToken();
-      iPaymu = await coinRequest.buyCoin(coinId: coinId, token: token);
 
       openInAppWebViewPayment(iPaymu?.data?.url);
       notifyListeners();

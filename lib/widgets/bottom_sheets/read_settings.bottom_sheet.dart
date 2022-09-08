@@ -3,11 +3,12 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_colors.dart';
+import 'package:read_novel/view_models/chapter.vm.dart';
 import 'package:read_novel/view_models/read_novel.vm.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-Future<dynamic> readSettingsBottomSheet(BuildContext context, ReadNovelViewModel vm) {
+Future<dynamic> readSettingsBottomSheet(BuildContext context, ChapterViewModel vm) {
   return showBarModalBottomSheet(
     expand: false,
     context: context,
@@ -38,7 +39,7 @@ Future<dynamic> readSettingsBottomSheet(BuildContext context, ReadNovelViewModel
   );
 }
 
-List<Widget> buildChooseBGColor(ReadNovelViewModel vm) {
+List<Widget> buildChooseBGColor(ChapterViewModel vm) {
   return AppColor.listChooseBgReadColor.map((e) {
     return CustomButton(
       onPressed: () => vm.handleBgColor(e),

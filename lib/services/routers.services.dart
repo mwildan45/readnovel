@@ -5,6 +5,7 @@ import 'package:read_novel/view_models/register_as_writer.vm.dart';
 import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:read_novel/views/pages/auth/login.page.dart';
 import 'package:read_novel/views/pages/auth/register.page.dart';
+import 'package:read_novel/views/pages/dashboard/see_all.page.dart';
 import 'package:read_novel/views/pages/home.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/create_update_novel.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/list_my_novel_chapter.page.dart';
@@ -33,21 +34,30 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AppRoutes.homeRoute:
       return MaterialPageRoute(builder: (context) => const HomePage());
 
+    case AppRoutes.seeAllRoute:
+      return MaterialPageRoute(
+        settings:
+        const RouteSettings(name: AppRoutes.seeAllRoute),
+        builder: (context) => SeeAllNovelsSectionPage(
+          sectionName: settings.arguments as String,
+        ),
+      );
+
     case AppRoutes.registerWriterRoute:
       return MaterialPageRoute(
           builder: (context) => const RegisterAsWriterPage());
 
     case AppRoutes.confirmRegisterWriterRoute:
       return MaterialPageRoute(
-        settings: const RouteSettings(name: AppRoutes.confirmRegisterWriterRoute),
+        settings:
+            const RouteSettings(name: AppRoutes.confirmRegisterWriterRoute),
         builder: (context) => ConfirmDataWriterPage(
           vm: settings.arguments as RegisterAsWriterViewModel,
         ),
       );
 
     case AppRoutes.createNovelRoute:
-      return MaterialPageRoute(
-          builder: (context) => const CreateNovelPage());
+      return MaterialPageRoute(builder: (context) => const CreateNovelPage());
 
     case AppRoutes.updateNovelRoute:
       return MaterialPageRoute(
@@ -97,7 +107,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => const KoinkuPage());
 
     case AppRoutes.paymentWebView:
-      return MaterialPageRoute(settings: const RouteSettings(name: AppRoutes.paymentWebView),
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: AppRoutes.paymentWebView),
         builder: (context) => PaymentScreen(
           url: settings.arguments as String,
         ),

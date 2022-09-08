@@ -52,7 +52,7 @@ class _MenulisMenuPageState extends State<
                             .pOnly(left: 12),
                         10.height,
                         const ImageProfileWidget(radius: 30),
-                        "${vm.profile?.username}".text.bold.xl.make(),
+                        "${vm.profile?.namaPena}".text.bold.xl.make(),
                         UiSpacer.verticalSpace(space: Vx.dp16),
                         CustomButton(
                           height: 32,
@@ -70,6 +70,8 @@ class _MenulisMenuPageState extends State<
                         .make(),
                     8.height,
                     "Novel Saya".text.bold.xl.make().center(),
+                    8.height,
+                    UiSpacer.divider(color: AppColor.romanSilver, width: 180).center(),
                     // UiSpacer.verticalSpace(),
                     ListMyOwnNovels(
                       vm: vm,

@@ -39,6 +39,7 @@ class AuthServices {
     setValue(AppStrings.userEmail, data.email ?? "");
     setValue(AppStrings.levelUser, data.level ?? "");
     setValue(AppStrings.coinUser, data.coin.toString());
+    setValue(AppStrings.namaPena, data.namaPena ?? "");
     setValue(AppStrings.incomeUser, data.income ?? "");
     setValue(AppStrings.numberID, data.nomorID ?? "");
     setValue(AppStrings.phoneUser, data.telepon ?? "");

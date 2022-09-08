@@ -16,17 +16,6 @@ class NovelDetailRequest extends HttpService {
     }
   }
 
-
-  Future<Read> getReadNovelChapter(Map params) async {
-    final apiResult = await post(Api.getReadNovelChapter, params);
-    final apiResponse = ApiResponse.fromResponse(apiResult);
-    if (apiResponse.allGood) {
-      return Read.fromJson(apiResponse.data);
-    } else {
-      throw apiResponse.message;
-    }
-  }
-
   Future<String> handleBookmark(Map params) async {
     final apiResult = await post(Api.handleBookmark, params);
     final apiResponse = ApiResponse.fromResponse(apiResult);

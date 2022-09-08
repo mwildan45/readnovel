@@ -57,9 +57,10 @@ class _ProfilePageState extends State<ProfilePage>
                         label: 'Buku Favorit Saya',
                       ),
                       UiSpacer.divider(width: double.maxFinite).py16(),
-                      const ProfileListItemMenu(
+                      ProfileListItemMenu(
                         icon: FontAwesomeIcons.feed,
                         label: 'Umpan Balik',
+                        onTap: vm.openEmailForFeedback,
                       ),
                       UiSpacer.divider(width: double.maxFinite).py16(),
                       const ProfileListItemMenu(
@@ -67,9 +68,10 @@ class _ProfilePageState extends State<ProfilePage>
                         label: 'Bagikan ReadNovel',
                       ),
                       UiSpacer.verticalSpace(space: Vx.dp12),
-                      const ProfileListItemMenu(
+                      ProfileListItemMenu(
                         icon: FontAwesomeIcons.instagramSquare,
                         label: 'Instagram',
+                        onTap: vm.openReadNovelInstagram,
                       ),
                       UiSpacer.verticalSpace(space: Vx.dp12),
                       ProfileListItemMenu(

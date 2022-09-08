@@ -6,15 +6,13 @@ import 'package:read_novel/view_models/chapter.vm.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-Widget customConfirmBuyCoinDialog({
+Widget customConfirmDialog({
   required BuildContext context,
   String? title,
   String? contentText,
   Function()? onConfirm,
-  bool onLoading = false,
-  required ChapterViewModel viewModel,
+  Function()? onCancel,
 }) {
-  print('bool $onLoading');
   return Dialog(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
@@ -28,19 +26,15 @@ Widget customConfirmBuyCoinDialog({
           children: [
             HStack(
               [
-                "Beli Bab".text.bold.lg.make(),
+                (title ?? "title").text.bold.lg.make(),
               ],
             ),
             8.height,
             (contentText ?? 'info goes here')
                 .text
-                .medium
+                .medium.center
                 .color(AppColor.fontColor)
                 .make(),
-            12.height,
-            viewModel.busy(viewModel.coinRequest)
-                ? const CircularProgressIndicator().w(25).h(25)
-                : UiSpacer.emptySpace(),
           ],
         ).wFull(context),
         UiSpacer.verticalSpace(space: 12),
@@ -48,22 +42,12 @@ Widget customConfirmBuyCoinDialog({
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton(
-              onPressed: () => context.pop(),
+              onPressed: onCancel ?? () => context.pop(),
               child: 'Tidak'.text.black.bold.make(),
             ).center(),
             TextButton(
               onPressed: onConfirm ?? () => context.pop(),
-              child: HStack(
-                [
-                  'Beli'.text.black.bold.make(),
-                  8.width,
-                  HStack([
-                    UiSpacer.buildCoin(size: 12),
-                    4.width,
-                    '1'.text.lg.black.fontFamily('Calibri').bold.make(),
-                  ])
-                ],
-              ),
+              child: 'Ya'.text.black.bold.make(),
             ).center(),
           ],
         ),

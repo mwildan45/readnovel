@@ -18,7 +18,7 @@ class UiSpacer {
     child: SizedBox.shrink(),
   );
 
-  static Widget verticalDivider() => VxBox().color(Colors.cyan).width(2).height(Vx.dp12).make().pOnly(right: Vx.dp8);
+  static Widget verticalDivider({Color? color}) => VxBox().color(color ?? Colors.cyan).width(2).height(Vx.dp12).make().pOnly(right: Vx.dp8);
   static Widget divider({double width = 20, Color? color}) => VxBox().color(color ?? AppColor.fadedGrey.withOpacity(0.5)).width(width).height(1.2).rounded.make().pOnly(top: Vx.dp3);
 
   static Widget greyedVerticalDivider() => VxBox().color(AppColor.grey).width(1).height(Vx.dp12).make().px4();

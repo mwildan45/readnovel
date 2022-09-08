@@ -133,7 +133,7 @@ class WriteChapterPage extends StatelessWidget {
                       loading: vm.busy(vm.chapterName),
                       shapeRadius: 30,
                       onPressed: () => vm.addNewAndUpdateChapter('publish', idNovel: idNovel, idChapter: idChapter, onUpdate: onUpdate),
-                      title: onUpdate ? 'Perbarui' : 'Publish Sekarang',
+                      title: onUpdate ? 'Perbarui' : 'Terbitkan Sekarang',
                     ).w40(context).centered(),
                   ],
                 ).px12(),
