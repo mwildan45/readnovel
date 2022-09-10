@@ -110,43 +110,47 @@ class WriteChapterViewModel extends MyBaseViewModel {
         setBusyForObject(status == 'draft' ? chapterNumber : chapterName, true);
         // print('chapter ${txt}, id $idNovel');
 
-        try {
-          ApiResponse? apiResponse;
+        if(chapterContent.characterCount <= 1200 && status == 'publish'){
+          showToast(msg: 'konten kamu harus mengandung setidaknya 1200 kata!');
+        }else {
+          try {
+            ApiResponse? apiResponse;
 
-          if (onUpdate) {
-            apiResponse = await writeRequest.updateChapterNovel(
-              chapterId: idChapter!,
-              chapterTitle: chapterName.text,
-              bab: chapterNumber.text,
-              coin: locked ? 1 : 0,
-              status: status,
-              content: txtContent,
-            );
-          } else {
-            apiResponse = await writeRequest.addChapterNovel(
-              novelId: idNovel!,
-              chapterTitle: chapterName.text,
-              bab: chapterNumber.text,
-              coin: locked ? 1 : 0,
-              status: status,
-              content: txtContent,
-            );
+            if (onUpdate) {
+              apiResponse = await writeRequest.updateChapterNovel(
+                chapterId: idChapter!,
+                chapterTitle: chapterName.text,
+                bab: chapterNumber.text,
+                coin: locked ? 1 : 0,
+                status: status,
+                content: txtContent,
+              );
+            } else {
+              apiResponse = await writeRequest.addChapterNovel(
+                novelId: idNovel!,
+                chapterTitle: chapterName.text,
+                bab: chapterNumber.text,
+                coin: locked ? 1 : 0,
+                status: status,
+                content: txtContent,
+              );
+            }
+
+            showDialogResponse(apiResponse.message.toString(), (value) {
+              viewContext?.navigator?.pop(true);
+              // viewContext?.navigator?.pop();
+            });
+
+            clearErrors();
+          } catch (error) {
+            print("Error ==> $error");
+            setError(error);
+            showToast(msg: "Ops, got error: $error");
           }
-
-          showDialogResponse(apiResponse.message.toString(), (value) {
-            viewContext?.navigator?.pop(true);
-            // viewContext?.navigator?.pop();
-          });
-
-          clearErrors();
-        } catch (error) {
-          print("Error ==> $error");
-          setError(error);
-          showToast(msg: "Ops, got error: $error");
         }
 
-        setBusyForObject(
-            status == 'draft' ? chapterNumber : chapterName, false);
+        setBusyForObject(status == 'draft' ? chapterNumber : chapterName, false);
+
       }else{
         showToast(msg: 'konten masih kosong!');
       }

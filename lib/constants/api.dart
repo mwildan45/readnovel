@@ -6,6 +6,10 @@ class Api {
     return "https://demo.higanic.com/api";
   }
 
+  static String get baseProfilePictureUrl {
+    return "https://demo.higanic.com/public/image/profile/";
+  }
+
   static const login = "/login";
   static const register = "/register";
 
@@ -18,12 +22,14 @@ class Api {
   static const getAges = "/ages";
   static const getNovelsPerSection = "/novels";
   static const getNovelsPerGenres = "/genrefilter";
+  static const searchNovel = "/search_novel";
 
   static const getBookmarks = "/bookmark";
   static const handleBookmark = "/isbookmark";
   static const getHistories = "/history";
 
   static const beAuthor = "/be_author";
+  static const claimIncome = "/claim_income";
 
   static const createNovel = "/add_novel";
   static const updateNovel = "/edit_novel";
@@ -35,6 +41,8 @@ class Api {
   static const editChapter = "/edit_chapter";
 
   static const getProfile = "/profile";
+  static const updateProfile = "/update_profile";
+
   static const getFAQ = "/faq";
   static const getListAvailableCoinsTopUp = "/coins";
   static const buyCoin = "/buycoins";

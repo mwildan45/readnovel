@@ -15,11 +15,17 @@ class SeeAllViewModel extends MyBaseViewModel {
   String pageTitle = "title";
   DashboardRequest dashboardRequest = DashboardRequest();
   List<Novel>? novels;
+  String? _keyword;
 
   @override
-  void initialise() {
+  void initialise({String? keyword}) {
+    _keyword = keyword;
     handleTitle();
-    fetchSeeAllNovelsPerSection();
+    if(keyword != null){
+      searchNovels(keyword);
+    }else{
+      fetchSeeAllNovelsPerSection();
+    }
   }
 
   //
@@ -36,6 +42,8 @@ class SeeAllViewModel extends MyBaseViewModel {
       pageTitle = 'Rekomendasi Pilihan';
     }else if(sectionName == AppStrings.rekomendasi){
       pageTitle = 'Kamu Mungkin Suka';
+    }else if(sectionName == 'Hasil'){
+      pageTitle = 'Hasil: $_keyword';
     }
   }
 
@@ -45,6 +53,27 @@ class SeeAllViewModel extends MyBaseViewModel {
     try {
 
       novels = await dashboardRequest.getNovelsPerSection(sectionName);
+
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+      // viewContext?.showToast(
+      //   msg: "$error",
+      //   bgColor: Colors.red,
+      // );
+    }
+
+    setBusy(false);
+  }
+
+  //
+  searchNovels(String keyword) async {
+    setBusy(true);
+
+    try {
+
+      novels = await dashboardRequest.searchNovel(keyword);
 
       clearErrors();
     } catch (error) {

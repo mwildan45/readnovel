@@ -56,4 +56,18 @@ class DashboardRequest extends HttpService {
       throw apiResponse.message;
     }
   }
+
+  Future<List<Novel>> searchNovel(String title) async {
+    final apiResult = await post(Api.searchNovel, {'title': title});
+    final apiResponse = ApiResponse.fromResponse(apiResult);
+    if (apiResponse.allGood) {
+      var data = <Novel>[];
+      apiResponse.data.forEach((v) {
+        data.add(Novel.fromJson(v));
+      });
+      return data;
+    } else {
+      throw apiResponse.message;
+    }
+  }
 }

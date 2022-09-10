@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:read_novel/constants/api.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/models/login.model.dart';
@@ -166,6 +167,10 @@ class AuthViewModel extends MyBaseViewModel {
 
       await AuthServices.isAuthenticated();
       await AuthServices.setAuthBearerToken(data.accesstoken);
+
+      if(data.profile != null){
+        setValue(AppStrings.profileImg, Api.baseProfilePictureUrl + (data.profile ?? ""));
+      }
 
       await AuthServices.setProfileValue(data);
 

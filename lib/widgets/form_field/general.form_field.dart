@@ -42,7 +42,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? errorText;
 
   final Function(String)? onChanged;
-  final Function? onFieldSubmitted;
+  final Function(String)? onFieldSubmitted;
   final String? Function(String?)? validator;
   final FocusNode? focusNode;
   final FocusNode? nextFocusNode;

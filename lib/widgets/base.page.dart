@@ -55,7 +55,7 @@ class _BasePageState extends State<BasePage> {
   @override
   Widget build(BuildContext context) {
     return LoaderOverlay(
-      useDefaultLoading: false,
+      useDefaultLoading: true,
       overlayWholeScreen: true,
       overlayWidget: Center(
         child: Image.asset(AppImages.appLogoOnly).w(75).h(75),

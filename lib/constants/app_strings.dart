@@ -14,6 +14,7 @@ class AppStrings {
   static String isSocialLogin = "is_social_login";
   static String loginType = "login_type";
   static String userId = "user_id";
+  static String name = "name";
   static String firstName = "first_name";
   static String lastName = "last_name";
   static String userEmail = "user_email";

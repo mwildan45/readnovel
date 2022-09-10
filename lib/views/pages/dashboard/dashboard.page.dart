@@ -42,22 +42,24 @@ class _DashboardPageState extends State<DashboardPage>
                       Image.asset(AppImages.appLogoHorizontal).w(130),
                       HStack(
                         [
-                          UiSpacer.buildCoin(),
+                          UiSpacer.buildCoin(size: 12),
                           4.width,
-                          getStringAsync(AppStrings.coinUser).text.white.bold.lg.make()
+                          "${getStringAsync(AppStrings.coinUser) == "" || getStringAsync(AppStrings.coinUser).isEmpty ? 0 : getStringAsync(AppStrings.coinUser) }".text.black.bold.make()
                         ],
-                      ).py4().px12().box.rounded.color(AppColor.royalOrange).make().onTap(vm.navKoinkuPage),
+                      ).py4()/*.px8()*//*.box.rounded.color(AppColor.royalOrange).make()*/.onTap(vm.navKoinkuPage),
                     ],
                   ),
                   UiSpacer.verticalSpace(space: Vx.dp12),
                   CustomTextFormField(
                     height: 38,
                     hintText: 'Mantan Tapi Menikah',
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       size: 16,
                     ),
                     maxLines: 1,
+                    maxLength: 30,
+                    onFieldSubmitted: (value) => vm.navToResultSearch(value),
                   ),
                   UiSpacer.verticalSpace(space: Vx.dp8),
                 ],

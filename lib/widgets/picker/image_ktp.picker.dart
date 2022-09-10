@@ -7,6 +7,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/register_as_writer.vm.dart';
+import 'package:read_novel/widgets/dialogs/custom_pick_image_source.dialog.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ImageKTPSelectorView extends StatefulWidget {
@@ -59,7 +60,7 @@ class _ImageKTPSelectorViewState extends State<ImageKTPSelectorView> {
   pickNewPhoto() async {
     var pickedFile;
 
-    final val = await showPickerDialog();
+    final val = await showPickerDialog(context);
 
     if (val == 'galeri') {
       pickedFile = await picker.pickImage(source: ImageSource.gallery);
@@ -76,33 +77,4 @@ class _ImageKTPSelectorViewState extends State<ImageKTPSelectorView> {
 
   //dialog
 
-  Future showPickerDialog() async {
-    return await showDialog(
-        context: context,
-        builder: (context) {
-          return Dialog(
-            insetPadding: const EdgeInsets.symmetric(horizontal: 80),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                UiSpacer.verticalSpace(),
-                'Pilih dari'.text.bold.make(),
-                UiSpacer.verticalSpace(),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    TextButton(
-                        onPressed: () => context.pop('galeri'),
-                        child: 'Galeri'.text.black.make()),
-                    TextButton(
-                        onPressed: () => context.pop('camera'),
-                        child: 'Camera'.text.black.make()),
-                  ],
-                ),
-                8.height
-              ],
-            ),
-          ).h48(context);
-        });
-  }
 }

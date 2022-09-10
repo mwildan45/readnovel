@@ -112,4 +112,8 @@ class MenuMenulisViewModel extends MyBaseViewModel {
       fetchMyOwnNovels();
     }
   }
+
+  navOpenIncome() async {
+    viewContext?.navigator?.pushNamed(AppRoutes.incomeAuthor);
+  }
 }

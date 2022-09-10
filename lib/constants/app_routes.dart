@@ -11,6 +11,7 @@ class AppRoutes {
 
   static const registerWriterRoute = "register_writer";
   static const confirmRegisterWriterRoute = "confirm_register_writer";
+  static const incomeAuthor = "income_author";
 
   static const createNovelRoute = "create_novel";
   static const updateNovelRoute = "update_novel";
@@ -22,4 +23,5 @@ class AppRoutes {
 
   static const koinkuRoute = "koinku";
   static const faqRoute = "faq";
+  static const editProfile = "edit_profile";
 }

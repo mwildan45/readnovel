@@ -24,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage>
     super.build(context);
     return ViewModelBuilder<ProfileViewModel>.reactive(
       viewModelBuilder: () => ProfileViewModel(context),
-      onModelReady: (model) => model.initialise(),
+      onModelReady: (model) => model.refreshLocalData(),
       builder: (context, vm, child) {
         return SafeArea(
           child: Container(
@@ -34,10 +34,25 @@ class _ProfilePageState extends State<ProfilePage>
                 8.height,
                 VStack(
                   [
-                    const ImageProfileWidget(),
+                    ImageProfileWidget(
+                      urlProfilePic: vm.urlPicture,
+                    ).onTap(vm.navToEditProfile),
                     UiSpacer.verticalSpace(space: Vx.dp4),
-                    ("${getStringAsync(AppStrings.firstName)} ${getStringAsync(AppStrings.lastName)}").text.bold.lg.xl2.make().center(),
-                    getStringAsync(AppStrings.userEmail).text.medium.size(12).make().center(),
+                    vm.usernameProfile == null || vm.usernameProfile!.isEmpty
+                        ? '(tidak ada username)'.text.sm.make().centered()
+                        : (vm.usernameProfile ?? "")
+                        .text
+                        .bold
+                        .lg
+                        .xl2
+                        .make()
+                        .center(),
+                    getStringAsync(AppStrings.userEmail)
+                        .text
+                        .medium
+                        .size(12)
+                        .make()
+                        .center(),
                   ],
                   crossAlignment: CrossAxisAlignment.stretch,
                 ).p12(),
@@ -52,9 +67,10 @@ class _ProfilePageState extends State<ProfilePage>
                         onTap: vm.navKoinkuPage,
                       ),
                       UiSpacer.verticalSpace(space: Vx.dp12),
-                      const ProfileListItemMenu(
+                      ProfileListItemMenu(
                         icon: FontAwesomeIcons.book,
                         label: 'Buku Favorit Saya',
+                        onTap: () => vm.openSeeAllNovels(AppStrings.popular),
                       ),
                       UiSpacer.divider(width: double.maxFinite).py16(),
                       ProfileListItemMenu(
@@ -87,7 +103,14 @@ class _ProfilePageState extends State<ProfilePage>
                       ),
                       // 8.height
                     ],
-                  ).p12().scrollVertical().box.white.topRounded(value: 18).make().px(10),
+                  )
+                      .p12()
+                      .scrollVertical()
+                      .box
+                      .white
+                      .topRounded(value: 18)
+                      .make()
+                      .px(10),
                 ),
               ],
             ),
@@ -98,5 +121,5 @@ class _ProfilePageState extends State<ProfilePage>
   }
 
   @override
-  bool get wantKeepAlive => true;
+  bool get wantKeepAlive => false;
 }

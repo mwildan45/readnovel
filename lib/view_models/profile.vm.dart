@@ -1,9 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:open_mail_app/open_mail_app.dart';
+import 'package:read_novel/constants/api.dart';
+import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/models/faq.model.dart';
+import 'package:read_novel/models/profile.model.dart';
 import 'package:read_novel/requests/profile.request.dart';
 import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
@@ -11,22 +17,76 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ProfileViewModel extends MyBaseViewModel {
-  ProfileViewModel(BuildContext context){
+  ProfileViewModel(BuildContext context) {
     viewContext = context;
   }
 
+  Profile? profile;
   ProfileRequest profileRequest = ProfileRequest();
   List<FAQ>? faq;
+  String? urlPicture;
+  String? usernameProfile;
 
+  TextEditingController username = TextEditingController();
+  TextEditingController realName = TextEditingController();
+  XFile? selectedProfilePic;
 
   @override
-  void initialise() {
+  void initialise() {}
 
+  //
+  getLocalDataProfile() {
+    username = TextEditingController(text: getStringAsync(AppStrings.username));
+    realName = TextEditingController(text: getStringAsync(AppStrings.name));
+  }
+
+  refreshLocalData() async {
+    urlPicture = getStringAsync(AppStrings.profileImg);
+    usernameProfile = getStringAsync(AppStrings.username);
+    notifyListeners();
+  }
+  
+  //
+  updateProfile() async {
+    if(formKey.currentState!.validate()) {
+      setBusy(true);
+      try {
+        final token = await AuthServices.getAuthBearerToken();
+        final apiResp = await profileRequest.updateProfile(
+            token: token,
+            realName: realName.text,
+            username: username.text,
+            picture: selectedProfilePic == null ? null : File(
+                selectedProfilePic!.path)
+        );
+
+        if(apiResp.status == 'failed'){
+          showToast(
+              msg: apiResp.message);
+        }else {
+          profile = Profile.fromJson(apiResp.data);
+
+          if (selectedProfilePic != null) {
+            setValue(AppStrings.profileImg, (profile?.profile ?? ""));
+          }
+          setValue(AppStrings.name, profile?.name ?? "");
+          setValue(AppStrings.username, profile?.username ?? "");
+
+          showToast(
+              msg: 'Berhasil terupdate!', color: AppColor.unitedNationsBlue);
+        }
+        clearErrors();
+      } catch (error) {
+        print("Error ==> $error");
+        setError(error);
+        showToast(msg: 'failed, please try again later');
+      }
+      setBusy(false);
+    }
   }
 
   //
   getFAQData() async {
-
     setBusyForObject(faq, true);
 
     try {
@@ -41,13 +101,22 @@ class ProfileViewModel extends MyBaseViewModel {
     setBusyForObject(faq, false);
   }
 
-  navPusatBantuanPage(){
+  navPusatBantuanPage() {
     viewContext?.navigator?.pushNamed(AppRoutes.faqRoute);
   }
 
-
-  navKoinkuPage(){
+  navKoinkuPage() {
     viewContext?.navigator?.pushNamed(AppRoutes.koinkuRoute);
+  }
+
+  openSeeAllNovels(String sectionName) async {
+    print('section $sectionName');
+    await viewContext?.navigator?.pushNamed(
+      AppRoutes.seeAllRoute,
+      arguments: {
+        'sectionName': sectionName
+      },
+    );
   }
 
   onLoginPage() {
@@ -68,7 +137,8 @@ class ProfileViewModel extends MyBaseViewModel {
 
     // Android: Will open mail app or show native picker.
     // iOS: Will open mail app if single mail app found.
-    var result = await OpenMailApp.composeNewEmailInMailApp(emailContent: email);
+    var result =
+        await OpenMailApp.composeNewEmailInMailApp(emailContent: email);
 
     // If no mail apps found, show error
     if (!result.didOpen && !result.canOpen) {
@@ -101,5 +171,22 @@ class ProfileViewModel extends MyBaseViewModel {
     } else {
       throw 'There was a problem to open the url: $url';
     }
+  }
+
+  navToEditProfile() {
+    viewContext?.navigator?.pushNamed(AppRoutes.editProfile).then((value) {
+      refreshLocalData();
+    });
+  }
+
+  //
+  onImageSelected(XFile file) {
+    selectedProfilePic = file;
+    notifyListeners();
+  }
+
+  onBackPressed() {
+    //
+    viewContext?.navigator?.pop(true);
   }
 }

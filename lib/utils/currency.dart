@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 
 class CustomCurrency {
   static NumberFormat currencyIdr() =>
-      NumberFormat.compactCurrency(locale: 'id');
+      NumberFormat.currency(locale: 'ID');
 }
 
 extension DynamicParsing on dynamic {

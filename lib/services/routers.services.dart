@@ -7,6 +7,7 @@ import 'package:read_novel/views/pages/auth/login.page.dart';
 import 'package:read_novel/views/pages/auth/register.page.dart';
 import 'package:read_novel/views/pages/dashboard/see_all.page.dart';
 import 'package:read_novel/views/pages/home.page.dart';
+import 'package:read_novel/views/pages/menulis/income.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/create_update_novel.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/list_my_novel_chapter.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/update_novel.page.dart';
@@ -14,6 +15,7 @@ import 'package:read_novel/views/pages/menulis/menulis_novel/write_chapter.page.
 import 'package:read_novel/views/pages/menulis/register_as_writer.page.dart';
 import 'package:read_novel/views/pages/menulis/register_step/confirm_data.page.dart';
 import 'package:read_novel/views/pages/payment.page.dart';
+import 'package:read_novel/views/pages/profile/edit_profile.page.dart';
 import 'package:read_novel/views/pages/profile/koinku.page.dart';
 import 'package:read_novel/views/pages/profile/pusat_bantuan.page.dart';
 import 'package:read_novel/views/pages/read_novel/detail_novel.page.dart';
@@ -39,7 +41,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         settings:
         const RouteSettings(name: AppRoutes.seeAllRoute),
         builder: (context) => SeeAllNovelsSectionPage(
-          sectionName: settings.arguments as String,
+          map: settings.arguments as Map,
         ),
       );
 
@@ -53,6 +55,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             const RouteSettings(name: AppRoutes.confirmRegisterWriterRoute),
         builder: (context) => ConfirmDataWriterPage(
           vm: settings.arguments as RegisterAsWriterViewModel,
+        ),
+      );
+
+    case AppRoutes.incomeAuthor:
+      return MaterialPageRoute(
+        // settings:
+        //     const RouteSettings(name: AppRoutes.incomeAuthor),
+        builder: (context) => IncomePage(
+          // map: settings.arguments as Map,
         ),
       );
 
@@ -106,6 +117,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AppRoutes.koinkuRoute:
       return MaterialPageRoute(builder: (context) => const KoinkuPage());
 
+    case AppRoutes.editProfile:
+      return MaterialPageRoute(builder: (context) => const EditProfilePage());
+
     case AppRoutes.paymentWebView:
       return MaterialPageRoute(
         settings: const RouteSettings(name: AppRoutes.paymentWebView),
@@ -113,26 +127,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           url: settings.arguments as String,
         ),
       );
-
-
-    //
-    // case AppRoutes.laporanPenjualan:
-    //   return MaterialPageRoute(
-    //     settings: const RouteSettings(name: AppRoutes.laporanPenjualan),
-    //     builder: (context) => const LaporanPenjualanPage(),
-    //   );
-
-    // case AppRoutes.laporanPenjualanTransaksiAll:
-    //   return MaterialPageRoute(
-    //     settings: const RouteSettings(name: AppRoutes.laporanPenjualanTransaksiAll, arguments: <String, dynamic>{}),
-    //     builder: (context) => LaporanPenjualanAllTransaksiPage(vm: settings.arguments!['vm']),
-    //   );
-
-    // case AppRoutes.laporanPenjualanReturAll:
-    //   return MaterialPageRoute(
-    //     settings: const RouteSettings(name: AppRoutes.laporanPenjualanReturAll),
-    //     builder: (context) => const LaporanPenjualanPage(),
-    //   );
 
     default:
       return MaterialPageRoute(builder: (context) => const HomePage());

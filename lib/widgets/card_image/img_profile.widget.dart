@@ -7,8 +7,9 @@ import 'package:read_novel/constants/app_strings.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ImageProfileWidget extends StatelessWidget {
-  const ImageProfileWidget({Key? key, this.radius = 43}) : super(key: key);
+  const ImageProfileWidget({Key? key, this.radius = 43, this.urlProfilePic}) : super(key: key);
   final double radius;
+  final String? urlProfilePic;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +20,8 @@ class ImageProfileWidget extends StatelessWidget {
         radius: radius - 1.5,
         backgroundColor: AppColor.ghostWhite,
         child: CachedNetworkImage(
-          imageUrl: getStringAsync(AppStrings.profileImg),
+          imageUrl: urlProfilePic ?? getStringAsync(AppStrings.profileImg),
+          width: double.maxFinite,
           fit: BoxFit.cover,
           errorWidget: (BuildContext context, String exception, stackTrace) {
             return CircleAvatar(

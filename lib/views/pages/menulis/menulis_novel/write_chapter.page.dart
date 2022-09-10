@@ -102,13 +102,20 @@ class WriteChapterPage extends StatelessWidget {
                               )
                             ),
                           ).px12().h64(context),
+                          4.height,
                           HStack(
                             [
-                              Checkbox(value: vm.locked, onChanged: vm.handleCheckbox),
-                              // 8.width,
-                              'Berbayar'.text.medium.make(),
+                              'minimal kata:'.text.italic.sm.gray400.make(),
+                              ' ${(1200 - vm.chapterContent.characterCount) <= 0 ? 0 : (1200 - vm.chapterContent.characterCount)}'.text.bold.sm.make()
                             ]
-                          ).px12(),
+                          ).objectCenterRight().px16(),
+                          // HStack(
+                          //   [
+                          //     Checkbox(value: vm.locked, onChanged: vm.handleCheckbox),
+                          //     // 8.width,
+                          //     'Berbayar'.text.medium.make(),
+                          //   ]
+                          // ).px12(),
                           UiSpacer.verticalSpace(),
                         ],
                       ),
@@ -134,7 +141,7 @@ class WriteChapterPage extends StatelessWidget {
                       shapeRadius: 30,
                       onPressed: () => vm.addNewAndUpdateChapter('publish', idNovel: idNovel, idChapter: idChapter, onUpdate: onUpdate),
                       title: onUpdate ? 'Perbarui' : 'Terbitkan Sekarang',
-                    ).w40(context).centered(),
+                    ).w48(context).centered(),
                   ],
                 ).px12(),
                 12.height

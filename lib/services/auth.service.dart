@@ -33,6 +33,7 @@ class AuthServices {
 
   static Future<void> setProfileValue(data) async {
     setValue(AppStrings.userId, data.id ?? "");
+    setValue(AppStrings.name, data.name ?? "");
     setValue(AppStrings.firstName, data.firstname ?? "");
     setValue(AppStrings.lastName, data.lastname ?? "");
     setValue(AppStrings.username, data.username ?? "");

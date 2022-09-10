@@ -1,7 +1,9 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:read_novel/constants/app_routes.dart';
+import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/models/banner.model.dart';
 import 'package:read_novel/models/genres.model.dart';
 import 'package:read_novel/models/novel.model.dart';
@@ -26,9 +28,11 @@ class DashboardViewModel extends MyBaseViewModel {
   List<Genres>? genres;
   List<Novel>? novelsPerGenre;
   String? selectedGenre;
+  String? coinUser;
 
   @override
   void initialise() {
+    coinUser = getStringAsync(AppStrings.coinUser);
     fetchBanner();
     fetchListNovelsDashboard();
     fetchGenres();
@@ -148,7 +152,20 @@ class DashboardViewModel extends MyBaseViewModel {
     print('section $sectionName');
     await viewContext?.navigator?.pushNamed(
       AppRoutes.seeAllRoute,
-      arguments: sectionName,
+      arguments: {
+        'sectionName': sectionName
+      },
+    );
+  }
+
+  navToResultSearch(String keyword) async {
+    print('section $keyword');
+    await viewContext?.navigator?.pushNamed(
+      AppRoutes.seeAllRoute,
+      arguments: {
+        'sectionName': 'Hasil',
+        'keyword': keyword
+      },
     );
   }
 

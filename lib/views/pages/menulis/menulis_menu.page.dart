@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_assets.dart';
+import 'package:read_novel/utils/currency.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/menu_menulis.vm.dart';
 import 'package:read_novel/view_models/register_as_writer.vm.dart';
@@ -45,11 +46,19 @@ class _MenulisMenuPageState extends State<
                   [
                     Column(
                       children: [
-                        12.height,
-                        Image.asset(AppImages.appLogoHorizontal)
-                            .w(130)
-                            .objectCenterLeft()
-                            .pOnly(left: 12),
+                        // 12.height,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Image.asset(AppImages.appLogoHorizontal)
+                                .w(130)
+                                .objectCenterLeft(),
+                            TextButton(
+                              onPressed: vm.navOpenIncome,
+                              child: 'Pendapatanku'.text.bold.color(AppColor.unitedNationsBlue).sm.make().center(),
+                            ),
+                          ],
+                        ).px12(),
                         10.height,
                         const ImageProfileWidget(radius: 30),
                         "${vm.profile?.namaPena}".text.bold.xl.make(),
@@ -68,10 +77,10 @@ class _MenulisMenuPageState extends State<
                         .color(AppColor.ghostWhite2)
                         .bottomRounded(value: 30)
                         .make(),
-                    8.height,
-                    "Novel Saya".text.bold.xl.make().center(),
-                    8.height,
-                    UiSpacer.divider(color: AppColor.romanSilver, width: 180).center(),
+                    12.height,
+                    "Novel Saya".text.bold.lg.make().px16(),
+                    4.height,
+                    UiSpacer.divider(color: AppColor.romanSilver, width: Vx.dp64, thickness: 2).px16(),
                     // UiSpacer.verticalSpace(),
                     ListMyOwnNovels(
                       vm: vm,
