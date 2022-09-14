@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -33,7 +34,9 @@ void main() async {
       HttpOverrides.global = MyHttpOverrides();
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-      await initializeDateFormatting('id_ID', null).then((_) => runApp(const MyApp()));
+      // Get any initial links
+      final PendingDynamicLinkData? initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
+      await initializeDateFormatting('id_ID', null).then((_) => runApp(MyApp(link: initialLink,)));
     },
     (error, stackTrace) {
       FirebaseCrashlytics.instance.recordError(error, stackTrace);

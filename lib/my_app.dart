@@ -1,13 +1,14 @@
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/constants/app_theme.dart';
 import 'package:read_novel/services/routers.services.dart' as router;
-import 'package:read_novel/views/pages/home.page.dart';
 import 'package:read_novel/views/pages/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key, this.link}) : super(key: key);
+  final PendingDynamicLinkData? link;
 
   // This widget is the root of your application.
   @override
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
             title: AppStrings.appName,
             onGenerateRoute: router.generateRoute,
             theme: theme,
-            home: const SplashScreen(),
+            home: SplashScreen(link: link),
           );
         }
     );

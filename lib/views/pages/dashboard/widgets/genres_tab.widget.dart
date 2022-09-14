@@ -46,31 +46,43 @@ class GenresTabWidget extends StatelessWidget {
         VStack(
           [
             8.height,
-            HStack([(vm.selectedGenre ?? 'Romances').text.bold.size(12).make().p8()]),
-            DynamicHeightGridView(
-              itemCount: vm.novelsPerGenre?.length ?? imgList.length,
-              crossAxisCount: 3,
-              crossAxisSpacing: 10,
-              shrinkWrap: true,
-              mainAxisSpacing: Vx.dp12,
-              builder: (ctx, index) {
-                if(vm.busy(vm.novelsPerGenre)){
-                  return const BusyIndicatorNovelItem(height: 130,);
-                } /*else if(vm.novelsPerGenre != null && vm.novelsPerGenre!.isEmpty) {
-                  return EmptyListWidget(
-                    textEmpty: 'Belum ada novel',
-                  ).centered();
-                } */else {
-                  return NovelItem(
-                    index: index,
-                    novel: vm.novelsPerGenre?[index],
-                    onItemTap: () =>
-                        vm.openNovel(vm.novelsPerGenre?[index].id,
-                            vm.novelsPerGenre?[index]),
-                  );
-                }
-              },
-            ).px8().expand(),
+            HStack([(vm.selectedGenre ?? 'Romances').text.bold.size(14).make().p8()]),
+            Stack(
+              children: [
+                DynamicHeightGridView(
+                  itemCount: vm.novelsPerGenre?.length ?? 12,
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 10,
+                  shrinkWrap: true,
+                  mainAxisSpacing: Vx.dp12,
+                  builder: (ctx, index) {
+                    if(vm.busy(vm.novelsPerGenre)){
+                      return const BusyIndicatorNovelItem(height: 130,);
+                    } /*else if(vm.novelsPerGenre != null && vm.novelsPerGenre!.isEmpty) {
+                      return EmptyListWidget(
+                        textEmpty: 'Belum ada novel',
+                      ).centered();
+                    } */else {
+                      return NovelItem(
+                        index: index,
+                        novel: vm.novelsPerGenre?[index],
+                        onItemTap: () =>
+                            vm.openNovel(vm.novelsPerGenre?[index].id,
+                                vm.novelsPerGenre?[index]),
+                      );
+                    }
+                  },
+                ).px8(),
+                Positioned.fill(
+                  bottom: 0.0,
+                  right: 0.0,
+                  left: 0.0,
+                  child: vm.novelsPerGenre != null && vm.novelsPerGenre!.isEmpty
+                      ? const EmptyListWidget(textEmpty: 'tidak ada novel di genre ini',).objectCenter()
+                      : const SizedBox.shrink(),
+                )
+              ],
+            ).expand(),
           ],
         ).expand(),
       ],

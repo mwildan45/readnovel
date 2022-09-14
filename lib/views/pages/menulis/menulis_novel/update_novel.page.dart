@@ -93,10 +93,10 @@ class _UpdateNovelPageState extends State<UpdateNovelPage> {
                     UiSpacer.verticalSpace(),
                     HStack(
                       [
-                        buildMenuAction(
-                            icon: FontAwesomeIcons.trashCan,
-                            label: 'Hapus Novel',
-                            color: AppColor.redScarlet),
+                        // buildMenuAction(
+                        //     icon: FontAwesomeIcons.trashCan,
+                        //     label: 'Hapus Novel',
+                        //     color: AppColor.redScarlet),
                         buildMenuAction(
                           icon: FontAwesomeIcons.listOl,
                           label: 'Daftar Bab',

@@ -4,10 +4,17 @@
 class Api {
   static String get baseUrl {
     return "https://demo.higanic.com/api";
+    // return "https://manage.readnovel.id/api";
+  }
+
+  static String get baseDynamicLink {
+    return 'https://readnovel.page.link';
+    // return "https://manage.readnovel.id";
   }
 
   static String get baseProfilePictureUrl {
     return "https://demo.higanic.com/public/image/profile/";
+    // return "https://manage.readnovel.id/public/image/profile/";
   }
 
   static const login = "/login";
@@ -22,7 +29,10 @@ class Api {
   static const getAges = "/ages";
   static const getNovelsPerSection = "/novels";
   static const getNovelsPerGenres = "/genrefilter";
+  static const getSpecificNovel = "/find_specific_novel";
   static const searchNovel = "/search_novel";
+  static const authors = "/authors";
+  static const detailAuthor = "/detail_author";
 
   static const getBookmarks = "/bookmark";
   static const handleBookmark = "/isbookmark";

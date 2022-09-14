@@ -13,6 +13,7 @@ import 'package:read_novel/views/pages/read_novel/widgets/info_viewchapterupdate
 import 'package:read_novel/widgets/base.page.dart';
 import 'package:read_novel/widgets/busy_indicator/paragraph.busy_indicator.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -70,7 +71,7 @@ class _DetailNovelPageState extends State<DetailNovelPage> {
                         .center
                         .make().px8()
                         .expand(),
-                    const Icon(Icons.more_horiz_outlined)
+                    const Icon(Icons.share, size: Vx.dp20,).onTap(vm.onShareNovel)
                   ],
                 ).px12().py12(),
                 Expanded(

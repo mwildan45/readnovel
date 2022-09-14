@@ -1,6 +1,7 @@
 
 import 'package:read_novel/constants/api.dart';
 import 'package:read_novel/models/api_response.dart';
+import 'package:read_novel/models/author.model.dart';
 import 'package:read_novel/models/banner.model.dart';
 import 'package:read_novel/models/genres.model.dart';
 import 'package:read_novel/models/novel.model.dart';

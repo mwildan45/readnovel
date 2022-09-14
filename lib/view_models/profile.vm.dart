@@ -112,7 +112,7 @@ class ProfileViewModel extends MyBaseViewModel {
   openSeeAllNovels(String sectionName) async {
     print('section $sectionName');
     await viewContext?.navigator?.pushNamed(
-      AppRoutes.seeAllRoute,
+      AppRoutes.seeAllNovelsRoute,
       arguments: {
         'sectionName': sectionName
       },

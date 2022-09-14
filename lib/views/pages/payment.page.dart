@@ -25,13 +25,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
           context: context,
           builder: (context) {
             return customConfirmDialog(
-                context: context,
-                title: 'Keluar Sekarang ?',
-                contentText:
-                    'Harap menyelesaikan pembayaran kamu sebelum keluar',
-                onConfirm: () {
-                  return true;
-                });
+              context: context,
+              title: 'Keluar Sekarang ?',
+              contentText: 'Harap menyelesaikan pembayaran kamu sebelum keluar',
+              onConfirm: () {
+                context.pop();
+                context.pop();
+                return true;
+              },
+            );
           },
         );
         return false;
@@ -39,20 +41,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
       child: BasePage(
         withAppBar: true,
         customAppBar: true,
-        // activeContext: context,
+        activeContext: context,
         onBackPressed: () {
           showDialog(
             context: context,
             builder: (context) {
               return customConfirmDialog(
-                  context: context,
-                  title: 'Keluar Sekarang ?',
-                  contentText:
-                      'Harap menyelesaikan pembayaran kamu sebelum keluar',
-                  onConfirm: () {
-                    context.pop();
-                    context.pop();
-                  });
+                context: context,
+                title: 'Keluar Sekarang ?',
+                contentText: 'Harap menyelesaikan pembayaran kamu sebelum keluar',
+                onConfirm: () {
+                  context.pop();
+                  context.pop();
+                },
+              );
             },
           );
         },

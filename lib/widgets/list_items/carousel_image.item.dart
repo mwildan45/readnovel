@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:read_novel/models/banner.model.dart';
+import 'package:read_novel/view_models/dashboard.vm.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -11,7 +13,7 @@ final List<String> imgList = [
   'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
 ];
 
-List<Container>? imageSliders(BannerHeader? bannerList) => bannerList?.data
+List<Widget>? imageSliders(BannerHeader? bannerList, DashboardViewModel vm) => bannerList?.data
     ?.map(
       (item) => Container(
         margin: const EdgeInsets.all(5.0),
@@ -25,36 +27,9 @@ List<Container>? imageSliders(BannerHeader? bannerList) => bannerList?.data
                 width: 1000.0,
                 imageUrl: item.img ?? "",
               ),
-              // Positioned(
-              //   bottom: 0.0,
-              //   left: 0.0,
-              //   right: 0.0,
-              //   child: Container(
-              //     decoration: const BoxDecoration(
-              //       gradient: LinearGradient(
-              //         colors: [
-              //           Color.fromARGB(200, 0, 0, 0),
-              //           Color.fromARGB(0, 0, 0, 0)
-              //         ],
-              //         begin: Alignment.bottomCenter,
-              //         end: Alignment.topCenter,
-              //       ),
-              //     ),
-              //     padding: const EdgeInsets.symmetric(
-              //         vertical: 10.0, horizontal: 20.0),
-              //     child: Text(
-              //       'Banner No. ${bannerList.data?.indexOf(item)}',
-              //       style: const TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 20.0,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
-      ),
+      ).onTap(() => vm.navBannerDetail(item.novelId!)),
     )
     .toList();

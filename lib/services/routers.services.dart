@@ -5,11 +5,13 @@ import 'package:read_novel/view_models/register_as_writer.vm.dart';
 import 'package:read_novel/view_models/write_novel.vm.dart';
 import 'package:read_novel/views/pages/auth/login.page.dart';
 import 'package:read_novel/views/pages/auth/register.page.dart';
-import 'package:read_novel/views/pages/dashboard/see_all.page.dart';
+import 'package:read_novel/views/pages/author/author.page.dart';
+import 'package:read_novel/views/pages/dashboard/see_all_authors.page.dart';
+import 'package:read_novel/views/pages/dashboard/see_all_novels.page.dart';
 import 'package:read_novel/views/pages/home.page.dart';
 import 'package:read_novel/views/pages/menulis/income.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/create_update_novel.page.dart';
-import 'package:read_novel/views/pages/menulis/menulis_novel/list_my_novel_chapter.page.dart';
+import 'package:read_novel/views/pages/menulis/menulis_novel/list_my_novel_chapters.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/update_novel.page.dart';
 import 'package:read_novel/views/pages/menulis/menulis_novel/write_chapter.page.dart';
 import 'package:read_novel/views/pages/menulis/register_as_writer.page.dart';
@@ -36,12 +38,23 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AppRoutes.homeRoute:
       return MaterialPageRoute(builder: (context) => const HomePage());
 
-    case AppRoutes.seeAllRoute:
+    case AppRoutes.seeAllNovelsRoute:
       return MaterialPageRoute(
         settings:
-        const RouteSettings(name: AppRoutes.seeAllRoute),
+        const RouteSettings(name: AppRoutes.seeAllNovelsRoute),
         builder: (context) => SeeAllNovelsSectionPage(
           map: settings.arguments as Map,
+        ),
+      );
+
+    case AppRoutes.seeAllAuthorsRoute:
+      return MaterialPageRoute(builder: (context) => const SeeAllAuthorsSectionPage());
+
+    case AppRoutes.authorDetail:
+      return MaterialPageRoute(
+        settings: const RouteSettings(name: AppRoutes.authorDetail),
+        builder: (context) => AuthorDetailPage(
+          idAuthor: settings.arguments as int,
         ),
       );
 
@@ -89,7 +102,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case AppRoutes.listChapterRoute:
       return MaterialPageRoute(
         settings: const RouteSettings(name: AppRoutes.listChapterRoute),
-        builder: (context) => ListMyNovelChapter(
+        builder: (context) => ListMyNovelChapters(
           idNovel: settings.arguments as int,
         ),
       );

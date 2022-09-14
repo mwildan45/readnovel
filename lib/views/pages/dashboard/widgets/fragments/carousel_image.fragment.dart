@@ -39,7 +39,7 @@ class CarouselImageDashboardFragment extends StatelessWidget {
             items:
             vm.bannerData == null || vm.bannerData!.data!.isEmpty
                 ? [const NoImagePlaceholder()]
-                : imageSliders(vm.bannerData),
+                : imageSliders(vm.bannerData, vm),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

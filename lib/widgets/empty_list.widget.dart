@@ -11,6 +11,7 @@ class EmptyListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(AppImages.appLogoOnly, color: AppColor.grey, width: Vx.dp40, height: Vx.dp40,),
         8.height,

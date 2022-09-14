@@ -43,7 +43,7 @@ class ListMyOwnNovels extends StatelessWidget {
               onLoading ? 5.height : Container(),
         ).expand()
       else if(novel!.isEmpty)
-        EmptyListWidget(
+        const EmptyListWidget(
           textEmpty: 'Kamu belum menerbitkan apapun',
         ).center().expand()
       else

@@ -25,7 +25,9 @@ class DetailNovel {
   String? cover;
   String? background;
   String? status;
+  String? slug;
   String? approval;
+  String? views;
   int? chapter;
   String? age;
   String? synopsis;
@@ -39,7 +41,10 @@ class DetailNovel {
         this.cover,
         this.background,
         this.status,
+        this.slug,
+        this.synopsis,
         this.approval,
+        this.views,
         this.chapter,
         this.age,
         this.genre,
@@ -52,7 +57,9 @@ class DetailNovel {
     cover = json['cover'];
     background = json['background'];
     status = json['status'];
+    slug = json['slug'];
     approval = json['approval'];
+    views = json['views'];
     chapter = json['chapter'];
     age = json['age'];
     synopsis = json['synopsis'];
@@ -73,7 +80,9 @@ class DetailNovel {
     data['cover'] = cover;
     data['background'] = background;
     data['status'] = status;
+    data['slug'] = slug;
     data['approval'] = approval;
+    data['views'] = views;
     data['chapter'] = chapter;
     data['age'] = age;
     data['synopsis'] = synopsis;

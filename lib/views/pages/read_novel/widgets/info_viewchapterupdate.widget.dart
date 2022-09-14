@@ -14,7 +14,7 @@ class InfoViewChapterUpdateWIdget extends StatelessWidget {
     return HStack(
       [
         richText(
-          text: '100rb dilihat',
+          text: '${data?.views ?? "0"}x dilihat',
           selected: '100rb',
         ),
         UiSpacer.greyedVerticalDivider().px8(),

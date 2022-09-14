@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/models/novel_read_chapter.model.dart';
 import 'package:read_novel/requests/chapter.request.dart';
@@ -218,6 +219,8 @@ class ChapterViewModel extends MyBaseViewModel {
           }else {
             navToReadChapter(selectedChapters!, index);
           }
+        }else if(apiResp.message == 'koin anda tidak mencukupi untuk membeli chapter ini'){
+          navKoinkuPage();
         }
       });
 
@@ -228,6 +231,10 @@ class ChapterViewModel extends MyBaseViewModel {
     }
 
     setBusyForObject(coinRequest, false);
+  }
+
+  navKoinkuPage() {
+    viewContext?.navigator?.pushNamed(AppRoutes.koinkuRoute);
   }
 
   backPressed() {

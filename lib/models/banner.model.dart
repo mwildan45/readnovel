@@ -9,14 +9,14 @@ class BannerHeader {
     if (json['data'] != null) {
       data = <BannerData>[];
       json['data'].forEach((v) {
-        data!.add(new BannerData.fromJson(v));
+        data!.add(BannerData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['message'] = this.message;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['message'] = message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -26,19 +26,19 @@ class BannerHeader {
 
 class BannerData {
   String? img;
-  String? url;
+  int? novelId;
 
-  BannerData({this.img, this.url});
+  BannerData({this.img, this.novelId});
 
   BannerData.fromJson(Map<String, dynamic> json) {
     img = json['img'];
-    url = json['url'];
+    novelId = json['novel_id'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['img'] = this.img;
-    data['url'] = this.url;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['img'] = img;
+    data['novel_id'] = novelId;
     return data;
   }
 }

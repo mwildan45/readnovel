@@ -7,8 +7,8 @@ import 'package:read_novel/widgets/list_items/my_chapters.item.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class ListMyNovelChapter extends StatelessWidget {
-  const ListMyNovelChapter({Key? key, required this.idNovel}) : super(key: key);
+class ListMyNovelChapters extends StatelessWidget {
+  const ListMyNovelChapters({Key? key, required this.idNovel}) : super(key: key);
   final int idNovel;
 
   @override
@@ -41,7 +41,12 @@ class ListMyNovelChapter extends StatelessWidget {
                       return MyChaptersItem(
                         vm: vm,
                         index: index,
-                      ).onTap(() => vm.navToWriteChapter(true, idChapter: vm.chapters?[index].id));
+                      ).onTap(() {
+                        if(vm.chapters?[index].status == 'draft') {
+                          vm.navToWriteChapter(
+                              true, idChapter: vm.chapters?[index].id);
+                        }
+                      });
                     },
                     separatorBuilder: (context, index) => 5.height,
                   ).expand()

@@ -79,7 +79,7 @@ class WriteChapterPage extends StatelessWidget {
                                 print('entered');
                               },
                               onChangeContent: (val){
-                                print('entered');
+                                print('entered ${val?.length}');
                               },
                             ),
                             controller: vm.chapterContent, //required
@@ -105,8 +105,8 @@ class WriteChapterPage extends StatelessWidget {
                           4.height,
                           HStack(
                             [
-                              'minimal kata:'.text.italic.sm.gray400.make(),
-                              ' ${(1200 - vm.chapterContent.characterCount) <= 0 ? 0 : (1200 - vm.chapterContent.characterCount)}'.text.bold.sm.make()
+                              // 'minimal kata:'.text.italic.sm.gray400.make(),
+                              '${vm.chapterContent.characterCount} Kata'.text.bold.sm.make()
                             ]
                           ).objectCenterRight().px16(),
                           // HStack(

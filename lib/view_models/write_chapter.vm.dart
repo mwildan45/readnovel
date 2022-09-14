@@ -110,7 +110,7 @@ class WriteChapterViewModel extends MyBaseViewModel {
         setBusyForObject(status == 'draft' ? chapterNumber : chapterName, true);
         // print('chapter ${txt}, id $idNovel');
 
-        if(chapterContent.characterCount <= 1200 && status == 'publish'){
+        if(chapterContent.characterCount <= 1000 && status == 'publish'){
           showToast(msg: 'konten kamu harus mengandung setidaknya 1200 kata!');
         }else {
           try {

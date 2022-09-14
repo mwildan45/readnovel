@@ -22,6 +22,7 @@ class ImageProfileWidget extends StatelessWidget {
         child: CachedNetworkImage(
           imageUrl: urlProfilePic ?? getStringAsync(AppStrings.profileImg),
           width: double.maxFinite,
+          height: double.maxFinite,
           fit: BoxFit.cover,
           errorWidget: (BuildContext context, String exception, stackTrace) {
             return CircleAvatar(

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/requests/novel_detail.request.dart';
 import 'package:read_novel/services/auth.service.dart';
+import 'package:read_novel/services/dynamic_links_services.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:read_novel/view_models/chapter.vm.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ReadNovelViewModel extends MyBaseViewModel {
-  ReadNovelViewModel(BuildContext context,
-      {this.idNovel}) {
+  ReadNovelViewModel(BuildContext context, {this.idNovel}) {
     viewContext = context;
   }
 
@@ -16,6 +17,7 @@ class ReadNovelViewModel extends MyBaseViewModel {
   NovelDetailRequest novelDetailRequest = NovelDetailRequest();
   DetailNovel? detailNovel;
   bool isBookmarked = false;
+  final DynamicLinkService dynamicLinkService = DynamicLinkService();
 
   @override
   void initialise() {}
@@ -64,6 +66,14 @@ class ReadNovelViewModel extends MyBaseViewModel {
         setError(error);
       }
       setBusyForObject(isBookmarked, false);
+    }
+  }
+
+  onShareNovel() async {
+    if(detailNovel != null) {
+      final url = await dynamicLinkService.createDynamicLink(detailNovel?.id ?? 0);
+      print('created url $url');
+      Share.share(url.toString());
     }
   }
 

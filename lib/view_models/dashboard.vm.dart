@@ -4,12 +4,15 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/constants/app_strings.dart';
+import 'package:read_novel/models/author.model.dart';
 import 'package:read_novel/models/banner.model.dart';
 import 'package:read_novel/models/genres.model.dart';
 import 'package:read_novel/models/novel.model.dart';
 import 'package:read_novel/models/novels_dashboard.model.dart';
+import 'package:read_novel/requests/author.request.dart';
 import 'package:read_novel/requests/dashboard.request.dart';
 import 'package:read_novel/requests/genres.request.dart';
+import 'package:read_novel/requests/novel_detail.request.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -23,10 +26,13 @@ class DashboardViewModel extends MyBaseViewModel {
   final RefreshController refreshController = RefreshController(initialRefresh: false);
   DashboardRequest dashboardRequest = DashboardRequest();
   GenresRequest genresRequest = GenresRequest();
+  AuthorRequest authorRequest = AuthorRequest();
+  NovelDetailRequest novelDetailRequest = NovelDetailRequest();
   BannerHeader? bannerData;
   ListNovelsDashboard? data;
   List<Genres>? genres;
   List<Novel>? novelsPerGenre;
+  List<Author>? authors;
   String? selectedGenre;
   String? coinUser;
 
@@ -36,6 +42,7 @@ class DashboardViewModel extends MyBaseViewModel {
     fetchBanner();
     fetchListNovelsDashboard();
     fetchGenres();
+    fetchAuthors();
   }
 
   void onRefresh() async{
@@ -109,6 +116,26 @@ class DashboardViewModel extends MyBaseViewModel {
   }
 
   //
+  fetchAuthors() async {
+    setBusyForObject(authors, true);
+    try {
+
+      authors = await authorRequest.getAuthors();
+
+      clearErrors();
+    } catch (error) {
+      print("Error ==> $error");
+      setError(error);
+      // viewContext?.showToast(
+      //   msg: "$error",
+      //   bgColor: Colors.red,
+      // );
+    }
+
+    setBusyForObject(authors, false);
+  }
+
+  //
   fetchNovelsPerGenre(idGenre, nameGenre) async {
     setBusyForObject(novelsPerGenre, true);
     novelsPerGenre = null;
@@ -151,22 +178,44 @@ class DashboardViewModel extends MyBaseViewModel {
   openSeeAllNovels(String sectionName) async {
     print('section $sectionName');
     await viewContext?.navigator?.pushNamed(
-      AppRoutes.seeAllRoute,
+      AppRoutes.seeAllNovelsRoute,
       arguments: {
         'sectionName': sectionName
       },
     );
   }
 
+  openSeeAllAuthors() async {
+    await viewContext?.navigator?.pushNamed(
+      AppRoutes.seeAllAuthorsRoute,
+    );
+  }
+
+  openDetailAuthors(id) async {
+    await viewContext?.navigator?.pushNamed(
+      AppRoutes.authorDetail,
+      arguments: id
+    );
+  }
+
   navToResultSearch(String keyword) async {
     print('section $keyword');
     await viewContext?.navigator?.pushNamed(
-      AppRoutes.seeAllRoute,
+      AppRoutes.seeAllNovelsRoute,
       arguments: {
         'sectionName': 'Hasil',
         'keyword': keyword
       },
     );
+  }
+
+  navBannerDetail(int id) async {
+    novelDetailRequest.getSpecificNovel(id.toString()).then((value) {
+      viewContext?.navigator?.pushNamed(
+        AppRoutes.detailNovelRoute,
+        arguments: value,
+      );
+    });
   }
 
   navKoinkuPage(){

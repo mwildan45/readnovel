@@ -61,8 +61,10 @@ class _HomeTabWidgetState extends State<HomeTabWidget> with AutomaticKeepAliveCl
                 );
               },
             ),
-            const ListAuthorBuilder(
+            ListAuthorBuilder(
               label: 'Authors',
+              vm: widget.vm,
+              onTapSeeAllAuthors: widget.vm.openSeeAllAuthors,
             ),
             ListNovelBuilder(
               label: 'Disukai Pembaca',
