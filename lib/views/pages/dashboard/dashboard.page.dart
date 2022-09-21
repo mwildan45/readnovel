@@ -44,14 +44,21 @@ class _DashboardPageState extends State<DashboardPage>
                         [
                           UiSpacer.buildCoin(size: 12),
                           4.width,
-                          "${getStringAsync(AppStrings.coinUser) == "" || getStringAsync(AppStrings.coinUser).isEmpty ? 0 : getStringAsync(AppStrings.coinUser) }".text.black.bold.make()
+                          "${getStringAsync(AppStrings.coinUser) == "" || getStringAsync(AppStrings.coinUser).isEmpty ? 0 : getStringAsync(AppStrings.coinUser)}"
+                              .text
+                              .black
+                              .bold
+                              .make()
                         ],
-                      ).py4()/*.px8()*//*.box.rounded.color(AppColor.royalOrange).make()*/.onTap(vm.navKoinkuPage),
+                      )
+                          .py4() /*.px8()*/ /*.box.rounded.color(AppColor.royalOrange).make()*/
+                          .onTap(vm.navKoinkuPage),
                     ],
                   ),
                   UiSpacer.verticalSpace(space: Vx.dp12),
                   CustomTextFormField(
                     height: 38,
+                    textEditingController: vm.searchController,
                     hintText: 'Mantan Tapi Menikah',
                     prefixIcon: Icon(
                       FontAwesomeIcons.magnifyingGlass,
@@ -60,6 +67,10 @@ class _DashboardPageState extends State<DashboardPage>
                     maxLines: 1,
                     maxLength: 30,
                     onFieldSubmitted: (value) => vm.navToResultSearch(value),
+                    suffixIcon: vm.searchController.text.isNotEmpty
+                        ? Icon(Icons.close)
+                            .onTap(() => vm.searchController.clear())
+                        : null,
                   ),
                   UiSpacer.verticalSpace(space: Vx.dp8),
                 ],

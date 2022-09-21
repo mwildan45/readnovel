@@ -73,7 +73,7 @@ class ReadNovelViewModel extends MyBaseViewModel {
     if(detailNovel != null) {
       final url = await dynamicLinkService.createDynamicLink(detailNovel?.id ?? 0);
       print('created url $url');
-      Share.share(url.toString());
+      Share.share("Hai! Saya mempunyai rekomendasi cerita menarik! Klik sekarang juga dari tautan ini! ${url.toString()}");
     }
   }
 

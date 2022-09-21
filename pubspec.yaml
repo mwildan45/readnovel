@@ -3,7 +3,7 @@ description: Read Novel
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 0.0.1+1
+version: 1.0.0+2
 
 environment:
   sdk: ">=2.17.3 <3.0.0"
@@ -56,6 +56,14 @@ dependencies:
   open_mail_app: ^0.4.5
   firebase_dynamic_links: ^4.3.7
   share_plus: ^4.1.0
+  onesignal_flutter: ^3.4.1
+  flutter_quill: ^6.0.4
+  delta_markdown: ^0.8.0
+  markdown: ^6.0.0
+  html2md: ^1.2.6
+  quill_markdown: ^0.1.0
+  upgrader: ^4.6.1
+  store_redirect: ^2.0.1
 
 
 dev_dependencies:
@@ -69,7 +77,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/logo_only.png"
+  image_path: "assets/icon/READ NOVEL LOGO NO NAME-01.jpg"
 
 flutter_native_splash:
   background_image: "assets/images/Read Novel splashscreen.png"

@@ -79,9 +79,10 @@ class _ProfilePageState extends State<ProfilePage>
                         onTap: vm.openEmailForFeedback,
                       ),
                       UiSpacer.divider(width: double.maxFinite).py16(),
-                      const ProfileListItemMenu(
+                      ProfileListItemMenu(
                         icon: FontAwesomeIcons.share,
                         label: 'Bagikan ReadNovel',
+                        onTap: vm.openStoreRedirect,
                       ),
                       UiSpacer.verticalSpace(space: Vx.dp12),
                       ProfileListItemMenu(

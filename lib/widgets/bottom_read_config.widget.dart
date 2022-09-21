@@ -32,11 +32,11 @@ class BottomReadConfigWidget extends StatelessWidget {
               width: 25,
               height: 25,
             ).w(50).onTap(() => vm.openReadSetting(vm)),
-            Image.asset(
-              AppIcons.share,
-              width: 25,
-              height: 25,
-            ),
+            // Image.asset(
+            //   AppIcons.share,
+            //   width: 25,
+            //   height: 25,
+            // ),
           ],
           alignment: MainAxisAlignment.spaceAround,
         ),

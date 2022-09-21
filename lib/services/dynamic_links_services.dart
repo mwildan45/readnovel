@@ -4,6 +4,7 @@ import 'package:read_novel/constants/api.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/requests/novel_detail.request.dart';
 import 'package:read_novel/services/auth.service.dart';
+import 'package:read_novel/utils/GlobalVariable.dart';
 import 'package:read_novel/views/pages/splash_screen.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -40,31 +41,31 @@ class DynamicLinkService {
       final PendingDynamicLinkData? data = await dynamicLinks.getInitialLink();
       final Uri? deepLink = data?.link;
 
-      if (deepLink != null) {
-        print("LINK ${deepLink.queryParameters['id']}");
-        final id = deepLink.queryParameters['id'];
-        if (!AuthServices.authenticated()) {
-          context.navigator?.pushNamedAndRemoveUntil(AppRoutes.loginRoute, (route) => false);
-        } else {
-          novelDetailRequest.getSpecificNovel(id ?? "5").then((value) {
-            context.navigator?.pushNamedAndRemoveUntil(AppRoutes.homeRoute, (route) => false);
-            context.navigator?.pushNamed(
-              AppRoutes.detailNovelRoute,
-              arguments: value,
-            );
-          });
-        }
-      }
+      // if (deepLink != null) {
+      //   print("LINK ${deepLink.queryParameters['id']}");
+      //   final id = deepLink.queryParameters['id'];
+      //   if (!AuthServices.authenticated()) {
+      //     context.navigator?.pushNamedAndRemoveUntil(AppRoutes.loginRoute, (route) => false);
+      //   } else {
+      //     novelDetailRequest.getSpecificNovel(id ?? "5").then((value) {
+      //       context.navigator?.pushNamedAndRemoveUntil(AppRoutes.homeRoute, (route) => false);
+      //       context.navigator?.pushNamed(
+      //         AppRoutes.detailNovelRoute,
+      //         arguments: value,
+      //       );
+      //     });
+      //   }
+      // }
 
       dynamicLinks.onLink.listen((PendingDynamicLinkData dynamicLink) async {
         print("LINK 2 ${dynamicLink.link.queryParameters['id']}");
         final id = dynamicLink.link.queryParameters['id'];
         if (!AuthServices.authenticated()) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const SplashScreen()));
+          Navigator.of(GlobalVariable.navState.currentContext ?? context).push(MaterialPageRoute(builder: (context) => const SplashScreen()));
         } else {
           novelDetailRequest.getSpecificNovel(id ?? "5").then((value) {
-            context.navigator?.pushNamedAndRemoveUntil(AppRoutes.homeRoute, (route) => false);
-            context.navigator?.pushNamed(
+            GlobalVariable.navState.currentContext?.navigator?.pushNamedAndRemoveUntil(AppRoutes.homeRoute, (route) => false);
+            GlobalVariable.navState.currentContext?.navigator?.pushNamed(
               AppRoutes.detailNovelRoute,
               arguments: value,
             );

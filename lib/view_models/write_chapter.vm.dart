@@ -1,15 +1,21 @@
+import 'dart:convert';
+
+import 'package:delta_markdown/delta_markdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:html_editor_enhanced/html_editor.dart';
+import 'package:markdown/markdown.dart' as mk;
+import 'package:quill_markdown/quill_markdown.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/api_response.dart';
 import 'package:read_novel/models/chapter.model.dart';
 import 'package:read_novel/models/novel_read_chapter.model.dart';
-import 'package:read_novel/requests/novel_detail.request.dart';
 import 'package:read_novel/requests/write.request.dart';
 import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 import 'package:read_novel/widgets/dialogs/custom_alert.dialog.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:html2md/html2md.dart' as html2md;
 
 class WriteChapterViewModel extends MyBaseViewModel {
   WriteChapterViewModel(BuildContext context, {this.idNovel}) {
@@ -25,7 +31,9 @@ class WriteChapterViewModel extends MyBaseViewModel {
   TextEditingController chapterName = TextEditingController();
   TextEditingController chapterNumber = TextEditingController();
   late HtmlEditorController chapterContent;
+  QuillController content = QuillController.basic();
   bool locked = false;
+  int countContent = 0;
 
   @override
   void initialise() {}
@@ -56,13 +64,21 @@ class WriteChapterViewModel extends MyBaseViewModel {
 
     setBusy(true);
 
+    content.document.changes.listen((event) {
+      handleCountChar();
+    });
+
     Future.delayed(const Duration(milliseconds: 300), () async {
       await fetchMyNovelChapters();
 
       if (onUpdate && chapters != null) {
         await getMyNovelChapter(idChapter).then((value) async {
           chapterName = TextEditingController(text: read?.title);
-          chapterContent.setText(read?.content ?? "");
+          // chapterContent.setText(read?.content ?? "");
+          content = QuillController(
+              document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "") ?? "")),
+              selection: TextSelection.collapsed(offset: 0));
+          handleCountChar();
           locked = read?.coin == 1 ? true : false;
         });
       }
@@ -73,6 +89,19 @@ class WriteChapterViewModel extends MyBaseViewModel {
     });
 
     setBusy(false);
+  }
+
+  void dispose() {
+    content.removeListener(handleCountChar);
+    super.dispose();
+  }
+
+  void handleCountChar() {
+    final s = content.document.toPlainText();
+    final RegExp regExp = RegExp(r"[\w-._]+");
+    final Iterable matches = regExp.allMatches(s);
+    countContent = matches.length;
+    notifyListeners();
   }
 
   //
@@ -101,16 +130,32 @@ class WriteChapterViewModel extends MyBaseViewModel {
     return true;
   }
 
+  String quillDeltaToHtml(Delta delta) {
+    final convertedValue = jsonEncode(delta.toJson());
+    final markdown = deltaToMarkdown(convertedValue);
+    final html = mk.markdownToHtml(markdown);
+
+    return html;
+  }
+
+  String? quillHtmlToDelta(String htmlData) {
+    // String? content = '[{"insert":"Heading"},{"insert":"\\n","attributes":{"header":1}},{"insert":"bold","attributes":{"bold":true}},{"insert":"\\n"},{"insert":"bold and italic","attributes":{"bold":true,"italic":true}},{"insert":"\\nsome code"},{"insert":"\\n","attributes":{"code-block":true}},{"insert":"A quote"},{"insert":"\\n","attributes":{"blockquote":true}},{"insert":"ordered list"},{"insert":"\\n","attributes":{"list":"ordered"}},{"insert":"unordered list"},{"insert":"\\n","attributes":{"list":"bullet"}},{"insert":"link","attributes":{"link":"pub.dev/packages/quill_markdown"}},{"insert":"\\n"}]';
+    final markdown = html2md.convert(htmlData);
+    final content = markdownToDelta(markdown);
+
+    return content;
+  }
+
   //
   addNewAndUpdateChapter(status, {int? idNovel, int? idChapter, bool onUpdate = false}) async {
 
     if (formKey.currentState!.validate()) {
-      var txtContent = await chapterContent.getText();
+      var txtContent = quillDeltaToHtml(content.document.toDelta());
       if (txtContent.isNotEmpty) {
         setBusyForObject(status == 'draft' ? chapterNumber : chapterName, true);
         // print('chapter ${txt}, id $idNovel');
 
-        if(chapterContent.characterCount <= 1000 && status == 'publish'){
+        if(countContent <= 1000 && status == 'publish'){
           showToast(msg: 'konten kamu harus mengandung setidaknya 1200 kata!');
         }else {
           try {

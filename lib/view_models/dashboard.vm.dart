@@ -35,6 +35,7 @@ class DashboardViewModel extends MyBaseViewModel {
   List<Author>? authors;
   String? selectedGenre;
   String? coinUser;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initialise() {

@@ -4,6 +4,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/constants/app_theme.dart';
 import 'package:read_novel/services/routers.services.dart' as router;
+import 'package:read_novel/utils/GlobalVariable.dart';
 import 'package:read_novel/views/pages/splash_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: AppStrings.appName,
             onGenerateRoute: router.generateRoute,
+            navigatorKey: GlobalVariable.navState,
             theme: theme,
             home: SplashScreen(link: link),
           );

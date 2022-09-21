@@ -3,7 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:read_novel/services/app.services.dart';
+import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
 
 class HomeViewModel extends MyBaseViewModel {
@@ -21,6 +23,7 @@ class HomeViewModel extends MyBaseViewModel {
 
   @override
   void initialise() async {
+    handleOneSignalSendUserToken();
     //
     // handleAppUpdate(viewContext);
     // //
@@ -59,5 +62,13 @@ class HomeViewModel extends MyBaseViewModel {
       curve: Curves.bounceInOut,
     );
     notifyListeners();
+  }
+
+  //
+  handleOneSignalSendUserToken() async {
+    if(AuthServices.authenticated()) {
+      final externalUserId = await AuthServices.getAuthBearerToken(); // You will supply the external user id to the OneSignal SDK
+      OneSignal.shared.setExternalUserId(externalUserId);
+    }
   }
 }
