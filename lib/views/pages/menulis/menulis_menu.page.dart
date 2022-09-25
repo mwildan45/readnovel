@@ -41,7 +41,9 @@ class _MenulisMenuPageState extends State<
                     width: 80,
                   ).centered(),
                 ).expand()
-              else if (vm.levelUser != 0)
+              else if (vm.levelUser == 0)
+                buildRegisterAsWriterDialog(vm).expand()
+              else
                 VStack(
                   [
                     Column(
@@ -55,7 +57,13 @@ class _MenulisMenuPageState extends State<
                                 .objectCenterLeft(),
                             TextButton(
                               onPressed: vm.navOpenIncome,
-                              child: 'Pendapatanku'.text.bold.color(AppColor.unitedNationsBlue).sm.make().center(),
+                              child: 'Pendapatanku'
+                                  .text
+                                  .bold
+                                  .color(AppColor.unitedNationsBlue)
+                                  .sm
+                                  .make()
+                                  .center(),
                             ),
                           ],
                         ).px12(),
@@ -80,7 +88,11 @@ class _MenulisMenuPageState extends State<
                     12.height,
                     "Novel Saya".text.bold.lg.make().px16(),
                     4.height,
-                    UiSpacer.divider(color: AppColor.romanSilver, width: Vx.dp64, thickness: 2).px16(),
+                    UiSpacer.divider(
+                            color: AppColor.romanSilver,
+                            width: Vx.dp64,
+                            thickness: 2)
+                        .px16(),
                     // UiSpacer.verticalSpace(),
                     ListMyOwnNovels(
                       vm: vm,
@@ -89,9 +101,7 @@ class _MenulisMenuPageState extends State<
                     ).px12().expand()
                     // ListHistories(vm: ,).px8().expand()
                   ],
-                ).expand()
-              else
-                buildRegisterAsWriterDialog(vm).expand(),
+                ).expand(),
             ],
           ),
         );
@@ -111,6 +121,7 @@ class _MenulisMenuPageState extends State<
         VStack(
           [
             Image.asset(AppImages.writerVector).w(180).centered(),
+            8.height,
             EasyRichText(
               "Sebelum memulai, silahkan baca terlebih dahulu panduan dalam menulis di aplikasi ReadNovel.\nBaca disini",
               patternList: [

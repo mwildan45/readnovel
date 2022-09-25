@@ -1,18 +1,21 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hidable/hidable.dart';
 import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
-import 'package:read_novel/view_models/chapter.vm.dart';
+import 'package:read_novel/view_models/read_chapter.vm.dart';
 import 'package:read_novel/widgets/bottom_read_config.widget.dart';
 import 'package:read_novel/widgets/base.page.dart';
 import 'package:read_novel/widgets/drawer_list_chapters.widget.dart';
 import 'package:side_navigation/side_navigation.dart';
 import 'package:stacked/stacked.dart';
+import 'package:tuple/tuple.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ReadNovelChapterPage extends StatefulWidget {
@@ -33,15 +36,15 @@ class ReadNovelChapterPage extends StatefulWidget {
 class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
   @override
   void dispose() {
-    ChapterViewModel(context).disableScreenshot(onClose: true);
+    ReadChapterViewModel(context).disableScreenshot(onClose: true);
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     print('detail novel id ${widget.detailNovel.id}');
-    return ViewModelBuilder<ChapterViewModel>.reactive(
-      viewModelBuilder: () => ChapterViewModel(context,
+    return ViewModelBuilder<ReadChapterViewModel>.reactive(
+      viewModelBuilder: () => ReadChapterViewModel(context,
           idNovelChapter: widget.idChapters, detailNovel: widget.detailNovel),
       onModelReady: (model) => model.initialise(),
       builder: (context, vm, child) {
@@ -52,16 +55,18 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                   vm: vm,
                 ),
           bodyBgColor: vm.selectedColor,
-          bottomNavigationBar: BottomReadConfigWidget(
-            vm: vm,
-          ),
+          bottomNavigationBar: vm.busy(vm.chapters)
+              ? const SizedBox.shrink()
+              : BottomReadConfigWidget(
+                  vm: vm,
+                ),
           body: SafeArea(
             child: vm.busy(vm.chapters)
                 ? const SizedBox.shrink()
                 : VStack(
                     [
                       Hidable(
-                        controller: vm.scrollController,
+                        controller: vm.scrollController[vm.indexChapter ?? 0],
                         child: HStack(
                           [
                             Icon(
@@ -88,7 +93,7 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                       Expanded(
                         child: VStack(
                           [
-                            UiSpacer.verticalSpace(space: Vx.dp32),
+                            UiSpacer.verticalSpace(space: Vx.dp20),
                             Builder(builder: (context) {
                               final double height =
                                   MediaQuery.of(context).size.height;
@@ -121,18 +126,48 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                                         .centered();
                                   } else {
                                     return SingleChildScrollView(
-                                      controller: vm.scrollController,
-                                      child: HtmlWidget(
-                                        vm.read?.content ?? "no content",
-                                        textStyle: TextStyle(
-                                          fontSize:
-                                              vm.selectedFontSize.toDouble(),
-                                          color:
-                                              vm.selectedColor == AppColor.black
-                                                  ? Colors.white
-                                                  : AppColor.fontColor,
+                                      controller: vm.scrollController[pageViewIndex],
+                                      child: vm.inHtml
+                                          ? HtmlWidget(
+                                              vm.read?.content ?? "no content",
+                                              textStyle: TextStyle(
+                                                fontSize: vm.selectedFontSize.toDouble(),
+                                                color: vm.selectedColor == AppColor.black
+                                                    ? Colors.white
+                                                    : AppColor.fontColor,
+                                              ),
+                                            )
+                                          : QuillEditor(
+                                              controller: vm.contentText,
+                                              readOnly: true,
+                                              scrollController: vm.scrollController[pageViewIndex],
+                                              scrollable: false,
+                                              focusNode: FocusNode(),
+                                              autoFocus: false,
+                                              expands: false,
+                                              padding: EdgeInsets.zero,
+                                              showCursor: false,
+                                        customStyles: DefaultStyles(
+                                          sizeSmall: TextStyle(
+                                            fontSize: vm.selectedFontSize.toDouble(),
+                                            color: vm.selectedColor == AppColor.black
+                                                ? Colors.white
+                                                : AppColor.fontColor,
+                                          ),
+                                          paragraph: DefaultTextBlockStyle(
+                                              GoogleFonts.alata(
+                                                fontSize: vm.selectedFontSize.toDouble(),
+                                                color: vm.selectedColor == AppColor.black
+                                                    ? Colors.white
+                                                    : AppColor.fontColor,
+                                              ),
+                                              Tuple2(16, 0),
+                                              Tuple2(0, 0),
+                                              null
+                                          )
+
                                         ),
-                                      ),
+                                            ).pOnly(bottom: Vx.dp24),
                                     );
                                   }
                                 },

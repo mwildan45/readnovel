@@ -13,6 +13,7 @@ import 'package:read_novel/models/profile.model.dart';
 import 'package:read_novel/requests/profile.request.dart';
 import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:store_redirect/store_redirect.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';

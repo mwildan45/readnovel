@@ -39,6 +39,8 @@ class AppStrings {
   static String rekomendasi = "rekomendasi";
   static String pilihan = "pilihan";
 
+  static String errorApiMsg = 'Ops, terjadi kesalahan, silahkan coba beberapa saat lagi';
+
 }
 
 enum SectionName {

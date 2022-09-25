@@ -38,7 +38,7 @@ class RegisterAsWriterRequest extends HttpService {
 
     final apiResponse = ApiResponse.fromResponse(apiResult);
     if (apiResponse.allGood) {
-      return apiResponse.body;
+      return apiResponse;
     } else {
       throw apiResponse.message;
     }

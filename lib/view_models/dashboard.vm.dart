@@ -49,6 +49,7 @@ class DashboardViewModel extends MyBaseViewModel {
   void onRefresh() async{
     fetchBanner();
     fetchListNovelsDashboard();
+    fetchAuthors();
     await Future.delayed(const Duration(milliseconds: 1000));
     refreshController.refreshCompleted();
   }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:delta_markdown/delta_markdown.dart';
@@ -30,13 +31,73 @@ class WriteChapterViewModel extends MyBaseViewModel {
 
   TextEditingController chapterName = TextEditingController();
   TextEditingController chapterNumber = TextEditingController();
-  late HtmlEditorController chapterContent;
-  QuillController content = QuillController.basic();
+  QuillController contentText = QuillController.basic();
+
+  late FocusNode chapterNameNode;
+  late FocusNode chapterBabNode;
+  late FocusNode contentNode;
+
   bool locked = false;
   int countContent = 0;
 
   @override
   void initialise() {}
+
+  //init write
+  setInitTextEditingValue(id, {bool onUpdate = false, int? idChapter}) async {
+    setBusy(true);
+
+    chapterNameNode = FocusNode();
+    chapterBabNode = FocusNode();
+    contentNode = FocusNode();
+
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      handleCountChar();
+    });
+
+    Future.delayed(const Duration(milliseconds: 300), () async {
+      await fetchMyNovelChapters();
+
+      if (onUpdate && chapters != null) {
+        await getMyNovelChapter(idChapter).then((value) async {
+          chapterName = TextEditingController(text: read?.title);
+          contentText = QuillController(
+              document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "") ?? "")),
+              selection: TextSelection.collapsed(offset: 0));
+          handleCountChar();
+          locked = read?.coin == 1 ? true : false;
+        });
+      }
+
+      chapterNumber =
+          TextEditingController(text: onUpdate ? read?.bab.toString() : (chapters!.length + 1).toString());
+
+    });
+
+    setBusy(false);
+  }
+
+  void dispose() {
+    chapterNameNode.dispose();
+    chapterBabNode.dispose();
+    contentNode.dispose();
+    contentText.removeListener(handleCountChar);
+    super.dispose();
+  }
+
+  void handleCountChar() {
+    final s = contentText.document.toPlainText();
+    final RegExp regExp = RegExp(r"[\w-._]+");
+    final Iterable matches = regExp.allMatches(s);
+    countContent = matches.length;
+    notifyListeners();
+  }
+
+  //
+  void handleCheckbox(bool? val) {
+    locked = !locked;
+    notifyListeners();
+  }
 
   //
   fetchMyNovelChapters() async {
@@ -59,57 +120,7 @@ class WriteChapterViewModel extends MyBaseViewModel {
     setBusyForObject(chapters, false);
   }
 
-  setInitTextEditingValue(id, {bool onUpdate = false, int? idChapter}) async {
-    chapterContent = HtmlEditorController();
-
-    setBusy(true);
-
-    content.document.changes.listen((event) {
-      handleCountChar();
-    });
-
-    Future.delayed(const Duration(milliseconds: 300), () async {
-      await fetchMyNovelChapters();
-
-      if (onUpdate && chapters != null) {
-        await getMyNovelChapter(idChapter).then((value) async {
-          chapterName = TextEditingController(text: read?.title);
-          // chapterContent.setText(read?.content ?? "");
-          content = QuillController(
-              document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "") ?? "")),
-              selection: TextSelection.collapsed(offset: 0));
-          handleCountChar();
-          locked = read?.coin == 1 ? true : false;
-        });
-      }
-
-      chapterNumber =
-          TextEditingController(text: onUpdate ? read?.bab.toString() : (chapters!.length + 1).toString());
-
-    });
-
-    setBusy(false);
-  }
-
-  void dispose() {
-    content.removeListener(handleCountChar);
-    super.dispose();
-  }
-
-  void handleCountChar() {
-    final s = content.document.toPlainText();
-    final RegExp regExp = RegExp(r"[\w-._]+");
-    final Iterable matches = regExp.allMatches(s);
-    countContent = matches.length;
-    notifyListeners();
-  }
-
   //
-  void handleCheckbox(bool? val) {
-    locked = !locked;
-    notifyListeners();
-  }
-
   Future getMyNovelChapter(idNovelChapter) async {
     //
     setBusyForObject(read, true);
@@ -132,31 +143,32 @@ class WriteChapterViewModel extends MyBaseViewModel {
 
   String quillDeltaToHtml(Delta delta) {
     final convertedValue = jsonEncode(delta.toJson());
-    final markdown = deltaToMarkdown(convertedValue);
-    final html = mk.markdownToHtml(markdown);
+    // final markdown = deltaToMarkdown(convertedValue);
+    // final html = mk.markdownToHtml(markdown);
 
-    return html;
+    return convertedValue;
   }
 
   String? quillHtmlToDelta(String htmlData) {
     // String? content = '[{"insert":"Heading"},{"insert":"\\n","attributes":{"header":1}},{"insert":"bold","attributes":{"bold":true}},{"insert":"\\n"},{"insert":"bold and italic","attributes":{"bold":true,"italic":true}},{"insert":"\\nsome code"},{"insert":"\\n","attributes":{"code-block":true}},{"insert":"A quote"},{"insert":"\\n","attributes":{"blockquote":true}},{"insert":"ordered list"},{"insert":"\\n","attributes":{"list":"ordered"}},{"insert":"unordered list"},{"insert":"\\n","attributes":{"list":"bullet"}},{"insert":"link","attributes":{"link":"pub.dev/packages/quill_markdown"}},{"insert":"\\n"}]';
-    final markdown = html2md.convert(htmlData);
-    final content = markdownToDelta(markdown);
+    // final markdown = html2md.convert(htmlData);
+    final content = markdownToDelta(htmlData);
 
-    return content;
+    return htmlData;
   }
 
   //
   addNewAndUpdateChapter(status, {int? idNovel, int? idChapter, bool onUpdate = false}) async {
 
     if (formKey.currentState!.validate()) {
-      var txtContent = quillDeltaToHtml(content.document.toDelta());
+      var txtContent = quillDeltaToHtml(contentText.document.toDelta());
+      print('markdown $txtContent');
       if (txtContent.isNotEmpty) {
         setBusyForObject(status == 'draft' ? chapterNumber : chapterName, true);
         // print('chapter ${txt}, id $idNovel');
 
         if(countContent <= 1000 && status == 'publish'){
-          showToast(msg: 'konten kamu harus mengandung setidaknya 1200 kata!');
+          showToast(msg: 'konten kamu harus mengandung setidaknya 1000 kata!');
         }else {
           try {
             ApiResponse? apiResponse;

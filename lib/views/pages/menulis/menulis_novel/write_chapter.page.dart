@@ -56,6 +56,7 @@ class WriteChapterPage extends StatelessWidget {
                                   Expanded(
                                     child: CustomTextFormField(
                                       textEditingController: vm.chapterName,
+                                      focusNode: vm.chapterNameNode,
                                       height: 48,
                                       labelText: '* Nama Chapter',
                                       hintText: 'Tulis nama chapter',
@@ -69,6 +70,7 @@ class WriteChapterPage extends StatelessWidget {
                                   8.width,
                                   CustomTextFormField(
                                     textEditingController: vm.chapterNumber,
+                                    focusNode: vm.chapterBabNode,
                                     height: 48,
                                     labelText: 'Bab',
                                     hintText: 'Bab ke',
@@ -86,7 +88,7 @@ class WriteChapterPage extends StatelessWidget {
                                 [
                                   QuillToolbar.basic(
                                     multiRowsDisplay: false,
-                                    controller: vm.content,
+                                    controller: vm.contentText,
                                     showColorButton: false,
                                     showCodeBlock: false,
                                     showListCheck: false,
@@ -94,12 +96,23 @@ class WriteChapterPage extends StatelessWidget {
                                     showListBullets: false,
                                     showListNumbers: false,
                                     showLink: false,
+                                    showBackgroundColorButton: false,
+                                    showStrikeThrough: false,
+                                    showInlineCode: false,
+                                    showQuote: false,
                                   ),
                                   4.height,
                                   // UiSpacer.divider(color: AppColor.cerisePink).objectCenterRight().px16(),
-                                  QuillEditor.basic(
-                                    controller: vm.content,
-                                    readOnly: false, // true for view only mode
+                                  QuillEditor(
+                                    controller: vm.contentText,
+                                    readOnly: false,
+                                    scrollController: ScrollController(),
+                                    scrollable: true,
+                                    focusNode: vm.contentNode,
+                                    autoFocus: true,
+                                    expands: false,
+                                    padding: EdgeInsets.zero,
+                                    showCursor: true,
                                   ),
                                   HStack([
                                     // 'minimal kata:'.text.italic.sm.gray400.make(),

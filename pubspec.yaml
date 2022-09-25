@@ -64,6 +64,8 @@ dependencies:
   quill_markdown: ^0.1.0
   upgrader: ^4.6.1
   store_redirect: ^2.0.1
+  flutter_markdown: ^0.6.12
+  tuple: ^2.0.0
 
 
 dev_dependencies:

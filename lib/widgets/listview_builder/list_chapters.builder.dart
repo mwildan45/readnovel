@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
-import 'package:read_novel/view_models/chapter.vm.dart';
+import 'package:read_novel/view_models/read_chapter.vm.dart';
 import 'package:read_novel/widgets/busy_indicator/novel_item.busy_indicator.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -10,7 +10,7 @@ class ListChaptersBuilder extends StatelessWidget {
   const ListChaptersBuilder(
       {Key? key, required this.vm, required this.detailNovel})
       : super(key: key);
-  final ChapterViewModel vm;
+  final ReadChapterViewModel vm;
   final DetailNovel detailNovel;
 
   @override
@@ -35,7 +35,7 @@ class ListChaptersBuilder extends StatelessWidget {
         itemBuilder: (context, index) {
           return HStack(
             [
-              '${vm.chapters?[index].title}'
+              'Bab ${vm.chapters?[index].bab} | ${vm.chapters?[index].title}'
                   .text
                   .color(AppColor.fontColor)
                   .make()

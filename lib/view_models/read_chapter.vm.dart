@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:delta_markdown/delta_markdown.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
@@ -14,9 +18,11 @@ import 'package:read_novel/widgets/bottom_sheets/read_settings.bottom_sheet.dart
 import 'package:read_novel/widgets/dialogs/custom_alert.dialog.dart';
 import 'package:read_novel/widgets/dialogs/custom_confirm_buy_coin.dialog.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:html2md/html2md.dart' as html2md;
 
-class ChapterViewModel extends MyBaseViewModel {
-  ChapterViewModel(BuildContext context,
+
+class ReadChapterViewModel extends MyBaseViewModel {
+  ReadChapterViewModel(BuildContext context,
       {this.idNovelChapter, this.detailNovel}) {
     viewContext = context;
   }
@@ -30,11 +36,13 @@ class ChapterViewModel extends MyBaseViewModel {
   List<Chapters>? chapters;
   Read? read;
   DetailNovel? detailNovel;
-  ScrollController scrollController = ScrollController();
+  QuillController contentText = QuillController.basic();
+  List<ScrollController> scrollController = [];
   final CarouselController carouselController = CarouselController();
   String? messageFailedToReadTheCh;
   bool failedGetContent = false;
   bool onInsideReadingPage = false;
+  bool inHtml = false;
   int? indexChapter;
 
   @override
@@ -54,6 +62,10 @@ class ChapterViewModel extends MyBaseViewModel {
         token: await AuthServices.getAuthBearerToken(),
       );
 
+      chapters?.forEach((element) {
+        scrollController.add(ScrollController());
+      });
+
       clearErrors();
     } catch (error) {
       print("Error ==> $error");
@@ -72,13 +84,32 @@ class ChapterViewModel extends MyBaseViewModel {
     disableScreenshot();
 
     try {
-      final apiResp = await chapterRequest.getReadNovelChapter({
-        'chapter_id': idChapterPagination ?? idNovelChapter,
-        'valToken': await AuthServices.getAuthBearerToken(),
-      });
+      final apiResp = await chapterRequest.getReadNovelChapter(
+        {
+          'chapter_id': idChapterPagination ?? idNovelChapter,
+          'valToken': await AuthServices.getAuthBearerToken(),
+        },
+      );
 
       read = apiResp.data;
-      print('msg $failedGetContent');
+
+      // try{
+      if((read?.content ?? "<p>").substring(0, 3) == "<p>") {
+        inHtml = true;
+      }else{
+        inHtml = false;
+        contentText = QuillController(
+          document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "") ?? "")),
+          selection: const TextSelection.collapsed(offset: 0),
+        );
+      }
+      // }catch(error){
+      //   contentText = QuillController(
+      //     document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "", toHtml: true) ?? "")),
+      //     selection: const TextSelection.collapsed(offset: 0),
+      //   );
+      // }
+
       if (apiResp.status == 'failed') {
         failedGetContent = true;
         messageFailedToReadTheCh = apiResp.message;
@@ -89,8 +120,21 @@ class ChapterViewModel extends MyBaseViewModel {
     } catch (error) {
       print("Error ==> $error");
       setError(error);
+      // failedGetContent = true;
     }
     setBusyForObject(read, false);
+  }
+
+  //
+  String? quillHtmlToDelta(String txt, {bool toHtml = false}) {
+    if(toHtml){
+      final markdown = html2md.convert(txt);
+      final content = markdownToDelta(markdown);
+
+      return content;
+    }else {
+      return txt;
+    }
   }
 
   //
@@ -110,6 +154,8 @@ class ChapterViewModel extends MyBaseViewModel {
 
   handleNavChapters(index) {
     indexChapter = index;
+    notifyListeners();
+    scrollController[index].position;
     getReadNovelChapter(
       idChapterPagination: chapters?[index].id,
       index: index,
@@ -152,7 +198,7 @@ class ChapterViewModel extends MyBaseViewModel {
     }
   }
 
-  openReadSetting(ChapterViewModel vm) {
+  openReadSetting(ReadChapterViewModel vm) {
     readSettingsBottomSheet(viewContext!, vm);
   }
 
@@ -180,7 +226,7 @@ class ChapterViewModel extends MyBaseViewModel {
             contentText: "Bab ${chapters.bab} | ${chapters.title} ?",
             onConfirm: () => handleBuyChapter(chapters.id),
             onLoading: busy(coinRequest),
-            viewModel: ChapterViewModel(viewContext!));
+            viewModel: ReadChapterViewModel(viewContext!));
       },
     );
   }

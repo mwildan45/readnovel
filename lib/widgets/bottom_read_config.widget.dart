@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hidable/hidable.dart';
 import 'package:read_novel/constants/app_assets.dart';
-import 'package:read_novel/view_models/chapter.vm.dart';
+import 'package:read_novel/view_models/read_chapter.vm.dart';
 import 'package:read_novel/view_models/read_novel.vm.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class BottomReadConfigWidget extends StatelessWidget {
   const BottomReadConfigWidget({Key? key, required this.vm}) : super(key: key);
-  final ChapterViewModel vm;
+  final ReadChapterViewModel vm;
 
   @override
   Widget build(BuildContext context) {
     return Hidable(
-      controller: vm.scrollController,
+      controller: vm.scrollController[vm.indexChapter ?? 0],
       wOpacity: true, // As default it's true.
       size: 58,
       child: Container(

@@ -42,9 +42,9 @@ class _DashboardPageState extends State<DashboardPage>
                       Image.asset(AppImages.appLogoHorizontal).w(130),
                       HStack(
                         [
-                          UiSpacer.buildCoin(size: 12),
+                          UiSpacer.buildCoin(size: 9),
                           4.width,
-                          "${getStringAsync(AppStrings.coinUser) == "" || getStringAsync(AppStrings.coinUser).isEmpty ? 0 : getStringAsync(AppStrings.coinUser)}"
+                          "${vm.coinUser == "" || (vm.coinUser ?? "").isEmpty ? 0 : vm.coinUser}"
                               .text
                               .black
                               .bold

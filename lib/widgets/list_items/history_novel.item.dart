@@ -85,9 +85,9 @@ class HistoryNovelItem extends StatelessWidget {
               bottomLeft: Radius.circular(8),
             ),
           ),
-          child: "Lanjutkan: ${novel?.chapterTitle ?? '20 Chapter'}"
+          child: "Lanjutkan: ${(novel?.chapterTitle ?? '- part').length > 20 ? "${(novel?.chapterTitle ?? '- part').substring(0, 20)}...." : (novel?.chapterTitle ?? '- part')}"
               .text
-              .white
+              .white.ellipsis
               .scale(0.82)
               .make()
               .pOnly(bottom: 1)

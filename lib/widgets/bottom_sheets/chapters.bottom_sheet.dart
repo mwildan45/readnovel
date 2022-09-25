@@ -4,7 +4,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/models/novel_detail.model.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
-import 'package:read_novel/view_models/chapter.vm.dart';
+import 'package:read_novel/view_models/read_chapter.vm.dart';
 import 'package:read_novel/view_models/read_novel.vm.dart';
 import 'package:read_novel/widgets/card_image/img_cover.widget.dart';
 import 'package:read_novel/widgets/listview_builder/list_chapters.builder.dart';
@@ -21,9 +21,9 @@ Future<dynamic> chaptersBottomSheet({
     isDismissible: true,
     backgroundColor: Colors.transparent,
     builder: (context) {
-      return ViewModelBuilder<ChapterViewModel>.reactive(
+      return ViewModelBuilder<ReadChapterViewModel>.reactive(
         viewModelBuilder: () =>
-            ChapterViewModel(context, idNovelChapter: detailNovel.id, detailNovel: detailNovel),
+            ReadChapterViewModel(context, idNovelChapter: detailNovel.id, detailNovel: detailNovel),
         onModelReady: (model) => model.getNovelChaptersList(),
         builder: (context, vm, child) {
           return VStack(

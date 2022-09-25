@@ -40,6 +40,8 @@ class RegisterAsWriterViewModel extends MyBaseViewModel {
   String? formatedTglLahir;
   DateFormat format = DateFormat("dd MMMM yyyy", "id_ID");
 
+  Profile? profile;
+
   @override
   void initialise() {
     registerPenulisPageChangeStream =
@@ -125,7 +127,10 @@ class RegisterAsWriterViewModel extends MyBaseViewModel {
           atas_nama: bankOwnerAccountCon.text,
           rekening: bankAccountCon.text);
 
-      await AuthServices.setProfileValue(apiResponse.data);
+      print('${apiResponse.data}');
+      profile = Profile.fromJson(apiResponse.data);
+
+      await AuthServices.setProfileValue(profile);
 
       showDialog(
         context: viewContext!,

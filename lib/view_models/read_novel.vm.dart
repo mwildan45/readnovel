@@ -4,7 +4,7 @@ import 'package:read_novel/requests/novel_detail.request.dart';
 import 'package:read_novel/services/auth.service.dart';
 import 'package:read_novel/services/dynamic_links_services.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
-import 'package:read_novel/view_models/chapter.vm.dart';
+import 'package:read_novel/view_models/read_chapter.vm.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:velocity_x/velocity_x.dart';
 

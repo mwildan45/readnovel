@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
-import 'package:read_novel/view_models/chapter.vm.dart';
+import 'package:read_novel/view_models/read_chapter.vm.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
