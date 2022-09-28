@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:read_novel/constants/app_assets.dart';
-import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/services/validator.service.dart';
 import 'package:read_novel/view_models/auth.vm.dart';
 import 'package:read_novel/widgets/base.page.dart';
@@ -25,7 +24,6 @@ class _LoginPageState extends State<LoginPage> {
         viewModelBuilder: () => AuthViewModel(context),
         onModelReady: (model) => model.initialise(),
         builder: (context, vm, child) {
-
           //third party auth
           Widget socialButtons = Row(
             mainAxisAlignment: MainAxisAlignment.center,

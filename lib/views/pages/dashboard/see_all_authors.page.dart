@@ -17,7 +17,7 @@ class SeeAllAuthorsSectionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<DashboardViewModel>.reactive(
       viewModelBuilder: () => DashboardViewModel(context),
-      onModelReady: (model) => model.fetchAuthors(),
+      onModelReady: (model) => model.fetchAuthors(type: 'all'),
       builder: (context, vm, child) {
         return BasePage(
           activeContext: context,
@@ -43,7 +43,7 @@ class SeeAllAuthorsSectionPage extends StatelessWidget {
                   gridview: true,
                 ),
               ],
-            ).pOnly(left: Vx.dp12, right: Vx.dp12),
+            ).pOnly(left: Vx.dp12, right: Vx.dp12, bottom: Vx.dp16),
           ),
         );
       },

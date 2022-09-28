@@ -14,6 +14,7 @@ import 'package:read_novel/requests/dashboard.request.dart';
 import 'package:read_novel/requests/genres.request.dart';
 import 'package:read_novel/requests/novel_detail.request.dart';
 import 'package:read_novel/view_models/base.view_model.dart';
+import 'package:read_novel/view_models/coin.vm.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class DashboardViewModel extends MyBaseViewModel {
@@ -34,16 +35,16 @@ class DashboardViewModel extends MyBaseViewModel {
   List<Novel>? novelsPerGenre;
   List<Author>? authors;
   String? selectedGenre;
-  String? coinUser;
   TextEditingController searchController = TextEditingController();
+  String? coinUser;
 
   @override
   void initialise() {
-    coinUser = getStringAsync(AppStrings.coinUser);
     fetchBanner();
     fetchListNovelsDashboard();
     fetchGenres();
     fetchAuthors();
+    CoinViewModel(viewContext!).refreshProfileUser().then((value) => coinUser = value?.coin.toString());
   }
 
   void onRefresh() async{
@@ -118,11 +119,11 @@ class DashboardViewModel extends MyBaseViewModel {
   }
 
   //
-  fetchAuthors() async {
+  fetchAuthors({String? type}) async {
     setBusyForObject(authors, true);
     try {
 
-      authors = await authorRequest.getAuthors();
+      authors = await authorRequest.getAuthors(type);
 
       clearErrors();
     } catch (error) {
@@ -185,6 +186,12 @@ class DashboardViewModel extends MyBaseViewModel {
         'sectionName': sectionName
       },
     );
+  }
+
+  refreshCoin(value) {
+    coinUser = value?.coin.toString();
+    notifyListeners();
+    print('coin $coinUser');
   }
 
   openSeeAllAuthors() async {

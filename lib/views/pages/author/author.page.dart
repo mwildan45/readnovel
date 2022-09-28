@@ -5,9 +5,9 @@ import 'package:read_novel/utils/ui_spacer.dart';
 import 'package:read_novel/view_models/author.vm.dart';
 import 'package:read_novel/widgets/base.page.dart';
 import 'package:read_novel/widgets/card_image/img_profile.widget.dart';
+import 'package:read_novel/widgets/empty_list.widget.dart';
 import 'package:read_novel/widgets/list_items/novel.item.dart';
 import 'package:read_novel/widgets/listview_builder/list_novel.builder.dart';
-import 'package:read_novel/widgets/listview_builder/list_own_novels.builder.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -43,22 +43,34 @@ class AuthorDetailPage extends StatelessWidget {
                       color: AppColor.romanSilver, width: Vx.dp64, thickness: 2)
                   .px16(),
               // UiSpacer.verticalSpace(),
-              SingleChildScrollView(
-                child: ListNovelBuilder(
-                  noLabel: true,
-                  isVerticalList: true,
-                  onLoading: vm.isBusy,
-                  itemCount: vm.novels?.length,
-                  itemBuilder: (context, index) {
-                    return NovelItem(
-                      isInfoOnRightPosition: true,
-                      index: index,
-                      novel: vm.novels?[index],
-                      onItemTap: () => vm.openNovel(vm.novels?[index].id, vm.novels?[index]),
-                    );
-                  },
-                ).px12(),
-              ).expand()
+              Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: ListNovelBuilder(
+                      noLabel: true,
+                      isVerticalList: true,
+                      onLoading: vm.isBusy,
+                      itemCount: vm.novels?.length,
+                      itemBuilder: (context, index) {
+                        return NovelItem(
+                          isInfoOnRightPosition: true,
+                          index: index,
+                          novel: vm.novels?[index],
+                          onItemTap: () => vm.openNovel(vm.novels?[index].id, vm.novels?[index]),
+                        );
+                      },
+                    ).px12(),
+                  ),
+                  Positioned.fill(
+                    bottom: 0.0,
+                    right: 0.0,
+                    left: 0.0,
+                    child: vm.novels != null && vm.novels!.isEmpty
+                        ? const EmptyListWidget(textEmpty: 'author belum merilis apapun.',).objectCenter()
+                        : const SizedBox.shrink(),
+                  )
+                ],
+              ).wFull(context).expand(),
             ],
           ),
         );

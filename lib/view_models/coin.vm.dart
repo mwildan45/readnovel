@@ -72,7 +72,7 @@ class CoinViewModel extends MyBaseViewModel {
         .then((value) => refreshProfileUser());
   }
 
-  refreshProfileUser() async {
+  Future<Profile?> refreshProfileUser() async {
     setBusy(true);
     try {
       final token = await AuthServices.getAuthBearerToken();
@@ -92,5 +92,7 @@ class CoinViewModel extends MyBaseViewModel {
     }
 
     setBusy(false);
+
+    return profile;
   }
 }

@@ -4,8 +4,8 @@ import 'package:read_novel/models/author.model.dart';
 import 'package:read_novel/services/http.service.dart';
 
 class AuthorRequest extends HttpService {
-  Future<List<Author>> getAuthors() async {
-    final apiResult = await post(Api.authors, {});
+  Future<List<Author>> getAuthors(String? type) async {
+    final apiResult = await post(Api.authors, {'type': type}); //type all/null
     final apiResponse = ApiResponse.fromResponse(apiResult);
     if (apiResponse.allGood) {
       var data = <Author>[];

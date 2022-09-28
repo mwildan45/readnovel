@@ -13,7 +13,7 @@ class BottomReadConfigWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Hidable(
-      controller: vm.scrollController[vm.indexChapter ?? 0],
+      controller: vm.hideScrollController[vm.indexChapter ?? 0],
       wOpacity: true, // As default it's true.
       size: 58,
       child: Container(

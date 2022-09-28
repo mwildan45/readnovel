@@ -66,7 +66,7 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                 : VStack(
                     [
                       Hidable(
-                        controller: vm.scrollController[vm.indexChapter ?? 0],
+                        controller: vm.hideScrollController[vm.indexChapter ?? 0],
                         child: HStack(
                           [
                             Icon(
@@ -90,6 +90,8 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                           ],
                         ).px12().py12(),
                       ),
+
+                      //
                       Expanded(
                         child: VStack(
                           [
@@ -126,13 +128,16 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                                         .centered();
                                   } else {
                                     return SingleChildScrollView(
-                                      controller: vm.scrollController[pageViewIndex],
+                                      controller:
+                                          vm.hideScrollController[pageViewIndex],
                                       child: vm.inHtml
                                           ? HtmlWidget(
                                               vm.read?.content ?? "no content",
                                               textStyle: TextStyle(
-                                                fontSize: vm.selectedFontSize.toDouble(),
-                                                color: vm.selectedColor == AppColor.black
+                                                fontSize: vm.selectedFontSize
+                                                    .toDouble(),
+                                                color: vm.selectedColor ==
+                                                        AppColor.black
                                                     ? Colors.white
                                                     : AppColor.fontColor,
                                               ),
@@ -140,33 +145,40 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                                           : QuillEditor(
                                               controller: vm.contentText,
                                               readOnly: true,
-                                              scrollController: vm.scrollController[pageViewIndex],
+                                              scrollController:
+                                                  vm.hideScrollController[
+                                                      pageViewIndex],
                                               scrollable: false,
                                               focusNode: FocusNode(),
                                               autoFocus: false,
                                               expands: false,
                                               padding: EdgeInsets.zero,
                                               showCursor: false,
-                                        customStyles: DefaultStyles(
-                                          sizeSmall: TextStyle(
-                                            fontSize: vm.selectedFontSize.toDouble(),
-                                            color: vm.selectedColor == AppColor.black
-                                                ? Colors.white
-                                                : AppColor.fontColor,
-                                          ),
-                                          paragraph: DefaultTextBlockStyle(
-                                              GoogleFonts.alata(
-                                                fontSize: vm.selectedFontSize.toDouble(),
-                                                color: vm.selectedColor == AppColor.black
-                                                    ? Colors.white
-                                                    : AppColor.fontColor,
+                                              customStyles: DefaultStyles(
+                                                sizeSmall: TextStyle(
+                                                  fontSize: vm.selectedFontSize
+                                                      .toDouble(),
+                                                  color: vm.selectedColor ==
+                                                          AppColor.black
+                                                      ? Colors.white
+                                                      : AppColor.fontColor,
+                                                ),
+                                                paragraph:
+                                                    DefaultTextBlockStyle(
+                                                  GoogleFonts.alata(
+                                                    fontSize: vm
+                                                        .selectedFontSize
+                                                        .toDouble(),
+                                                    color: vm.selectedColor ==
+                                                            AppColor.black
+                                                        ? Colors.white
+                                                        : AppColor.fontColor,
+                                                  ),
+                                                  Tuple2(16, 0),
+                                                  Tuple2(0, 0),
+                                                  null,
+                                                ),
                                               ),
-                                              Tuple2(16, 0),
-                                              Tuple2(0, 0),
-                                              null
-                                          )
-
-                                        ),
                                             ).pOnly(bottom: Vx.dp24),
                                     );
                                   }

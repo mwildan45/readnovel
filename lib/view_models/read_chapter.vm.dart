@@ -37,7 +37,7 @@ class ReadChapterViewModel extends MyBaseViewModel {
   Read? read;
   DetailNovel? detailNovel;
   QuillController contentText = QuillController.basic();
-  List<ScrollController> scrollController = [];
+  List<ScrollController> hideScrollController = [ScrollController()];
   final CarouselController carouselController = CarouselController();
   String? messageFailedToReadTheCh;
   bool failedGetContent = false;
@@ -63,7 +63,7 @@ class ReadChapterViewModel extends MyBaseViewModel {
       );
 
       chapters?.forEach((element) {
-        scrollController.add(ScrollController());
+        hideScrollController.add(ScrollController());
       });
 
       clearErrors();
@@ -98,10 +98,14 @@ class ReadChapterViewModel extends MyBaseViewModel {
         inHtml = true;
       }else{
         inHtml = false;
-        contentText = QuillController(
-          document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "") ?? "")),
-          selection: const TextSelection.collapsed(offset: 0),
-        );
+        try{
+          contentText = QuillController(
+            document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "") ?? "")),
+            selection: const TextSelection.collapsed(offset: 0),
+          );
+        }catch (error){
+          inHtml = true;
+        }
       }
       // }catch(error){
       //   contentText = QuillController(
@@ -118,9 +122,9 @@ class ReadChapterViewModel extends MyBaseViewModel {
 
       clearErrors();
     } catch (error) {
-      print("Error ==> $error");
+      print("Error read chapter ==> $error");
+      failedGetContent = true;
       setError(error);
-      // failedGetContent = true;
     }
     setBusyForObject(read, false);
   }
@@ -155,7 +159,7 @@ class ReadChapterViewModel extends MyBaseViewModel {
   handleNavChapters(index) {
     indexChapter = index;
     notifyListeners();
-    scrollController[index].position;
+    // scrollController[index].position;
     getReadNovelChapter(
       idChapterPagination: chapters?[index].id,
       index: index,

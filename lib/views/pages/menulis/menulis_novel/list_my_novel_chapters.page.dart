@@ -45,10 +45,10 @@ class ListMyNovelChapters extends StatelessWidget {
                             vm: vm,
                             index: index,
                           ).onTap(() {
-                            if(vm.chapters?[index].status == 'draft') {
+                            // if(vm.chapters?[index].status == 'draft') {
                               vm.navToWriteChapter(
                                   true, idChapter: vm.chapters?[index].id);
-                            }
+                            // }
                           });
                         },
                         separatorBuilder: (context, index) => 5.height,

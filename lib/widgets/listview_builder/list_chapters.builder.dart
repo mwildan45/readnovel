@@ -40,6 +40,7 @@ class ListChaptersBuilder extends StatelessWidget {
                   .color(AppColor.fontColor)
                   .make()
                   .expand(),
+              8.width,
               if (vm.chapters![index].isLocked!)
                 Icon(
                   Icons.lock,

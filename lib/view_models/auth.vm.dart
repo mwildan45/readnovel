@@ -39,12 +39,18 @@ class AuthViewModel extends MyBaseViewModel {
       setBusy(true);
 
       try {
-        login = await authRequest.login(
+        final result = await authRequest.login(
           {
             'email': email.text,
             'password': password.text
           }
         );
+
+        if(result.status == 'success'){
+          login = Login.fromJson(result.data);
+        }else{
+          ScaffoldMessenger.of(viewContext!).showSnackBar(SnackBar(content: Text(result.message)));
+        }
 
         setValue(AppStrings.profileImg, login?.profile ?? "");
 
@@ -70,13 +76,19 @@ class AuthViewModel extends MyBaseViewModel {
         setBusy(true);
 
         try {
-          register = await authRequest.register(
+          final result = await authRequest.register(
               {
                 'username': username.text,
                 'email': email.text,
                 'password': password.text
               }
           );
+
+          if(result.status == 'success'){
+            register = Register.fromJson(result.data);
+          }else{
+            ScaffoldMessenger.of(viewContext!).showSnackBar(SnackBar(content: Text(result.message)));
+          }
 
           setValue(AppStrings.profileImg, register?.profile ?? "");
 
@@ -143,7 +155,8 @@ class AuthViewModel extends MyBaseViewModel {
   setRegister(params, isSocialLogin) async {
     try {
 
-      register = await authRequest.register(params);
+      final result = await authRequest.register(params);
+      register = Register.fromJson(result.data);
 
       if(isSocialLogin) {
         setValue(AppStrings.isSocialLogin, true);

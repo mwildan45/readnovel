@@ -5,6 +5,7 @@ import 'package:read_novel/constants/app_assets.dart';
 import 'package:read_novel/constants/app_colors.dart';
 import 'package:read_novel/constants/app_strings.dart';
 import 'package:read_novel/utils/ui_spacer.dart';
+import 'package:read_novel/view_models/coin.vm.dart';
 import 'package:read_novel/view_models/dashboard.vm.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/genres_tab.widget.dart';
 import 'package:read_novel/views/pages/dashboard/widgets/home_tab.widget.dart';
@@ -40,19 +41,39 @@ class _DashboardPageState extends State<DashboardPage>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(AppImages.appLogoHorizontal).w(130),
-                      HStack(
-                        [
-                          UiSpacer.buildCoin(size: 9),
-                          4.width,
-                          "${vm.coinUser == "" || (vm.coinUser ?? "").isEmpty ? 0 : vm.coinUser}"
-                              .text
-                              .black
-                              .bold
-                              .make()
+                      Row(
+                        children: [
+                          HStack(
+                            [
+                              UiSpacer.buildCoin(size: 9),
+                              4.width,
+                              "${vm.coinUser == null || vm.coinUser == "null" || vm.coinUser == "" || (vm.coinUser ?? "").isEmpty ? 0 : vm.coinUser}"
+                                  .text
+                                  .black
+                                  .bold
+                                  .make(),
+                            ],
+                          )
+                              .py4() /*.px8()*/ /*.box.rounded.color(AppColor.royalOrange).make()*/
+                              .onTap(vm.navKoinkuPage),
+                          6.width,
+                          ViewModelBuilder<CoinViewModel>.reactive(
+                            viewModelBuilder: () => CoinViewModel(context),
+                            onModelReady: (model) {},
+                            builder: (context, vmCoin, child) {
+                              return InkWell(
+                                onTap: vmCoin.isBusy ? null : () => vmCoin.refreshProfileUser().then((value) {
+                                  vm.refreshCoin(value);
+                                }),
+                                child: vmCoin.isBusy ? const CircularProgressIndicator().w(15).h(15) : const Icon(
+                                  FontAwesomeIcons.arrowsRotate,
+                                  size: 15,
+                                ),
+                              );
+                            },
+                          ),
                         ],
-                      )
-                          .py4() /*.px8()*/ /*.box.rounded.color(AppColor.royalOrange).make()*/
-                          .onTap(vm.navKoinkuPage),
+                      ),
                     ],
                   ),
                   UiSpacer.verticalSpace(space: Vx.dp12),
@@ -60,7 +81,7 @@ class _DashboardPageState extends State<DashboardPage>
                     height: 38,
                     textEditingController: vm.searchController,
                     hintText: 'Mantan Tapi Menikah',
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       FontAwesomeIcons.magnifyingGlass,
                       size: 16,
                     ),

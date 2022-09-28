@@ -3,8 +3,8 @@
 
 class Api {
   static String get baseUrl {
-    return "https://demo.higanic.com/api";
-    // return "https://manage.readnovel.id/api";
+    // return "https://demo.higanic.com/api";
+    return "https://manage.readnovel.id/api";
   }
 
   static String get baseDynamicLink {
@@ -13,8 +13,8 @@ class Api {
   }
 
   static String get baseProfilePictureUrl {
-    return "https://demo.higanic.com/public/image/profile/";
-    // return "https://manage.readnovel.id/public/image/profile/";
+    // return "https://demo.higanic.com/public/image/profile/";
+    return "https://manage.readnovel.id/public/image/profile/";
   }
 
   static const login = "/login";
