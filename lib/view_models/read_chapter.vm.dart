@@ -131,11 +131,15 @@ class ReadChapterViewModel extends MyBaseViewModel {
 
   //
   String? quillHtmlToDelta(String txt, {bool toHtml = false}) {
-    if(toHtml){
+    if(txt.substring(0, 2) == "<p") {
       final markdown = html2md.convert(txt);
       final content = markdownToDelta(markdown);
-
-      return content;
+      if(content.contains('{"divider":"hr"}')){
+        final removed = content.replaceAll('{"divider":"hr"}', '""');
+        return removed;
+      }else{
+        return content;
+      }
     }else {
       return txt;
     }

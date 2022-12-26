@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:delta_markdown/delta_markdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
-import 'package:html_editor_enhanced/html_editor.dart';
-import 'package:markdown/markdown.dart' as mk;
-import 'package:quill_markdown/quill_markdown.dart';
 import 'package:read_novel/constants/app_routes.dart';
 import 'package:read_novel/models/api_response.dart';
 import 'package:read_novel/models/chapter.model.dart';
@@ -63,7 +61,7 @@ class WriteChapterViewModel extends MyBaseViewModel {
           chapterName = TextEditingController(text: read?.title);
           contentText = QuillController(
               document: Document.fromJson(jsonDecode(quillHtmlToDelta(read?.content ?? "") ?? "")),
-              selection: TextSelection.collapsed(offset: 0));
+              selection: const TextSelection.collapsed(offset: 0));
           handleCountChar();
           locked = read?.coin == 1 ? true : false;
         });
@@ -151,10 +149,18 @@ class WriteChapterViewModel extends MyBaseViewModel {
 
   String? quillHtmlToDelta(String htmlData) {
     // String? content = '[{"insert":"Heading"},{"insert":"\\n","attributes":{"header":1}},{"insert":"bold","attributes":{"bold":true}},{"insert":"\\n"},{"insert":"bold and italic","attributes":{"bold":true,"italic":true}},{"insert":"\\nsome code"},{"insert":"\\n","attributes":{"code-block":true}},{"insert":"A quote"},{"insert":"\\n","attributes":{"blockquote":true}},{"insert":"ordered list"},{"insert":"\\n","attributes":{"list":"ordered"}},{"insert":"unordered list"},{"insert":"\\n","attributes":{"list":"bullet"}},{"insert":"link","attributes":{"link":"pub.dev/packages/quill_markdown"}},{"insert":"\\n"}]';
-    if(htmlData.substring(0, 3) == "<p>") {
+    if(htmlData.substring(0, 2) == "<p") {
       final markdown = html2md.convert(htmlData);
       final content = markdownToDelta(markdown);
-      return content;
+
+      if(content.contains('{"divider":"hr"}')){
+        final removed = content.replaceAll('{"divider":"hr"}', '""');
+        log(removed);
+        return removed;
+      }else{
+        return content;
+      }
+
     }else {
       return htmlData;
     }

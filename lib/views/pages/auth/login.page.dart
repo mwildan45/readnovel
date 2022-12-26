@@ -8,6 +8,7 @@ import 'package:read_novel/widgets/base.page.dart';
 import 'package:read_novel/widgets/buttons/custom_button.dart';
 import 'package:read_novel/widgets/form_field/auth.form_field.dart';
 import 'package:stacked/stacked.dart';
+import 'package:upgrader/upgrader.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class LoginPage extends StatefulWidget {
@@ -52,95 +53,97 @@ class _LoginPageState extends State<LoginPage> {
             ],
           );
 
-          return BasePage(
-            body: Stack(
-              children: <Widget>[
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: Center(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Image.asset(AppImages.appLogoTransparent,
-                              width: 150, height: 150),
-                          24.height,
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20, right: 20),
-                            child: Form(
-                              key: vm.formKey,
-                              child: Column(
-                                children: [
-                                  EditText(
-                                    hintText: 'masukkan email',
-                                    isPassword: false,
-                                    mController: vm.email,
-                                    mKeyboardType: TextInputType.emailAddress,
-                                    validator: FormValidator.validateEmail,
-                                  ),
-                                  14.height,
-                                  EditText(
-                                    hintText: 'masukkan password',
-                                    isPassword: true,
-                                    mController: vm.password,
-                                    isSecure: true,
-                                    validator: FormValidator.validatePassword,
-                                  ),
-                                  8.height,
-                                ],
+          return UpgradeAlert(
+            child: BasePage(
+              body: Stack(
+                children: <Widget>[
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(AppImages.appLogoTransparent,
+                                width: 150, height: 150),
+                            24.height,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20, right: 20),
+                              child: Form(
+                                key: vm.formKey,
+                                child: Column(
+                                  children: [
+                                    EditText(
+                                      hintText: 'masukkan email',
+                                      isPassword: false,
+                                      mController: vm.email,
+                                      mKeyboardType: TextInputType.emailAddress,
+                                      validator: FormValidator.validateEmail,
+                                    ),
+                                    14.height,
+                                    EditText(
+                                      hintText: 'masukkan password',
+                                      isPassword: true,
+                                      mController: vm.password,
+                                      isSecure: true,
+                                      validator: FormValidator.validatePassword,
+                                    ),
+                                    8.height,
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          20.height,
-                          CustomButton(
-                            isGradientColor: true,
-                            loading: vm.isBusy,
-                            shapeRadius: 10,
-                            title: 'LOGIN',
-                            titleStyle: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                            onPressed: vm.onLocalLogin,
-                          ).px20(),
-                          20.height,
-                          socialButtons,
-                          16.height,
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text('Pengguna baru?',
-                                  style: primaryTextStyle(
-                                    size: 14,
-                                  )),
-                              Container(
-                                margin: const EdgeInsets.only(left: 4),
-                                child: GestureDetector(
-                                    onTap: vm.navRegisterPage,
-                                    child: const Text('Daftar!',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.cyan,
-                                        )),
+                            20.height,
+                            CustomButton(
+                              isGradientColor: true,
+                              loading: vm.isBusy,
+                              shapeRadius: 10,
+                              title: 'LOGIN',
+                              titleStyle: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16),
+                              onPressed: vm.onLocalLogin,
+                            ).px20(),
+                            20.height,
+                            socialButtons,
+                            16.height,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text('Pengguna baru?',
+                                    style: primaryTextStyle(
+                                      size: 14,
+                                    )),
+                                Container(
+                                  margin: const EdgeInsets.only(left: 4),
+                                  child: GestureDetector(
+                                      onTap: vm.navRegisterPage,
+                                      child: const Text('Daftar!',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.cyan,
+                                          )),
+                                  )
                                 )
-                              )
-                            ],
-                          ),
-                        ],
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-                // isLoading
-                //     ? Container(
-                //         child: CircularProgressIndicator(),
-                //         alignment: Alignment.center,
-                //       )
-                //     : SizedBox(),
-              ],
+                  // isLoading
+                  //     ? Container(
+                  //         child: CircularProgressIndicator(),
+                  //         alignment: Alignment.center,
+                  //       )
+                  //     : SizedBox(),
+                ],
+              ),
             ),
           );
         });

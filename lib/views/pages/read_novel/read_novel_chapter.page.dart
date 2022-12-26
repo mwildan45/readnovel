@@ -127,6 +127,7 @@ class _ReadNovelChapterPageState extends State<ReadNovelChapterPage> {
                                         .make()
                                         .centered();
                                   } else {
+                                    print('in html ${vm.inHtml}');
                                     return SingleChildScrollView(
                                       controller:
                                           vm.hideScrollController[pageViewIndex],

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:read_novel/utils/custom_exception.dart';
 
 class ApiResponse {
@@ -32,7 +34,7 @@ class ApiResponse {
     dynamic message;
     dynamic status;
 
-    print('RESPONSE API: ${response.data}');
+    print('RESPONSE API: ${jsonEncode(response.data)}');
 
     switch (response.statusCode) {
       case 200:

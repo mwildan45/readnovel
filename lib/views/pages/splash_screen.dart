@@ -16,14 +16,12 @@ class SplashScreen extends StatelessWidget {
         onModelReady: (model) => model.initialise(),
         builder: (context, model, child) {
           return SafeArea(
-            child: UpgradeAlert(
-              child: Center(
-                child: Image.asset(
-                  AppImages.appSplashScreenImage1,
-                  fit: BoxFit.fill,
-                  height: double.maxFinite,
-                  width: double.maxFinite,
-                ),
+            child: Center(
+              child: Image.asset(
+                AppImages.appSplashScreenImage1,
+                fit: BoxFit.fill,
+                height: double.maxFinite,
+                width: double.maxFinite,
               ),
             ),
           );
